@@ -64,6 +64,8 @@ struct FeedCardView: View {
                         }
                 )
         }
+        // 🔥 ЖЕЛЕЗОБЕТОННЫЙ ОТСТУП ДЛЯ ВСЕЙ ЯЧЕЙКИ 🔥
+        // Теперь он снаружи, и карточка не сможет вылезти за края
         .padding(.horizontal, 16)
         .onAppear {
             guard !hasUserSwiped && !FeedCardView.hasWiggledThisSession else { return }
@@ -84,17 +86,23 @@ struct FeedCardView: View {
     @ViewBuilder
     private var cardContent: some View {
         ZStack(alignment: .bottom) {
-            // Full-bleed image
-            AsyncImage(url: URL(string: item.imageURL)) { phase in
-                if let image = phase.image {
-                    image.resizable().scaledToFill()
-                } else {
-                    Color(white: 0.15)
+            // Full-bleed image with solid fallback
+            GeometryReader { geo in
+                AsyncImage(url: URL(string: item.imageURL)) { phase in
+                    if let image = phase.image {
+                        image
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: geo.size.width, height: max(geo.size.height, 360))
+                    } else {
+                        Color(white: 0.15)
+                    }
                 }
             }
+            .frame(maxWidth: .infinity, minHeight: 360)
             .clipped()
 
-            // Gradient overlay: clear top → black bottom 60%
+            // Gradient overlay
             LinearGradient(
                 stops: [
                     .init(color: .clear, location: 0.0),
@@ -104,6 +112,7 @@ struct FeedCardView: View {
                 startPoint: .top,
                 endPoint: .bottom
             )
+            .allowsHitTesting(false)
 
             // Top chips (category + vote count)
             VStack {
@@ -140,20 +149,17 @@ struct FeedCardView: View {
 
             // Bottom-aligned content
             VStack(alignment: .leading, spacing: 10) {
-                // News title — subtle
                 Text(item.title)
                     .font(.subheadline)
                     .foregroundStyle(.white.opacity(0.65))
                     .lineLimit(2)
 
-                // Question — hero
                 Text(item.question)
                     .font(.title3.bold())
                     .foregroundStyle(.white)
                     .lineLimit(3)
                     .fixedSize(horizontal: false, vertical: true)
 
-                // Vote buttons
                 if item.options.count >= 2 {
                     let colors: [Color] = [AppTheme.success, AppTheme.danger]
                     HStack(spacing: 8) {
@@ -172,7 +178,6 @@ struct FeedCardView: View {
                     }
                 }
 
-                // AI analytics badge
                 if let analysis = item.aiAnalysis {
                     Button { showAnalytics = true } label: {
                         HStack(spacing: 5) {
@@ -197,6 +202,7 @@ struct FeedCardView: View {
             RoundedRectangle(cornerRadius: AppTheme.cardRadius)
                 .strokeBorder(AppTheme.border, lineWidth: 1)
         )
+        // Смещение работает идеально, так как границы уже заданы родителем
         .offset(x: dragOffset + wiggleOffset)
     }
 

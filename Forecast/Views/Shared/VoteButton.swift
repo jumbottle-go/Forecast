@@ -24,7 +24,7 @@ struct VoteButton: View {
 
     var body: some View {
         Button(action: onTap) {
-            HStack(spacing: 8) {
+            HStack(spacing: 4) {
                 VStack(alignment: .leading, spacing: 2) {
                     HStack(spacing: 6) {
                         Image(systemName: option.iconName)
@@ -33,10 +33,10 @@ struct VoteButton: View {
                             .fontWeight(.semibold)
                             .foregroundStyle(textColor)
                             .lineLimit(1)
-                            .minimumScaleFactor(0.72)
+                            .minimumScaleFactor(0.65)
                             .allowsTightening(true)
                     }
-                    .font(.subheadline)
+                    .font(.headline)
 
                     if showSubtitle {
                         Text(option.subtitle)
@@ -49,12 +49,12 @@ struct VoteButton: View {
                 Spacer(minLength: 0)
 
                 Text("\(Int(option.percent))%")
-                    .font(.subheadline.bold())
+                    .font(.headline.bold())
                     .foregroundStyle(fillColor)
                     .opacity(isVoted ? 1 : 0)
             }
-            .padding(.horizontal, 12)
-            .padding(.vertical, showSubtitle ? 12 : 10)
+            .padding(.horizontal, 8)
+            .padding(.vertical, showSubtitle ? 16 : 14)
             .background(alignment: .leading) {
                 GeometryReader { geo in
                     Rectangle()

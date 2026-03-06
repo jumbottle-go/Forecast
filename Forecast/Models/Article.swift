@@ -32,20 +32,17 @@ struct Article: Identifiable, Hashable {
     let newsItem: NewsItem
     let keyFacts: [KeyFact]
     let bodyParagraphs: [BodyElement]
-    let predictionQuestions: [PredictionCard]
 
     init(
         id: UUID = UUID(),
         newsItem: NewsItem,
         keyFacts: [KeyFact],
-        bodyParagraphs: [BodyElement],
-        predictionQuestions: [PredictionCard]
+        bodyParagraphs: [BodyElement]
     ) {
         self.id                  = id
         self.newsItem            = newsItem
         self.keyFacts            = keyFacts
         self.bodyParagraphs      = bodyParagraphs
-        self.predictionQuestions = predictionQuestions
     }
 
     static func == (lhs: Article, rhs: Article) -> Bool { lhs.id == rhs.id }

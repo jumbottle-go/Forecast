@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct FeedView: View {
-    @StateObject private var viewModel = FeedViewModel()
+    @EnvironmentObject private var viewModel: FeedViewModel
     @State private var scrollProxy: ScrollViewProxy? = nil
     @State private var selectedArticle: Article? = nil
     private let tabsAnchor = "categoryTabs"

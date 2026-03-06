@@ -3,6 +3,7 @@ import SwiftUI
 struct ArticleView: View {
     let article: Article
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var feedViewModel: FeedViewModel
 
     private var vm: ArticleViewModel { ArticleViewModel(article: article) }
 
@@ -118,9 +119,6 @@ struct ArticleView: View {
                     .padding(.horizontal, 16)
                     .padding(.bottom, 24)
 
-                    // MARK: Make Prediction block
-                    predictionBlock
-
                     Color.clear.frame(height: 40)
                 }
             }
@@ -148,74 +146,4 @@ struct ArticleView: View {
         .navigationBarHidden(true)
     }
 
-    @ViewBuilder
-    private var predictionBlock: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            // Background gradient
-            VStack(alignment: .leading, spacing: 0) {
-                // Header
-                HStack(spacing: 10) {
-                    Image(systemName: "sparkles")
-                        .font(.title2)
-                        .foregroundStyle(AppTheme.accent)
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("Сделайте предсказание")
-                            .font(.headline)
-                            .foregroundStyle(AppTheme.textPrimary)
-                        Text("\(vm.questionCount) вопросов")
-                            .font(.caption)
-                            .foregroundStyle(AppTheme.textSecondary)
-                    }
-                }
-
-                // Preview questions
-                VStack(alignment: .leading, spacing: 12) {
-                    ForEach(Array(vm.previewQuestions.enumerated()), id: \.element.id) { i, q in
-                        HStack(alignment: .top, spacing: 10) {
-                            Text("\(i + 1)")
-                                .font(.caption.bold())
-                                .foregroundStyle(AppTheme.accent)
-                                .frame(width: 18, height: 18)
-                                .background(AppTheme.accent.opacity(0.15))
-                                .clipShape(Circle())
-                            Text(q.question)
-                                .font(.subheadline)
-                                .foregroundStyle(AppTheme.textPrimary)
-                                .lineLimit(2)
-                        }
-                    }
-                }
-                .padding(.top, 18)
-
-                // CTA
-                NavigationLink {
-                    DeckView(cards: vm.predictionQuestions)
-                } label: {
-                    Text("Начать предсказания")
-                        .font(.headline)
-                        .foregroundStyle(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 14)
-                        .background(AppTheme.accent)
-                        .clipShape(RoundedRectangle(cornerRadius: AppTheme.buttonRadius))
-                }
-                .buttonStyle(.plain)
-                .padding(.top, 20)
-            }
-            .padding(16)
-            .background(
-                LinearGradient(
-                    colors: [AppTheme.accent.opacity(0.1), AppTheme.card],
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-            )
-            .clipShape(RoundedRectangle(cornerRadius: AppTheme.cardRadius))
-            .overlay(
-                RoundedRectangle(cornerRadius: AppTheme.cardRadius)
-                    .strokeBorder(AppTheme.border, lineWidth: 1)
-            )
-        }
-        .padding(.horizontal, 16)
-    }
 }

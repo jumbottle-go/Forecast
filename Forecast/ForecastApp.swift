@@ -10,9 +10,12 @@ struct ForecastApp: App {
 }
 
 struct ContentView: View {
+    @StateObject private var feedViewModel = FeedViewModel()
+
     var body: some View {
         TabView {
             FeedView()
+                .environmentObject(feedViewModel)
                 .tabItem {
                     Label("Лента", systemImage: "newspaper")
                 }

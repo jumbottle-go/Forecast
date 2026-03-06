@@ -10,11 +10,4 @@ final class ArticleViewModel: ObservableObject {
     var newsItem: NewsItem { article.newsItem }
     var keyFacts: [KeyFact] { article.keyFacts }
     var bodyParagraphs: [BodyElement] { article.bodyParagraphs }
-    var predictionQuestions: [PredictionCard] { article.predictionQuestions }
-
-    var questionCount: Int { predictionQuestions.count }
-
-    var previewQuestions: [PredictionCard] {
-        Array(predictionQuestions.prefix(3))
-    }
 }

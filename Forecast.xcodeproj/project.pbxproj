@@ -10,22 +10,17 @@
 		EE0000000000000000000001 /* ForecastApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000001 /* ForecastApp.swift */; };
 		EE0000000000000000000002 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000002 /* AppTheme.swift */; };
 		EE0000000000000000000003 /* NewsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000003 /* NewsItem.swift */; };
-		EE0000000000000000000004 /* PredictionCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000004 /* PredictionCard.swift */; };
 		EE0000000000000000000005 /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000005 /* Article.swift */; };
 		EE0000000000000000000006 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000006 /* MockData.swift */; };
 		EE0000000000000000000007 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000007 /* FeedViewModel.swift */; };
 		EE0000000000000000000008 /* ArticleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000008 /* ArticleViewModel.swift */; };
-		EE0000000000000000000009 /* DeckViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000009 /* DeckViewModel.swift */; };
 		EE0000000000000000000010 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000010 /* FeedView.swift */; };
 		EE0000000000000000000011 /* HeroCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000011 /* HeroCardView.swift */; };
 		EE0000000000000000000012 /* CategoryTabsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000012 /* CategoryTabsView.swift */; };
 		EE0000000000000000000013 /* FeedCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000013 /* FeedCardView.swift */; };
 		EE0000000000000000000014 /* ShareSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000014 /* ShareSheetView.swift */; };
 		EE0000000000000000000015 /* ArticleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000015 /* ArticleView.swift */; };
-		EE0000000000000000000016 /* DeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000016 /* DeckView.swift */; };
-		EE0000000000000000000017 /* SwipeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000017 /* SwipeCardView.swift */; };
 		EE0000000000000000000018 /* VoteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000018 /* VoteButton.swift */; };
-		EE0000000000000000000019 /* ProgressSegments.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000019 /* ProgressSegments.swift */; };
 		EE000000000000000000001A /* AnalyticsSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000000000000000000001A /* AnalyticsSheetView.swift */; };
 		EE0000000000000000000020 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000020 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -34,22 +29,17 @@
 		DD0000000000000000000001 /* ForecastApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastApp.swift; sourceTree = "<group>"; };
 		DD0000000000000000000002 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		DD0000000000000000000003 /* NewsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsItem.swift; sourceTree = "<group>"; };
-		DD0000000000000000000004 /* PredictionCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredictionCard.swift; sourceTree = "<group>"; };
 		DD0000000000000000000005 /* Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Article.swift; sourceTree = "<group>"; };
 		DD0000000000000000000006 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
 		DD0000000000000000000007 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		DD0000000000000000000008 /* ArticleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleViewModel.swift; sourceTree = "<group>"; };
-		DD0000000000000000000009 /* DeckViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckViewModel.swift; sourceTree = "<group>"; };
 		DD0000000000000000000010 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		DD0000000000000000000011 /* HeroCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroCardView.swift; sourceTree = "<group>"; };
 		DD0000000000000000000012 /* CategoryTabsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTabsView.swift; sourceTree = "<group>"; };
 		DD0000000000000000000013 /* FeedCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCardView.swift; sourceTree = "<group>"; };
 		DD0000000000000000000014 /* ShareSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheetView.swift; sourceTree = "<group>"; };
 		DD0000000000000000000015 /* ArticleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleView.swift; sourceTree = "<group>"; };
-		DD0000000000000000000016 /* DeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckView.swift; sourceTree = "<group>"; };
-		DD0000000000000000000017 /* SwipeCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeCardView.swift; sourceTree = "<group>"; };
 		DD0000000000000000000018 /* VoteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteButton.swift; sourceTree = "<group>"; };
-		DD0000000000000000000019 /* ProgressSegments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressSegments.swift; sourceTree = "<group>"; };
 		DD000000000000000000001A /* AnalyticsSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsSheetView.swift; sourceTree = "<group>"; };
 		DD0000000000000000000020 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DD0000000000000000000021 /* Forecast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Forecast.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -108,7 +98,6 @@
 			isa = PBXGroup;
 			children = (
 				DD0000000000000000000003 /* NewsItem.swift */,
-				DD0000000000000000000004 /* PredictionCard.swift */,
 				DD0000000000000000000005 /* Article.swift */,
 			);
 			path = Models;
@@ -127,7 +116,6 @@
 			children = (
 				DD0000000000000000000007 /* FeedViewModel.swift */,
 				DD0000000000000000000008 /* ArticleViewModel.swift */,
-				DD0000000000000000000009 /* DeckViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -166,8 +154,6 @@
 		CC0000000000000000000009 /* Deck */ = {
 			isa = PBXGroup;
 			children = (
-				DD0000000000000000000016 /* DeckView.swift */,
-				DD0000000000000000000017 /* SwipeCardView.swift */,
 			);
 			path = Deck;
 			sourceTree = "<group>";
@@ -176,7 +162,6 @@
 			isa = PBXGroup;
 			children = (
 				DD0000000000000000000018 /* VoteButton.swift */,
-				DD0000000000000000000019 /* ProgressSegments.swift */,
 				DD000000000000000000001A /* AnalyticsSheetView.swift */,
 			);
 			path = Shared;
@@ -254,22 +239,17 @@
 				EE0000000000000000000001 /* ForecastApp.swift in Sources */,
 				EE0000000000000000000002 /* AppTheme.swift in Sources */,
 				EE0000000000000000000003 /* NewsItem.swift in Sources */,
-				EE0000000000000000000004 /* PredictionCard.swift in Sources */,
 				EE0000000000000000000005 /* Article.swift in Sources */,
 				EE0000000000000000000006 /* MockData.swift in Sources */,
 				EE0000000000000000000007 /* FeedViewModel.swift in Sources */,
 				EE0000000000000000000008 /* ArticleViewModel.swift in Sources */,
-				EE0000000000000000000009 /* DeckViewModel.swift in Sources */,
 				EE0000000000000000000010 /* FeedView.swift in Sources */,
 				EE0000000000000000000011 /* HeroCardView.swift in Sources */,
 				EE0000000000000000000012 /* CategoryTabsView.swift in Sources */,
 				EE0000000000000000000013 /* FeedCardView.swift in Sources */,
 				EE0000000000000000000014 /* ShareSheetView.swift in Sources */,
 				EE0000000000000000000015 /* ArticleView.swift in Sources */,
-				EE0000000000000000000016 /* DeckView.swift in Sources */,
-				EE0000000000000000000017 /* SwipeCardView.swift in Sources */,
 				EE0000000000000000000018 /* VoteButton.swift in Sources */,
-				EE0000000000000000000019 /* ProgressSegments.swift in Sources */,
 				EE000000000000000000001A /* AnalyticsSheetView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
