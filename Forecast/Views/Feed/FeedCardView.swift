@@ -7,6 +7,9 @@ struct FeedCardView: View {
     let onVote: (VoteOption) -> Void
     var onCardTap: ((Article) -> Void)? = nil
 
+    @AppStorage("hasUserSwiped") private var hasUserSwiped = false
+    static var hasWiggledThisSession = false
+
     @State private var dragOffset: CGFloat = 0
     @State private var isDragging: Bool = false
     @State private var showAnalytics: Bool = false
@@ -34,7 +37,6 @@ struct FeedCardView: View {
                     guard !isDragging, let article else { return }
                     onCardTap?(article)
                 }
-                .offset(x: dragOffset + wiggleOffset)
                 .rotationEffect(.degrees(Double(dragOffset) / 25 * 8 / swipeThreshold))
                 // High-priority drag cancels tap evaluation
                 .highPriorityGesture(
@@ -53,6 +55,7 @@ struct FeedCardView: View {
                                     ? (item.options.first ?? item.options[0])
                                     : (item.options.last ?? item.options[0])
                                 withAnimation(.easeOut(duration: 0.2)) { dragOffset = 0 }
+                                hasUserSwiped = true
                                 onVote(option)
                             } else {
                                 withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
@@ -64,7 +67,8 @@ struct FeedCardView: View {
         }
         .padding(.horizontal, 16)
         .onAppear {
-            guard !isVoted else { return }
+            guard !hasUserSwiped && !FeedCardView.hasWiggledThisSession else { return }
+            FeedCardView.hasWiggledThisSession = true
             withAnimation(.easeInOut(duration: 0.15).repeatCount(4, autoreverses: true).delay(1.0)) {
                 wiggleOffset = 10
             }
@@ -204,6 +208,7 @@ struct FeedCardView: View {
             }
             .padding(12)
         }
+        .offset(x: dragOffset + wiggleOffset)
         .background(AppTheme.card)
         .clipShape(RoundedRectangle(cornerRadius: AppTheme.cardRadius))
         .overlay(
