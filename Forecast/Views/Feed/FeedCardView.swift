@@ -64,7 +64,6 @@ struct FeedCardView: View {
                         }
                 )
         }
-        .padding(.horizontal, 16)
         .onAppear {
             guard !hasUserSwiped && !FeedCardView.hasWiggledThisSession else { return }
             FeedCardView.hasWiggledThisSession = true
@@ -86,11 +85,13 @@ struct FeedCardView: View {
         ZStack(alignment: .bottom) {
             // Full-bleed image
             AsyncImage(url: URL(string: item.imageURL)) { phase in
-                switch phase {
-                case .success(let img): img.resizable().scaledToFill()
-                default: Rectangle().fill(AppTheme.border)
+                if let image = phase.image {
+                    image.resizable().scaledToFill()
+                } else {
+                    Color(white: 0.15)
                 }
             }
+            .frame(maxWidth: .infinity, minHeight: 360)
             .clipped()
 
             // Gradient overlay: clear top → black bottom 60%
@@ -190,12 +191,13 @@ struct FeedCardView: View {
             }
             .padding(14)
         }
-        .frame(maxWidth: .infinity, minHeight: 360)
+        .frame(minHeight: 360)
         .clipShape(RoundedRectangle(cornerRadius: AppTheme.cardRadius))
         .overlay(
             RoundedRectangle(cornerRadius: AppTheme.cardRadius)
                 .strokeBorder(AppTheme.border, lineWidth: 1)
         )
+        .padding(.horizontal, 16)
         .offset(x: dragOffset + wiggleOffset)
     }
 

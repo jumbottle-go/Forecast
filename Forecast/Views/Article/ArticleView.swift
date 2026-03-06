@@ -155,8 +155,9 @@ struct ArticleView: View {
             VStack(alignment: .leading, spacing: 0) {
                 // Header
                 HStack(spacing: 10) {
-                    Text("🎯")
+                    Image(systemName: "sparkles")
                         .font(.title2)
+                        .foregroundStyle(AppTheme.accent)
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Сделайте предсказание")
                             .font(.headline)

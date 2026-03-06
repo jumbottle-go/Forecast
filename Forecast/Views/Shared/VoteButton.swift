@@ -56,13 +56,11 @@ struct VoteButton: View {
             .padding(.horizontal, 12)
             .padding(.vertical, showSubtitle ? 12 : 10)
             .background(alignment: .leading) {
-                if isVoted {
-                    GeometryReader { geo in
-                        Rectangle()
-                            .fill(fillColor.opacity(0.18))
-                            .frame(width: geo.size.width * option.percent / 100)
-                            .animation(.easeOut(duration: 0.6), value: isVoted)
-                    }
+                GeometryReader { geo in
+                    Rectangle()
+                        .fill(fillColor.opacity(0.18))
+                        .frame(width: isVoted ? (geo.size.width * option.percent / 100) : 0)
+                        .animation(.easeOut(duration: 0.6), value: isVoted)
                 }
             }
         }
