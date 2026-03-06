@@ -208,13 +208,13 @@ struct FeedCardView: View {
             }
             .padding(12)
         }
-        .offset(x: dragOffset + wiggleOffset)
         .background(AppTheme.card)
         .clipShape(RoundedRectangle(cornerRadius: AppTheme.cardRadius))
         .overlay(
             RoundedRectangle(cornerRadius: AppTheme.cardRadius)
                 .strokeBorder(AppTheme.border, lineWidth: 1)
         )
+        .offset(x: dragOffset + wiggleOffset)
     }
 
     @ViewBuilder
