@@ -19,7 +19,19 @@ enum MockData {
             VoteOption(iconName: "bolt.fill", text: "Да, немедленно", subtitle: "Пекин уже предупредил о мерах", percent: 62),
             VoteOption(iconName: "bubble.left.and.bubble.right.fill", text: "Нет, переговоры", subtitle: "Дипломатическое решение", percent: 24),
             VoteOption(iconName: "clock.fill", text: "Позже", subtitle: "Через 1–2 недели", percent: 14)
-        ]
+        ],
+        aiAnalysis: AIAnalysis(
+            summary: "68% за «Да»",
+            pros: [
+            "В 2018–2019 гг. Пекин отвечал в течение 24 ч.",
+            "Госсовет КНР созвал экстренное заседание",
+            "Ограничения на редкозёмы готовы к подписанию"
+            ],
+            cons: [
+            "Идут тайные дипломатические переговоры",
+            "Пекин может предпочесть нетарифное давление"
+            ]
+        )
     )
 
     // MARK: Finance
@@ -36,7 +48,18 @@ enum MockData {
             options: [
                 VoteOption(iconName: "arrow.down.circle.fill", text: "Да, снизит", subtitle: "Экономика замедлится", percent: 44),
                 VoteOption(iconName: "lock.fill", text: "Нет, заморозка", subtitle: "Инфляция держится", percent: 56)
-            ]
+            ],
+            aiAnalysis: AIAnalysis(
+                summary: "54% за «Нет»",
+                pros: [
+                "Core PCE ниже 3% с декабря 2025",
+                "Исторически ФРС снижает через 2 заседания после пика"
+                ],
+                cons: [
+                "Тарифы создают инфляционный риск",
+                "Рынок труда остаётся перегретым"
+                ]
+            )
         ),
         NewsItem(
             title: "Bitcoin Surges Past $128,000 — New All-Time High",
@@ -50,7 +73,19 @@ enum MockData {
             options: [
                 VoteOption(iconName: "arrow.up.circle.fill", text: "Да, побьёт", subtitle: "Бычий тренд продолжается", percent: 58),
                 VoteOption(iconName: "arrow.down.circle.fill", text: "Нет, коррекция", subtitle: "Рынок перегрет", percent: 42)
-            ]
+            ],
+            aiAnalysis: AIAnalysis(
+                summary: "58% за «Да»",
+                pros: [
+                "Post-halving цикл исторически пиковый через 12–18 мес.",
+                "Рекордный приток в ETF: $3.2B за неделю",
+                "Stock-to-flow: цель $180K–$220K"
+                ],
+                cons: [
+                "Индикатор жадности 89/100 — перекупленность",
+                "BTC-доминация вблизи исторического ротационного пика"
+                ]
+            )
         ),
         NewsItem(
             title: "Nvidia Reports $42B Quarter, Raises Guidance Again",
@@ -64,7 +99,19 @@ enum MockData {
             options: [
                 VoteOption(iconName: "chart.line.uptrend.xyaxis", text: "Да, вырастет", subtitle: "ИИ-бум продолжается", percent: 71),
                 VoteOption(iconName: "chart.bar.fill", text: "Нет, плато", subtitle: "Конкуренты давят", percent: 29)
-            ]
+            ],
+            aiAnalysis: AIAnalysis(
+                summary: "71% за «Да»",
+                pros: [
+                "Форвардный P/E 32x — ниже 3-летнего среднего 40x",
+                "Запуск GB300 в Q3 добавит ключевой катализатор",
+                "Гиперскейлеры продолжают наращивать капзатраты"
+                ],
+                cons: [
+                "Тарифы повышают стоимость аппаратного обеспечения",
+                "AMD набирает долю рынка в инференс-нагрузках"
+                ]
+            )
         )
     ]
 
@@ -82,7 +129,18 @@ enum MockData {
             options: [
                 VoteOption(iconName: "hammer.fill", text: "Да, запретят", subtitle: "Брюссель уже изучает", percent: 53),
                 VoteOption(iconName: "cpu", text: "Нет, интегрируют", subtitle: "Регуляторы отстают", percent: 47)
-            ]
+            ],
+            aiAnalysis: AIAnalysis(
+                summary: "51% за «Да»",
+                pros: [
+                "EU AI Act уже требует аудита для топ-моделей",
+                "Расследование GPT-4 ускоряет процесс"
+                ],
+                cons: [
+                "Штрафы за 6 мес. — исторически быстро для ЕС",
+                "Лоббирование крупного бизнеса тормозит исполнение"
+                ]
+            )
         ),
         NewsItem(
             title: "Apple Vision Pro 2 Leaks: 4K Micro-OLED, Half the Weight",
@@ -96,7 +154,18 @@ enum MockData {
             options: [
                 VoteOption(iconName: "star.fill", text: "Да, бестселлер", subtitle: "Цена стала доступнее", percent: 39),
                 VoteOption(iconName: "dollarsign.circle.fill", text: "Нет, нишевый", subtitle: "Всё равно дорого", percent: 61)
-            ]
+            ],
+            aiAnalysis: AIAnalysis(
+                summary: "39% за «Да»",
+                pros: [
+                "Цена снижена vs первого поколения",
+                "Экосистема приложений значительно расширилась"
+                ],
+                cons: [
+                "Любая VR-гарнитура выше $1K остаётся нишевой",
+                "Meta Quest Pro стоит вдвое дешевле"
+                ]
+            )
         ),
         NewsItem(
             title: "Google Achieves Quantum Error Correction Milestone with Willow 2",
@@ -110,7 +179,18 @@ enum MockData {
             options: [
                 VoteOption(iconName: "lock.open.fill", text: "Да, взломают", subtitle: "Темп развития ускоряется", percent: 35),
                 VoteOption(iconName: "shield.fill", text: "Нет, защитятся", subtitle: "Post-quantum крипто готова", percent: 65)
-            ]
+            ],
+            aiAnalysis: AIAnalysis(
+                summary: "35% за «Да»",
+                pros: [
+                "Темп развития квантовых вычислений ускоряется",
+                "Google Willow: 1000 кубитов с рекордной коррекцией"
+                ],
+                cons: [
+                "Post-quantum криптография стандартизирована NIST",
+                "Корпоративный сектор внедряет крипто-агильность"
+                ]
+            )
         )
     ]
 
@@ -128,7 +208,18 @@ enum MockData {
             options: [
                 VoteOption(iconName: "checkmark.seal.fill", text: "Да, единогласно", subtitle: "Давление Трампа объединяет", percent: 67),
                 VoteOption(iconName: "xmark.circle.fill", text: "Нет, блокируют", subtitle: "Венгрия против", percent: 33)
-            ]
+            ],
+            aiAnalysis: AIAnalysis(
+                summary: "67% за «Да»",
+                pros: [
+                "Давление Трампа исторически объединяет ЕС",
+                "Угроза со стороны РФ — сильнейший катализатор"
+                ],
+                cons: [
+                "Венгрия систематически блокирует оборонные инициативы",
+                "Турецкий фактор усложняет консенсус"
+                ]
+            )
         ),
         NewsItem(
             title: "NATO Votes on Georgia & Moldova Accession — Decision Next Week",
@@ -142,7 +233,18 @@ enum MockData {
             options: [
                 VoteOption(iconName: "checkmark.circle.fill", text: "Да, примут", subtitle: "Геополитика требует", percent: 41),
                 VoteOption(iconName: "minus.circle.fill", text: "Нет, отложат", subtitle: "Консенсус не достигнут", percent: 59)
-            ]
+            ],
+            aiAnalysis: AIAnalysis(
+                summary: "41% за «Да»",
+                pros: [
+                "Геополитическое давление создаёт политический импульс",
+                "США и Великобритания выразили поддержку"
+                ],
+                cons: [
+                "Консенсус всех 32 членов исторически труднодостижим",
+                "Выборы в Венгрии и Словакии создают риск вето"
+                ]
+            )
         ),
         NewsItem(
             title: "UN Security Council Votes on Global AI Governance Treaty",
@@ -156,7 +258,18 @@ enum MockData {
             options: [
                 VoteOption(iconName: "doc.fill", text: "Да, примут", subtitle: "США и ЕС лоббируют", percent: 28),
                 VoteOption(iconName: "hand.raised.fill", text: "Нет, вето", subtitle: "Китай и РФ заблокируют", percent: 72)
-            ]
+            ],
+            aiAnalysis: AIAnalysis(
+                summary: "28% за «Да»",
+                pros: [
+                "США и ЕС активно лоббируют договор",
+                "Общественное давление после инцидентов с ИИ растёт"
+                ],
+                cons: [
+                "Китай и Россия обладают правом вето",
+                "КНР продвигает конкурирующую резолюцию"
+                ]
+            )
         )
     ]
 
@@ -174,7 +287,18 @@ enum MockData {
             options: [
                 VoteOption(iconName: "soccerball", text: "Да, «Реал»", subtitle: "Опыт и класс", percent: 55),
                 VoteOption(iconName: "circle.fill", text: "Нет, «Арсенал»", subtitle: "Молодая злость", percent: 45)
-            ]
+            ],
+            aiAnalysis: AIAnalysis(
+                summary: "54% за «Реал»",
+                pros: [
+                "18 побед в 22 домашних еврокубковых матчах",
+                "Опыт финалов ЛЧ: 15 участий за историю клуба"
+                ],
+                cons: [
+                "Виньисиус Жр. под сомнением из-за травмы",
+                "Арсенал не пропустил гола в 3 гостевых матчах"
+                ]
+            )
         ),
         NewsItem(
             title: "F1 2026: New Engine Regs Shake Up the Grid — Ferrari Favourite?",
@@ -188,7 +312,18 @@ enum MockData {
             options: [
                 VoteOption(iconName: "car.fill", text: "Да, «Феррари»", subtitle: "Двигатель под их стиль", percent: 38),
                 VoteOption(iconName: "trophy.fill", text: "Нет, другая", subtitle: "Mercedes или Red Bull", percent: 62)
-            ]
+            ],
+            aiAnalysis: AIAnalysis(
+                summary: "38% за «Феррари»",
+                pros: [
+                "Новый двигатель 2026 идеально соответствует стилю Феррари",
+                "Дуэт Леклер–Хэмилтон — сильнейший за историю команды"
+                ],
+                cons: [
+                "Mercedes и Red Bull разработали кардинальные обновления",
+                "Феррари исторически теряет очки из-за ошибок стратегии"
+                ]
+            )
         ),
         NewsItem(
             title: "NBA Trade Deadline Bombshell: LeBron to Warriors in 3-Team Deal",
@@ -202,7 +337,18 @@ enum MockData {
             options: [
                 VoteOption(iconName: "star.fill", text: "Да, чемпионы", subtitle: "ЛеБрон меняет всё", percent: 61),
                 VoteOption(iconName: "snowflake", text: "Нет, не выйдет", subtitle: "Нужна командная химия", percent: 39)
-            ]
+            ],
+            aiAnalysis: AIAnalysis(
+                summary: "61% за «Да»",
+                pros: [
+                "ЛеБрон кардинально меняет баланс сил на Западе",
+                "Дуэт Карри + ЛеБрон — беспрецедентный в истории НБА"
+                ],
+                cons: [
+                "Командная химия требует времени на построение",
+                "Оклахома и Денвер также являются претендентами"
+                ]
+            )
         )
     ]
 
@@ -220,7 +366,18 @@ enum MockData {
             options: [
                 VoteOption(iconName: "sparkles", text: "Да, жизнь есть", subtitle: "Условия подходящие", percent: 34),
                 VoteOption(iconName: "moon.fill", text: "Нет, стерильно", subtitle: "Радиация и соль", percent: 66)
-            ]
+            ],
+            aiAnalysis: AIAnalysis(
+                summary: "15% за «Да»",
+                pros: [
+                "Условия схожи с земными гипергалинными средами",
+                "Органические молекулы уже найдены марсоходами"
+                ],
+                cons: [
+                "Нужна буровая миссия — не ранее 2035 г.",
+                "Радиация и перхлораты губительны для большинства организмов"
+                ]
+            )
         ),
         NewsItem(
             title: "mRNA Cancer Vaccine Shows 93% Efficacy in Phase 3 Trials",
@@ -234,7 +391,18 @@ enum MockData {
             options: [
                 VoteOption(iconName: "syringe.fill", text: "Да, одобрят", subtitle: "Данные убедительные", percent: 78),
                 VoteOption(iconName: "pause.circle.fill", text: "Нет, задержка", subtitle: "Нужны доп. данные", percent: 22)
-            ]
+            ],
+            aiAnalysis: AIAnalysis(
+                summary: "78% за «Да»",
+                pros: [
+                "Данные Phase 3: снижение смертности на 41%",
+                "FDA предоставило статус прорывной терапии"
+                ],
+                cons: [
+                "Комитет VRBPAC может запросить дополнительные данные",
+                "Прецеденты ускоренного одобрения вызывают споры"
+                ]
+            )
         ),
         NewsItem(
             title: "Scientists Confirm Atlantic Circulation (AMOC) Approaching Collapse Threshold",
@@ -248,7 +416,18 @@ enum MockData {
             options: [
                 VoteOption(iconName: "water.waves", text: "Да, коллапс", subtitle: "Тренды неумолимы", percent: 47),
                 VoteOption(iconName: "leaf.fill", text: "Нет, стабилизируют", subtitle: "Снижение CO2 поможет", percent: 53)
-            ]
+            ],
+            aiAnalysis: AIAnalysis(
+                summary: "47% за «Да»",
+                pros: [
+                "Скорость АМОК на историческом минимуме за 1600 лет",
+                "Таяние льда Гренландии ускоряется быстрее прогнозов"
+                ],
+                cons: [
+                "Снижение выбросов CO2 может стабилизировать течение",
+                "Климатические модели показывают высокую неопределённость"
+                ]
+            )
         )
     ]
 

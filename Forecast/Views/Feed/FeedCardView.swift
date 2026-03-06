@@ -9,6 +9,8 @@ struct FeedCardView: View {
 
     @State private var dragOffset: CGFloat = 0
     @State private var isDragging: Bool = false
+    @State private var showAnalytics: Bool = false
+    @State private var wiggleOffset: CGFloat = 0
 
     private let swipeThreshold: CGFloat = 100
 
@@ -32,7 +34,7 @@ struct FeedCardView: View {
                     guard !isDragging, let article else { return }
                     onCardTap?(article)
                 }
-                .offset(x: dragOffset)
+                .offset(x: dragOffset + wiggleOffset)
                 .rotationEffect(.degrees(Double(dragOffset) / 25 * 8 / swipeThreshold))
                 // High-priority drag cancels tap evaluation
                 .highPriorityGesture(
@@ -61,6 +63,17 @@ struct FeedCardView: View {
                 )
         }
         .padding(.horizontal, 16)
+        .onAppear {
+            guard !isVoted else { return }
+            withAnimation(.easeInOut(duration: 0.15).repeatCount(4, autoreverses: true).delay(1.0)) {
+                wiggleOffset = 10
+            }
+        }
+        .sheet(isPresented: $showAnalytics) {
+            if let analysis = item.aiAnalysis {
+                AnalyticsSheetView(analysis: analysis)
+            }
+        }
     }
 
     // MARK: Card Content
@@ -143,6 +156,34 @@ struct FeedCardView: View {
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(.top, 4)
 
+                // AI analytics badge
+                if let analysis = item.aiAnalysis {
+                    Button { showAnalytics = true } label: {
+                        HStack(spacing: 6) {
+                            Image(systemName: "sparkles")
+                                .font(.caption.bold())
+                                .foregroundStyle(AppTheme.accent)
+                            Text(analysis.summary)
+                                .font(.caption.bold())
+                                .foregroundStyle(AppTheme.accent)
+                                .lineLimit(1)
+                            Spacer(minLength: 0)
+                            Image(systemName: "chevron.right")
+                                .font(.caption2)
+                                .foregroundStyle(AppTheme.textSecondary)
+                        }
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 7)
+                        .background(AppTheme.accent.opacity(0.1))
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .strokeBorder(AppTheme.accent.opacity(0.25), lineWidth: 1)
+                        )
+                    }
+                    .buttonStyle(.plain)
+                }
+
                 // Vote buttons in HStack
                 if item.options.count >= 2 {
                     HStack(spacing: 8) {
@@ -160,14 +201,6 @@ struct FeedCardView: View {
                     }
                 }
 
-                // Swipe hint
-                let left = item.options.first?.text ?? ""
-                let right = item.options.last?.text ?? ""
-                Text("← \(left)  |  \(right) →")
-                    .font(.caption2)
-                    .foregroundStyle(AppTheme.textSecondary)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .opacity(isVoted ? 0 : 1)
             }
             .padding(12)
         }

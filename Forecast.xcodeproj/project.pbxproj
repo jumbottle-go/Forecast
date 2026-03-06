@@ -26,6 +26,7 @@
 		EE0000000000000000000017 /* SwipeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000017 /* SwipeCardView.swift */; };
 		EE0000000000000000000018 /* VoteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000018 /* VoteButton.swift */; };
 		EE0000000000000000000019 /* ProgressSegments.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000019 /* ProgressSegments.swift */; };
+		EE000000000000000000001A /* AnalyticsSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000000000000000000001A /* AnalyticsSheetView.swift */; };
 		EE0000000000000000000020 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000020 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +50,7 @@
 		DD0000000000000000000017 /* SwipeCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeCardView.swift; sourceTree = "<group>"; };
 		DD0000000000000000000018 /* VoteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteButton.swift; sourceTree = "<group>"; };
 		DD0000000000000000000019 /* ProgressSegments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressSegments.swift; sourceTree = "<group>"; };
+		DD000000000000000000001A /* AnalyticsSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsSheetView.swift; sourceTree = "<group>"; };
 		DD0000000000000000000020 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DD0000000000000000000021 /* Forecast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Forecast.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -175,6 +177,7 @@
 			children = (
 				DD0000000000000000000018 /* VoteButton.swift */,
 				DD0000000000000000000019 /* ProgressSegments.swift */,
+				DD000000000000000000001A /* AnalyticsSheetView.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -267,6 +270,7 @@
 				EE0000000000000000000017 /* SwipeCardView.swift in Sources */,
 				EE0000000000000000000018 /* VoteButton.swift in Sources */,
 				EE0000000000000000000019 /* ProgressSegments.swift in Sources */,
+				EE000000000000000000001A /* AnalyticsSheetView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

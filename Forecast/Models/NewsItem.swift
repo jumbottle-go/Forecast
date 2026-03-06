@@ -1,5 +1,11 @@
 import Foundation
 
+struct AIAnalysis: Hashable {
+    let summary: String
+    let pros: [String]
+    let cons: [String]
+}
+
 enum Category: String, CaseIterable, Identifiable, Hashable {
     case forYou   = "For You"
     case finance  = "Finance"
@@ -50,6 +56,7 @@ struct NewsItem: Identifiable, Hashable {
     let isBreaking: Bool
     let question: String
     let options: [VoteOption]
+    let aiAnalysis: AIAnalysis?
 
     init(
         id: UUID = UUID(),
@@ -62,7 +69,8 @@ struct NewsItem: Identifiable, Hashable {
         category: Category,
         isBreaking: Bool = false,
         question: String,
-        options: [VoteOption]
+        options: [VoteOption],
+        aiAnalysis: AIAnalysis? = nil
     ) {
         self.id         = id
         self.title      = title
@@ -75,6 +83,7 @@ struct NewsItem: Identifiable, Hashable {
         self.isBreaking = isBreaking
         self.question   = question
         self.options    = options
+        self.aiAnalysis = aiAnalysis
     }
 
     static func == (lhs: NewsItem, rhs: NewsItem) -> Bool { lhs.id == rhs.id }
