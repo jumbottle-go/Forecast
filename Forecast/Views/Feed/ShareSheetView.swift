@@ -48,7 +48,7 @@ struct ShareSheetView: View {
                                 .font(.caption)
                                 .foregroundStyle(AppTheme.textSecondary)
                             if let option = chosenOption {
-                                Text("\(option.emoji) \(option.text)")
+                                Label(option.text, systemImage: option.iconName)
                                     .font(.subheadline.bold())
                                     .foregroundStyle(AppTheme.accent)
                             }

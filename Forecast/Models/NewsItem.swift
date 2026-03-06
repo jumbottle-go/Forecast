@@ -24,14 +24,14 @@ enum Category: String, CaseIterable, Identifiable, Hashable {
 
 struct VoteOption: Identifiable, Hashable {
     let id: UUID
-    let emoji: String
+    let iconName: String
     let text: String
     let subtitle: String
     var percent: Double
 
-    init(id: UUID = UUID(), emoji: String, text: String, subtitle: String, percent: Double) {
+    init(id: UUID = UUID(), iconName: String, text: String, subtitle: String, percent: Double) {
         self.id       = id
-        self.emoji    = emoji
+        self.iconName = iconName
         self.text     = text
         self.subtitle = subtitle
         self.percent  = percent

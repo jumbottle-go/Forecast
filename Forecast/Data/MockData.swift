@@ -16,9 +16,9 @@ enum MockData {
         isBreaking: true,
         question: "Will China retaliate with counter-tariffs within 48 hours?",
         options: [
-            VoteOption(emoji: "🔥", text: "Да, немедленно", subtitle: "Пекин уже предупредил о мерах", percent: 62),
-            VoteOption(emoji: "🕊️", text: "Нет, переговоры", subtitle: "Дипломатическое решение", percent: 24),
-            VoteOption(emoji: "⏳", text: "Позже", subtitle: "Через 1–2 недели", percent: 14)
+            VoteOption(iconName: "bolt.fill", text: "Да, немедленно", subtitle: "Пекин уже предупредил о мерах", percent: 62),
+            VoteOption(iconName: "bubble.left.and.bubble.right.fill", text: "Нет, переговоры", subtitle: "Дипломатическое решение", percent: 24),
+            VoteOption(iconName: "clock.fill", text: "Позже", subtitle: "Через 1–2 недели", percent: 14)
         ]
     )
 
@@ -34,8 +34,8 @@ enum MockData {
             category: .finance,
             question: "Will the Fed cut rates before Q3 2026?",
             options: [
-                VoteOption(emoji: "✂️", text: "Да, снизит", subtitle: "Экономика замедлится", percent: 44),
-                VoteOption(emoji: "🔒", text: "Нет, заморозка", subtitle: "Инфляция держится", percent: 56)
+                VoteOption(iconName: "arrow.down.circle.fill", text: "Да, снизит", subtitle: "Экономика замедлится", percent: 44),
+                VoteOption(iconName: "lock.fill", text: "Нет, заморозка", subtitle: "Инфляция держится", percent: 56)
             ]
         ),
         NewsItem(
@@ -48,8 +48,8 @@ enum MockData {
             category: .finance,
             question: "Will Bitcoin reach $150,000 within 60 days?",
             options: [
-                VoteOption(emoji: "🚀", text: "Да, побьёт", subtitle: "Бычий тренд продолжается", percent: 58),
-                VoteOption(emoji: "📉", text: "Нет, коррекция", subtitle: "Рынок перегрет", percent: 42)
+                VoteOption(iconName: "arrow.up.circle.fill", text: "Да, побьёт", subtitle: "Бычий тренд продолжается", percent: 58),
+                VoteOption(iconName: "arrow.down.circle.fill", text: "Нет, коррекция", subtitle: "Рынок перегрет", percent: 42)
             ]
         ),
         NewsItem(
@@ -62,8 +62,8 @@ enum MockData {
             category: .finance,
             question: "Will NVDA stock hit $200 by end of 2026?",
             options: [
-                VoteOption(emoji: "📈", text: "Да, вырастет", subtitle: "ИИ-бум продолжается", percent: 71),
-                VoteOption(emoji: "📊", text: "Нет, плато", subtitle: "Конкуренты давят", percent: 29)
+                VoteOption(iconName: "chart.line.uptrend.xyaxis", text: "Да, вырастет", subtitle: "ИИ-бум продолжается", percent: 71),
+                VoteOption(iconName: "chart.bar.fill", text: "Нет, плато", subtitle: "Конкуренты давят", percent: 29)
             ]
         )
     ]
@@ -80,8 +80,8 @@ enum MockData {
             category: .tech,
             question: "Will GPT-5 trigger major AI regulation in the EU within 6 months?",
             options: [
-                VoteOption(emoji: "⚖️", text: "Да, запретят", subtitle: "Брюссель уже изучает", percent: 53),
-                VoteOption(emoji: "🤖", text: "Нет, интегрируют", subtitle: "Регуляторы отстают", percent: 47)
+                VoteOption(iconName: "hammer.fill", text: "Да, запретят", subtitle: "Брюссель уже изучает", percent: 53),
+                VoteOption(iconName: "cpu", text: "Нет, интегрируют", subtitle: "Регуляторы отстают", percent: 47)
             ]
         ),
         NewsItem(
@@ -94,8 +94,8 @@ enum MockData {
             category: .tech,
             question: "Will Vision Pro 2 sell 1 million units in its first year?",
             options: [
-                VoteOption(emoji: "🥽", text: "Да, бестселлер", subtitle: "Цена стала доступнее", percent: 39),
-                VoteOption(emoji: "💸", text: "Нет, нишевый", subtitle: "Всё равно дорого", percent: 61)
+                VoteOption(iconName: "star.fill", text: "Да, бестселлер", subtitle: "Цена стала доступнее", percent: 39),
+                VoteOption(iconName: "dollarsign.circle.fill", text: "Нет, нишевый", subtitle: "Всё равно дорого", percent: 61)
             ]
         ),
         NewsItem(
@@ -108,8 +108,8 @@ enum MockData {
             category: .tech,
             question: "Will quantum computing make current encryption obsolete by 2030?",
             options: [
-                VoteOption(emoji: "🔐", text: "Да, взломают", subtitle: "Темп развития ускоряется", percent: 35),
-                VoteOption(emoji: "🛡️", text: "Нет, защитятся", subtitle: "Post-quantum крипто готова", percent: 65)
+                VoteOption(iconName: "lock.open.fill", text: "Да, взломают", subtitle: "Темп развития ускоряется", percent: 35),
+                VoteOption(iconName: "shield.fill", text: "Нет, защитятся", subtitle: "Post-quantum крипто готова", percent: 65)
             ]
         )
     ]
@@ -126,8 +126,8 @@ enum MockData {
             category: .politics,
             question: "Will the EU defense fund be ratified by all 27 members?",
             options: [
-                VoteOption(emoji: "🇪🇺", text: "Да, единогласно", subtitle: "Давление Трампа объединяет", percent: 67),
-                VoteOption(emoji: "❌", text: "Нет, блокируют", subtitle: "Венгрия против", percent: 33)
+                VoteOption(iconName: "checkmark.seal.fill", text: "Да, единогласно", subtitle: "Давление Трампа объединяет", percent: 67),
+                VoteOption(iconName: "xmark.circle.fill", text: "Нет, блокируют", subtitle: "Венгрия против", percent: 33)
             ]
         ),
         NewsItem(
@@ -140,8 +140,8 @@ enum MockData {
             category: .politics,
             question: "Will NATO accept Georgia and Moldova as members in 2026?",
             options: [
-                VoteOption(emoji: "✅", text: "Да, примут", subtitle: "Геополитика требует", percent: 41),
-                VoteOption(emoji: "🚫", text: "Нет, отложат", subtitle: "Консенсус не достигнут", percent: 59)
+                VoteOption(iconName: "checkmark.circle.fill", text: "Да, примут", subtitle: "Геополитика требует", percent: 41),
+                VoteOption(iconName: "minus.circle.fill", text: "Нет, отложат", subtitle: "Консенсус не достигнут", percent: 59)
             ]
         ),
         NewsItem(
@@ -154,8 +154,8 @@ enum MockData {
             category: .politics,
             question: "Will the UN AI treaty pass the Security Council vote?",
             options: [
-                VoteOption(emoji: "📋", text: "Да, примут", subtitle: "США и ЕС лоббируют", percent: 28),
-                VoteOption(emoji: "🗳️", text: "Нет, вето", subtitle: "Китай и РФ заблокируют", percent: 72)
+                VoteOption(iconName: "doc.fill", text: "Да, примут", subtitle: "США и ЕС лоббируют", percent: 28),
+                VoteOption(iconName: "hand.raised.fill", text: "Нет, вето", subtitle: "Китай и РФ заблокируют", percent: 72)
             ]
         )
     ]
@@ -172,8 +172,8 @@ enum MockData {
             category: .sports,
             question: "Will Real Madrid reach the Champions League final?",
             options: [
-                VoteOption(emoji: "⚽", text: "Да, «Реал»", subtitle: "Опыт и класс", percent: 55),
-                VoteOption(emoji: "🔴", text: "Нет, «Арсенал»", subtitle: "Молодая злость", percent: 45)
+                VoteOption(iconName: "soccerball", text: "Да, «Реал»", subtitle: "Опыт и класс", percent: 55),
+                VoteOption(iconName: "circle.fill", text: "Нет, «Арсенал»", subtitle: "Молодая злость", percent: 45)
             ]
         ),
         NewsItem(
@@ -186,8 +186,8 @@ enum MockData {
             category: .sports,
             question: "Will Ferrari win the 2026 F1 Constructors' Championship?",
             options: [
-                VoteOption(emoji: "🏎️", text: "Да, «Феррари»", subtitle: "Двигатель под их стиль", percent: 38),
-                VoteOption(emoji: "🏆", text: "Нет, другая", subtitle: "Mercedes или Red Bull", percent: 62)
+                VoteOption(iconName: "car.fill", text: "Да, «Феррари»", subtitle: "Двигатель под их стиль", percent: 38),
+                VoteOption(iconName: "trophy.fill", text: "Нет, другая", subtitle: "Mercedes или Red Bull", percent: 62)
             ]
         ),
         NewsItem(
@@ -200,8 +200,8 @@ enum MockData {
             category: .sports,
             question: "Will the Warriors win the 2026 NBA Championship with LeBron?",
             options: [
-                VoteOption(emoji: "🏀", text: "Да, чемпионы", subtitle: "ЛеБрон меняет всё", percent: 61),
-                VoteOption(emoji: "❄️", text: "Нет, не выйдет", subtitle: "Нужна командная химия", percent: 39)
+                VoteOption(iconName: "star.fill", text: "Да, чемпионы", subtitle: "ЛеБрон меняет всё", percent: 61),
+                VoteOption(iconName: "snowflake", text: "Нет, не выйдет", subtitle: "Нужна командная химия", percent: 39)
             ]
         )
     ]
@@ -218,8 +218,8 @@ enum MockData {
             category: .science,
             question: "Will evidence of microbial life be found in the Martian water?",
             options: [
-                VoteOption(emoji: "🦠", text: "Да, жизнь есть", subtitle: "Условия подходящие", percent: 34),
-                VoteOption(emoji: "🌑", text: "Нет, стерильно", subtitle: "Радиация и соль", percent: 66)
+                VoteOption(iconName: "sparkles", text: "Да, жизнь есть", subtitle: "Условия подходящие", percent: 34),
+                VoteOption(iconName: "moon.fill", text: "Нет, стерильно", subtitle: "Радиация и соль", percent: 66)
             ]
         ),
         NewsItem(
@@ -232,8 +232,8 @@ enum MockData {
             category: .science,
             question: "Will this mRNA vaccine receive FDA approval in 2026?",
             options: [
-                VoteOption(emoji: "💉", text: "Да, одобрят", subtitle: "Данные убедительные", percent: 78),
-                VoteOption(emoji: "⏸️", text: "Нет, задержка", subtitle: "Нужны доп. данные", percent: 22)
+                VoteOption(iconName: "syringe.fill", text: "Да, одобрят", subtitle: "Данные убедительные", percent: 78),
+                VoteOption(iconName: "pause.circle.fill", text: "Нет, задержка", subtitle: "Нужны доп. данные", percent: 22)
             ]
         ),
         NewsItem(
@@ -246,8 +246,8 @@ enum MockData {
             category: .science,
             question: "Will AMOC fully collapse before 2100?",
             options: [
-                VoteOption(emoji: "🌊", text: "Да, коллапс", subtitle: "Тренды неумолимы", percent: 47),
-                VoteOption(emoji: "♻️", text: "Нет, стабилизируют", subtitle: "Снижение CO2 поможет", percent: 53)
+                VoteOption(iconName: "water.waves", text: "Да, коллапс", subtitle: "Тренды неумолимы", percent: 47),
+                VoteOption(iconName: "leaf.fill", text: "Нет, стабилизируют", subtitle: "Снижение CO2 поможет", percent: 53)
             ]
         )
     ]

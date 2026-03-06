@@ -28,15 +28,14 @@ struct FeedCardView: View {
 
             // Card
             cardContent
-                .offset(x: dragOffset)
-                .rotationEffect(.degrees(Double(dragOffset) / 25 * 8 / swipeThreshold))
-                // Tap on non-button area → notify parent to navigate
                 .onTapGesture {
                     guard !isDragging, let article else { return }
                     onCardTap?(article)
                 }
-                // Horizontal drag → swipe vote; vertical drag passes to ScrollView
-                .simultaneousGesture(
+                .offset(x: dragOffset)
+                .rotationEffect(.degrees(Double(dragOffset) / 25 * 8 / swipeThreshold))
+                // High-priority drag cancels tap evaluation
+                .highPriorityGesture(
                     DragGesture(minimumDistance: 20)
                         .onChanged { value in
                             guard !isVoted else { return }
@@ -179,7 +178,7 @@ struct FeedCardView: View {
         if let option {
             let opacity = min(abs(dragOffset) / swipeThreshold, 1.0)
             let show = isLeft ? dragOffset < -10 : dragOffset > 10
-            Text("\(option.emoji) \(option.text)")
+            Label(option.text, systemImage: option.iconName)
                 .font(.subheadline.bold())
                 .foregroundStyle(isLeft ? AppTheme.danger : AppTheme.success)
                 .opacity(show ? Double(opacity) : 0)

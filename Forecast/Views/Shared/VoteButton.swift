@@ -34,13 +34,17 @@ struct VoteButton: View {
 
                 HStack(spacing: 8) {
                     VStack(alignment: .leading, spacing: 2) {
-                        Text(verbatim: "\(option.emoji)  \(option.text)")
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-                            .foregroundStyle(textColor)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.72)
-                            .allowsTightening(true)
+                        HStack(spacing: 6) {
+                            Image(systemName: option.iconName)
+                                .foregroundStyle(textColor)
+                            Text(option.text)
+                                .fontWeight(.semibold)
+                                .foregroundStyle(textColor)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.72)
+                                .allowsTightening(true)
+                        }
+                        .font(.subheadline)
 
                         if showSubtitle {
                             Text(option.subtitle)

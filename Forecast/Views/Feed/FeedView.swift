@@ -32,6 +32,7 @@ struct FeedView: View {
                                 }
                             }
                             .id(tabsAnchor)
+                            .zIndex(1)
 
                             // Feed cards
                             ForEach(viewModel.filteredNews) { item in
