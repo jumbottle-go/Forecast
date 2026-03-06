@@ -91,7 +91,6 @@ struct FeedCardView: View {
                 default: Rectangle().fill(AppTheme.border)
                 }
             }
-            .frame(maxWidth: .infinity)
             .clipped()
 
             // Gradient overlay: clear top → black bottom 60%
@@ -191,7 +190,7 @@ struct FeedCardView: View {
             }
             .padding(14)
         }
-        .frame(minHeight: 360)
+        .frame(maxWidth: .infinity, minHeight: 360)
         .clipShape(RoundedRectangle(cornerRadius: AppTheme.cardRadius))
         .overlay(
             RoundedRectangle(cornerRadius: AppTheme.cardRadius)

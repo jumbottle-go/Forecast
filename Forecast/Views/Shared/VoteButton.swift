@@ -24,8 +24,38 @@ struct VoteButton: View {
 
     var body: some View {
         Button(action: onTap) {
-            ZStack(alignment: .leading) {
-                // fill bar (voted state)
+            HStack(spacing: 8) {
+                VStack(alignment: .leading, spacing: 2) {
+                    HStack(spacing: 6) {
+                        Image(systemName: option.iconName)
+                            .foregroundStyle(textColor)
+                        Text(option.text)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(textColor)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.72)
+                            .allowsTightening(true)
+                    }
+                    .font(.subheadline)
+
+                    if showSubtitle {
+                        Text(option.subtitle)
+                            .font(.caption)
+                            .foregroundStyle(AppTheme.textSecondary)
+                            .lineLimit(1)
+                    }
+                }
+
+                Spacer(minLength: 0)
+
+                Text("\(Int(option.percent))%")
+                    .font(.subheadline.bold())
+                    .foregroundStyle(fillColor)
+                    .opacity(isVoted ? 1 : 0)
+            }
+            .padding(.horizontal, 12)
+            .padding(.vertical, showSubtitle ? 12 : 10)
+            .background(alignment: .leading) {
                 if isVoted {
                     GeometryReader { geo in
                         Rectangle()
@@ -34,38 +64,6 @@ struct VoteButton: View {
                             .animation(.easeOut(duration: 0.6), value: isVoted)
                     }
                 }
-
-                HStack(spacing: 8) {
-                    VStack(alignment: .leading, spacing: 2) {
-                        HStack(spacing: 6) {
-                            Image(systemName: option.iconName)
-                                .foregroundStyle(textColor)
-                            Text(option.text)
-                                .fontWeight(.semibold)
-                                .foregroundStyle(textColor)
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.72)
-                                .allowsTightening(true)
-                        }
-                        .font(.subheadline)
-
-                        if showSubtitle {
-                            Text(option.subtitle)
-                                .font(.caption)
-                                .foregroundStyle(AppTheme.textSecondary)
-                                .lineLimit(1)
-                        }
-                    }
-
-                    Spacer(minLength: 0)
-
-                    Text("\(Int(option.percent))%")
-                        .font(.subheadline.bold())
-                        .foregroundStyle(fillColor)
-                        .opacity(isVoted ? 1 : 0)
-                }
-                .padding(.horizontal, 12)
-                .padding(.vertical, showSubtitle ? 12 : 10)
             }
         }
         .buttonStyle(.plain)
