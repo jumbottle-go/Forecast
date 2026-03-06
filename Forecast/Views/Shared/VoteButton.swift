@@ -56,12 +56,10 @@ struct VoteButton: View {
 
                     Spacer(minLength: 0)
 
-                    if isVoted {
-                        Text("\(Int(option.percent))%")
-                            .font(.subheadline.bold())
-                            .foregroundStyle(fillColor)
-                            .transition(.opacity.combined(with: .scale))
-                    }
+                    Text("\(Int(option.percent))%")
+                        .font(.subheadline.bold())
+                        .foregroundStyle(fillColor)
+                        .opacity(isVoted ? 1 : 0)
                 }
                 .padding(.horizontal, 12)
                 .padding(.vertical, showSubtitle ? 12 : 10)

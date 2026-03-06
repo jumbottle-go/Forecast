@@ -87,7 +87,7 @@ struct FeedCardView: View {
                 )
                 .frame(height: 110)
 
-                // Category chip — pinned top-left
+                // Category chip (top-left) + vote count chip (top-right)
                 VStack {
                     HStack {
                         HStack(spacing: 4) {
@@ -102,6 +102,17 @@ struct FeedCardView: View {
                         .background(.black.opacity(0.4))
                         .clipShape(RoundedRectangle(cornerRadius: 6))
                         Spacer()
+                        HStack(spacing: 4) {
+                            Image(systemName: "person.2.fill")
+                                .font(.caption2.bold())
+                            Text(item.votesCount.formatted())
+                                .font(.caption.bold())
+                        }
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                        .background(.black.opacity(0.4))
+                        .clipShape(RoundedRectangle(cornerRadius: 6))
                     }
                     .padding(8)
                     Spacer()
@@ -124,23 +135,12 @@ struct FeedCardView: View {
 
             // Below image
             VStack(alignment: .leading, spacing: 10) {
-                // Meta
-                HStack(spacing: 4) {
-                    Text(item.source)
-                    Text("·")
-                    Text(item.timeAgo)
-                    Text("·")
-                    Image(systemName: "person.2.fill")
-                    Text("\(item.votesCount.formatted())")
-                }
-                .font(.caption)
-                .foregroundStyle(AppTheme.textSecondary)
-
                 // Prediction question
                 Text(item.question)
                     .font(.subheadline.bold())
                     .foregroundStyle(AppTheme.textPrimary)
                     .lineLimit(3)
+                    .fixedSize(horizontal: false, vertical: true)
                     .padding(.top, 4)
 
                 // Vote buttons in HStack
@@ -161,14 +161,13 @@ struct FeedCardView: View {
                 }
 
                 // Swipe hint
-                if !isVoted {
-                    let left = item.options.first?.text ?? ""
-                    let right = item.options.last?.text ?? ""
-                    Text("← \(left)  |  \(right) →")
-                        .font(.caption2)
-                        .foregroundStyle(AppTheme.textSecondary)
-                        .frame(maxWidth: .infinity, alignment: .center)
-                }
+                let left = item.options.first?.text ?? ""
+                let right = item.options.last?.text ?? ""
+                Text("← \(left)  |  \(right) →")
+                    .font(.caption2)
+                    .foregroundStyle(AppTheme.textSecondary)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .opacity(isVoted ? 0 : 1)
             }
             .padding(12)
         }
