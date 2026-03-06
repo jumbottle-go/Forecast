@@ -1,0 +1,156 @@
+
+You are a senior iOS developer. Build "Forecast" — an MVP social prediction app in SwiftUI. Users read news, predict outcomes, earn expertise. Mock data only, no backend.
+
+Stack
+Swift, SwiftUI, iOS 17+, MVVM
+SF Symbols for icons, AsyncImage with Unsplash URLs
+No external dependencies
+
+File Structure
+
+Forecast/
+├── ForecastApp.swift
+├── Models/
+│   ├── NewsItem.swift          # id, title, subtitle, imageURL, source, timeAgo, votesCount, category, isBreaking, question, options(emoji/text/percent)
+│   ├── PredictionCard.swift    # id, question, imageURL, deadline, yesPercent, noPercent, totalVotes, aiAnalysis
+│   └── Article.swift           # id, newsItem, keyFacts, bodyParagraphs(text+inlineImages), predictionQuestions
+├── Data/
+│   └── MockData.swift          # All mock data. 1 breaking hero + 15+ news (3+ per category). Realistic topics: geopolitics, AI, finance, sports, science
+├── ViewModels/
+│   ├── FeedViewModel.swift
+│   ├── ArticleViewModel.swift
+│   └── DeckViewModel.swift
+├── Views/
+│   ├── Feed/
+│   │   ├── FeedView.swift
+│   │   ├── HeroCardView.swift
+│   │   ├── CategoryTabsView.swift
+│   │   ├── FeedCardView.swift
+│   │   └── ShareSheetView.swift
+│   ├── Article/
+│   │   └── ArticleView.swift
+│   ├── Deck/
+│   │   ├── DeckView.swift
+│   │   └── SwipeCardView.swift
+│   └── Shared/
+│       ├── VoteButton.swift
+│       └── ProgressSegments.swift
+└── Theme/
+└── AppTheme.swift
+
+Design Tokens (AppTheme.swift)
+
+Colors: bg #080B12, card #0C1018, border #1F2937, textPrimary #E2E8F0, textSecondary #64748B, accent #6366F1, breaking/danger #EF4444, success #22C55E
+Radii: cards 20, buttons 14, chips 10
+Typography: hero title .title2.bold, card title .headline, body .subheadline, caption .caption+secondary
+
+Screen 1: Feed (FeedView)
+
+ScrollView → Hero → CategoryTabs → LazyVStack of cards.
+
+Hero (HeroCardView)
+Full-width image 200pt, bottom gradient overlay (black 0.7→clear)
+If isBreaking: red "BREAKING" badge top-left with pulsating white dot (infinite opacity 0.3↔1.0). Else: category tag
+Title: white bold, lineLimit(2), over image bottom
+Meta line: source · time · 🗳 X votes — secondary color
+Prediction question — white .headline
+2-3 vote buttons in VStack: emoji + text + subtitle. Card bg, border, 14pt radius
+"Learn more →" link in accent
+
+Hero Vote Flow
+
+1. Tap option → 0.6s ease-out animation: selected gets accent border + accent bg 0.15 opacity, all buttons show fill bar + percent text, unselected dim
+2. After 0.6s → present ShareSheetView as .sheet
+
+ShareSheet (ONLY after Hero vote)
+Title with icon + "Share your prediction!"
+Preview widget: app logo + chosen answer + topic
+Comment TextEditor, 280 char limit with counter
+Share buttons HStack (circles): X, Telegram, WhatsApp, Copy (SF Symbols)
+"Skip" button — secondary text
+Any tap dismisses sheet
+
+CategoryTabs
+Horizontal ScrollView, chip style: SF Symbol + text
+Categories: For You (default), Finance, Tech, Politics, Sports, Science
+Active: white bg + black text. Inactive: card bg + secondary text
+On switch: ScrollViewReader scrolls page so tabs anchor to top, animated 0.3s easeInOut
+
+Feed Cards (FeedCardView) — 3 states
+
+DEFAULT:
+Image ~100pt full-width with gradient
+Category tag chip over image top-left
+Title over image bottom — white bold
+Meta: source + time + votes
+Two vote buttons in HStack
+Swipe hint: "← Option1 | Option2 →" small secondary text
+
+SWIPING:
+Card follows finger horizontally + rotation3DEffect max ±8°
+Behind card: option labels visible left/right
+
+VOTED (after tap or swipe):
+Card stays in place (no collapse, no removal)
+Selected option highlighted accent
+Percents animate in 0.6s
+Page scroll unchanged
+Tap card (not vote button) → NavigationLink to ArticleView.
+
+Screen 2: Article (ArticleView)
+
+Custom back button (pill: semi-transparent + blur + "←")
+Header: image 200pt + gradient + category tag + title overlay + source/time
+Key facts: horizontal ScrollView of chips (emoji + text), card bg
+Article body: paragraphs + inline images (16pt radius, border, caption below)
+Bottom "Make Prediction" block:
+Gradient bg (accent 0.1 → card)
+🎯 icon, title, "X questions" subtitle
+Numbered preview of 3 questions
+Full-width CTA button "Start Predictions" — accent bg, white text, 14pt radius
+Tap → NavigationLink to DeckView
+
+Screen 3: Deck (DeckView)
+
+ProgressSegments top bar: segments = card count. Filled = accent, empty = border
+"✕ Close" button top-right → dismiss to root
+ZStack of cards center screen. Top card interactive, others scaled down + offset (stack effect)
+
+SwipeCard (~70% screen height)
+Top 45%: AsyncImage, top corners rounded 20pt, gradient overlay
+Bottom 55%: card bg, padded
+Deadline: red badge (clock icon + "X days left")
+Question: white .title3.bold
+Vote bar: horizontal — green portion (Yes%) + red (No%). Labels above: "Yes X%" left, "No Y%" right
+"🗳 X votes" secondary text
+Card border + 20pt radius
+
+Swipe Gesture
+DragGesture: offset + rotation max ±12°
+"YES" overlay: green, top-right, appears at offset.x > 20, opacity proportional, rotate +10°
+"NO" overlay: red, top-left, appears at offset.x < -20, opacity proportional, rotate -10°
+Threshold: |offset.x| > 120pt → card flies off, next card becomes active, progress updates
+Below threshold: spring back
+Hint below card: "← No | swipe | Yes →"
+
+AI Analytics
+Button "🤖 AI Analytics" below card — card bg, accent text
+Tap toggles panel with mock analysis (2-3 paragraphs: historical context, key factors, probability estimate)
+
+After Last Card
+"Done! 🎉" screen with prediction count
+"Back to Feed" button → popToRoot
+
+Screen 4: TabView
+
+4 tabs: Feed (newspaper) WORKS | Explore (safari) STUB | Leaderboard (trophy) STUB | Profile (person.circle) STUB
+Dark tab bar, accent selected, secondary unselected.
+
+Key Rules
+
+1. Share sheet triggers ONLY on Hero vote, never on feed cards
+2. Feed cards stay in place after vote — no collapse, no scroll change
+3. Category tabs: min 3 news each
+4. All animations use withAnimation
+5. Dark theme everywhere, no light mode
+6. Russian UI text for labels where user-facing (кнопки, заголовки секций), English for mock news content

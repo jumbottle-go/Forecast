@@ -1,0 +1,96 @@
+import SwiftUI
+
+struct VoteButton: View {
+    let option: VoteOption
+    let isSelected: Bool
+    let isVoted: Bool
+    let showSubtitle: Bool
+    let onTap: () -> Void
+
+    init(option: VoteOption,
+         isSelected: Bool,
+         isVoted: Bool,
+         showSubtitle: Bool = false,
+         onTap: @escaping () -> Void) {
+        self.option      = option
+        self.isSelected  = isSelected
+        self.isVoted     = isVoted
+        self.showSubtitle = showSubtitle
+        self.onTap       = onTap
+    }
+
+    var body: some View {
+        Button(action: onTap) {
+            ZStack(alignment: .leading) {
+                // fill bar (voted state)
+                if isVoted {
+                    GeometryReader { geo in
+                        Rectangle()
+                            .fill(fillColor.opacity(0.18))
+                            .frame(width: geo.size.width * option.percent / 100)
+                            .animation(.easeOut(duration: 0.6), value: isVoted)
+                    }
+                }
+
+                HStack(spacing: 8) {
+                    Text(option.emoji)
+                        .font(showSubtitle ? .title3 : .subheadline)
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(option.text)
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(textColor)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.75)
+                            .allowsTightening(true)
+
+                        if showSubtitle {
+                            Text(option.subtitle)
+                                .font(.caption)
+                                .foregroundStyle(AppTheme.textSecondary)
+                                .lineLimit(1)
+                        }
+                    }
+
+                    Spacer(minLength: 0)
+
+                    if isVoted {
+                        Text("\(Int(option.percent))%")
+                            .font(.subheadline.bold())
+                            .foregroundStyle(fillColor)
+                            .transition(.opacity.combined(with: .scale))
+                    }
+                }
+                .padding(.horizontal, 10)
+                .padding(.vertical, showSubtitle ? 12 : 10)
+            }
+        }
+        .buttonStyle(.plain)
+        .background(buttonBackground)
+        .clipShape(RoundedRectangle(cornerRadius: AppTheme.buttonRadius))
+        .overlay(
+            RoundedRectangle(cornerRadius: AppTheme.buttonRadius)
+                .strokeBorder(borderColor, lineWidth: isSelected ? 1.5 : 1)
+        )
+        .opacity(isVoted && !isSelected ? 0.55 : 1.0)
+        .animation(.easeOut(duration: 0.3), value: isSelected)
+        .animation(.easeOut(duration: 0.3), value: isVoted)
+    }
+
+    private var fillColor: Color {
+        isSelected ? AppTheme.accent : AppTheme.textSecondary
+    }
+
+    private var textColor: Color {
+        isSelected ? AppTheme.accent : AppTheme.textPrimary
+    }
+
+    private var borderColor: Color {
+        isSelected ? AppTheme.accent : AppTheme.border
+    }
+
+    private var buttonBackground: Color {
+        isSelected ? AppTheme.accent.opacity(0.15) : AppTheme.card
+    }
+}

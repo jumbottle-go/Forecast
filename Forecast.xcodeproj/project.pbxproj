@@ -1,0 +1,468 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 60;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		EE0000000000000000000001 /* ForecastApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000001 /* ForecastApp.swift */; };
+		EE0000000000000000000002 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000002 /* AppTheme.swift */; };
+		EE0000000000000000000003 /* NewsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000003 /* NewsItem.swift */; };
+		EE0000000000000000000004 /* PredictionCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000004 /* PredictionCard.swift */; };
+		EE0000000000000000000005 /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000005 /* Article.swift */; };
+		EE0000000000000000000006 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000006 /* MockData.swift */; };
+		EE0000000000000000000007 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000007 /* FeedViewModel.swift */; };
+		EE0000000000000000000008 /* ArticleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000008 /* ArticleViewModel.swift */; };
+		EE0000000000000000000009 /* DeckViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000009 /* DeckViewModel.swift */; };
+		EE0000000000000000000010 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000010 /* FeedView.swift */; };
+		EE0000000000000000000011 /* HeroCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000011 /* HeroCardView.swift */; };
+		EE0000000000000000000012 /* CategoryTabsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000012 /* CategoryTabsView.swift */; };
+		EE0000000000000000000013 /* FeedCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000013 /* FeedCardView.swift */; };
+		EE0000000000000000000014 /* ShareSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000014 /* ShareSheetView.swift */; };
+		EE0000000000000000000015 /* ArticleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000015 /* ArticleView.swift */; };
+		EE0000000000000000000016 /* DeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000016 /* DeckView.swift */; };
+		EE0000000000000000000017 /* SwipeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000017 /* SwipeCardView.swift */; };
+		EE0000000000000000000018 /* VoteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000018 /* VoteButton.swift */; };
+		EE0000000000000000000019 /* ProgressSegments.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000019 /* ProgressSegments.swift */; };
+		EE0000000000000000000020 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000020 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		DD0000000000000000000001 /* ForecastApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastApp.swift; sourceTree = "<group>"; };
+		DD0000000000000000000002 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		DD0000000000000000000003 /* NewsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsItem.swift; sourceTree = "<group>"; };
+		DD0000000000000000000004 /* PredictionCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredictionCard.swift; sourceTree = "<group>"; };
+		DD0000000000000000000005 /* Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Article.swift; sourceTree = "<group>"; };
+		DD0000000000000000000006 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
+		DD0000000000000000000007 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
+		DD0000000000000000000008 /* ArticleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleViewModel.swift; sourceTree = "<group>"; };
+		DD0000000000000000000009 /* DeckViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckViewModel.swift; sourceTree = "<group>"; };
+		DD0000000000000000000010 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
+		DD0000000000000000000011 /* HeroCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroCardView.swift; sourceTree = "<group>"; };
+		DD0000000000000000000012 /* CategoryTabsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTabsView.swift; sourceTree = "<group>"; };
+		DD0000000000000000000013 /* FeedCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCardView.swift; sourceTree = "<group>"; };
+		DD0000000000000000000014 /* ShareSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheetView.swift; sourceTree = "<group>"; };
+		DD0000000000000000000015 /* ArticleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleView.swift; sourceTree = "<group>"; };
+		DD0000000000000000000016 /* DeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckView.swift; sourceTree = "<group>"; };
+		DD0000000000000000000017 /* SwipeCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeCardView.swift; sourceTree = "<group>"; };
+		DD0000000000000000000018 /* VoteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteButton.swift; sourceTree = "<group>"; };
+		DD0000000000000000000019 /* ProgressSegments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressSegments.swift; sourceTree = "<group>"; };
+		DD0000000000000000000020 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DD0000000000000000000021 /* Forecast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Forecast.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BB0000000000000000000007 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AA0000000000000000000002 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				CC0000000000000000000001 /* Forecast */,
+				AA0000000000000000000003 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AA0000000000000000000003 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DD0000000000000000000021 /* Forecast.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CC0000000000000000000001 /* Forecast */ = {
+			isa = PBXGroup;
+			children = (
+				DD0000000000000000000001 /* ForecastApp.swift */,
+				DD0000000000000000000020 /* Assets.xcassets */,
+				CC0000000000000000000002 /* Theme */,
+				CC0000000000000000000003 /* Models */,
+				CC0000000000000000000004 /* Data */,
+				CC0000000000000000000005 /* ViewModels */,
+				CC0000000000000000000006 /* Views */,
+			);
+			path = Forecast;
+			sourceTree = "<group>";
+		};
+		CC0000000000000000000002 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				DD0000000000000000000002 /* AppTheme.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		CC0000000000000000000003 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				DD0000000000000000000003 /* NewsItem.swift */,
+				DD0000000000000000000004 /* PredictionCard.swift */,
+				DD0000000000000000000005 /* Article.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		CC0000000000000000000004 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				DD0000000000000000000006 /* MockData.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		CC0000000000000000000005 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				DD0000000000000000000007 /* FeedViewModel.swift */,
+				DD0000000000000000000008 /* ArticleViewModel.swift */,
+				DD0000000000000000000009 /* DeckViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		CC0000000000000000000006 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CC0000000000000000000007 /* Feed */,
+				CC0000000000000000000008 /* Article */,
+				CC0000000000000000000009 /* Deck */,
+				CC0000000000000000000010 /* Shared */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		CC0000000000000000000007 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				DD0000000000000000000010 /* FeedView.swift */,
+				DD0000000000000000000011 /* HeroCardView.swift */,
+				DD0000000000000000000012 /* CategoryTabsView.swift */,
+				DD0000000000000000000013 /* FeedCardView.swift */,
+				DD0000000000000000000014 /* ShareSheetView.swift */,
+			);
+			path = Feed;
+			sourceTree = "<group>";
+		};
+		CC0000000000000000000008 /* Article */ = {
+			isa = PBXGroup;
+			children = (
+				DD0000000000000000000015 /* ArticleView.swift */,
+			);
+			path = Article;
+			sourceTree = "<group>";
+		};
+		CC0000000000000000000009 /* Deck */ = {
+			isa = PBXGroup;
+			children = (
+				DD0000000000000000000016 /* DeckView.swift */,
+				DD0000000000000000000017 /* SwipeCardView.swift */,
+			);
+			path = Deck;
+			sourceTree = "<group>";
+		};
+		CC0000000000000000000010 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				DD0000000000000000000018 /* VoteButton.swift */,
+				DD0000000000000000000019 /* ProgressSegments.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BB0000000000000000000001 /* Forecast */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BB0000000000000000000002 /* Build configuration list for PBXNativeTarget "Forecast" */;
+			buildPhases = (
+				BB0000000000000000000005 /* Sources */,
+				BB0000000000000000000006 /* Resources */,
+				BB0000000000000000000007 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Forecast;
+			productName = Forecast;
+			productReference = DD0000000000000000000021 /* Forecast.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AA0000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					BB0000000000000000000001 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = AA0000000000000000000004 /* Build configuration list for PBXProject "Forecast" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AA0000000000000000000002 /* Main */;
+			productRefGroup = AA0000000000000000000003 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BB0000000000000000000001 /* Forecast */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BB0000000000000000000006 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EE0000000000000000000020 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BB0000000000000000000005 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EE0000000000000000000001 /* ForecastApp.swift in Sources */,
+				EE0000000000000000000002 /* AppTheme.swift in Sources */,
+				EE0000000000000000000003 /* NewsItem.swift in Sources */,
+				EE0000000000000000000004 /* PredictionCard.swift in Sources */,
+				EE0000000000000000000005 /* Article.swift in Sources */,
+				EE0000000000000000000006 /* MockData.swift in Sources */,
+				EE0000000000000000000007 /* FeedViewModel.swift in Sources */,
+				EE0000000000000000000008 /* ArticleViewModel.swift in Sources */,
+				EE0000000000000000000009 /* DeckViewModel.swift in Sources */,
+				EE0000000000000000000010 /* FeedView.swift in Sources */,
+				EE0000000000000000000011 /* HeroCardView.swift in Sources */,
+				EE0000000000000000000012 /* CategoryTabsView.swift in Sources */,
+				EE0000000000000000000013 /* FeedCardView.swift in Sources */,
+				EE0000000000000000000014 /* ShareSheetView.swift in Sources */,
+				EE0000000000000000000015 /* ArticleView.swift in Sources */,
+				EE0000000000000000000016 /* DeckView.swift in Sources */,
+				EE0000000000000000000017 /* SwipeCardView.swift in Sources */,
+				EE0000000000000000000018 /* VoteButton.swift in Sources */,
+				EE0000000000000000000019 /* ProgressSegments.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		AA0000000000000000000005 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		AA0000000000000000000006 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		BB0000000000000000000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				ENABLE_ON_DEMAND_RESOURCES = NO;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.forecast.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		BB0000000000000000000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				ENABLE_ON_DEMAND_RESOURCES = NO;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.forecast.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AA0000000000000000000004 /* Build configuration list for PBXProject "Forecast" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA0000000000000000000005 /* Debug */,
+				AA0000000000000000000006 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BB0000000000000000000002 /* Build configuration list for PBXNativeTarget "Forecast" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BB0000000000000000000003 /* Debug */,
+				BB0000000000000000000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+	};
+	rootObject = AA0000000000000000000001 /* Project object */;
+}
