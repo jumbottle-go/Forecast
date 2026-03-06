@@ -118,7 +118,7 @@ struct SwipeCardView: View {
                 }
             }
             .offset(x: isTop ? offset.width : 0, y: isTop ? offset.height * 0.1 : 0)
-            .rotationEffect(.degrees(isTop ? Double(offset.width) / 30 * 12 : 0))
+            .rotationEffect(.degrees(isTop ? Double(offset.width) / 30 * 6 : 0))
             .gesture(
                 isTop ? DragGesture()
                     .onChanged { value in
@@ -144,7 +144,7 @@ struct SwipeCardView: View {
     private func flyOff(direction: SwipeDirection) {
         let targetX: CGFloat = direction == .right ? 500 : -500
         withAnimation(.easeOut(duration: 0.35)) {
-            offset = CGSize(width: targetX, height: 0)
+            offset = CGSize(width: targetX, height: 250)
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
             onSwipe(direction)
