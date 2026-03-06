@@ -136,6 +136,13 @@ struct FeedCardView: View {
                 .font(.caption)
                 .foregroundStyle(AppTheme.textSecondary)
 
+                // Prediction question
+                Text(item.question)
+                    .font(.subheadline.bold())
+                    .foregroundStyle(AppTheme.textPrimary)
+                    .lineLimit(3)
+                    .padding(.top, 4)
+
                 // Vote buttons in HStack
                 if item.options.count >= 2 {
                     HStack(spacing: 8) {
