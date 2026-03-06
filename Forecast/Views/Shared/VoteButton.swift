@@ -5,18 +5,21 @@ struct VoteButton: View {
     let isSelected: Bool
     let isVoted: Bool
     let showSubtitle: Bool
+    let tintColor: Color?
     let onTap: () -> Void
 
     init(option: VoteOption,
          isSelected: Bool,
          isVoted: Bool,
          showSubtitle: Bool = false,
+         tintColor: Color? = nil,
          onTap: @escaping () -> Void) {
-        self.option      = option
-        self.isSelected  = isSelected
-        self.isVoted     = isVoted
+        self.option       = option
+        self.isSelected   = isSelected
+        self.isVoted      = isVoted
         self.showSubtitle = showSubtitle
-        self.onTap       = onTap
+        self.tintColor    = tintColor
+        self.onTap        = onTap
     }
 
     var body: some View {
@@ -77,19 +80,23 @@ struct VoteButton: View {
         .animation(.easeOut(duration: 0.3), value: isVoted)
     }
 
+    private var baseColor: Color {
+        tintColor ?? AppTheme.accent
+    }
+
     private var fillColor: Color {
-        isSelected ? AppTheme.accent : AppTheme.textSecondary
+        isSelected ? baseColor : AppTheme.textSecondary
     }
 
     private var textColor: Color {
-        isSelected ? AppTheme.accent : AppTheme.textPrimary
+        isSelected ? baseColor : AppTheme.textPrimary
     }
 
     private var borderColor: Color {
-        isSelected ? AppTheme.accent : AppTheme.border
+        isSelected ? baseColor : (tintColor ?? AppTheme.border)
     }
 
     private var buttonBackground: Color {
-        isSelected ? AppTheme.accent.opacity(0.15) : AppTheme.card
+        isSelected ? baseColor.opacity(0.15) : (tintColor.map { $0.opacity(0.1) } ?? AppTheme.card)
     }
 }

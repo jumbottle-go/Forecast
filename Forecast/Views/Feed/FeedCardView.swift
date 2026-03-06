@@ -38,7 +38,6 @@ struct FeedCardView: View {
                     onCardTap?(article)
                 }
                 .rotationEffect(.degrees(Double(dragOffset) / 25 * 8 / swipeThreshold))
-                // High-priority drag cancels tap evaluation
                 .highPriorityGesture(
                     DragGesture(minimumDistance: 20)
                         .onChanged { value in
@@ -84,119 +83,87 @@ struct FeedCardView: View {
 
     @ViewBuilder
     private var cardContent: some View {
-        VStack(alignment: .leading, spacing: 0) {
-
-            // Image
-            ZStack {
-                AsyncImage(url: URL(string: item.imageURL)) { phase in
-                    switch phase {
-                    case .success(let img): img.resizable().scaledToFill()
-                    default: Rectangle().fill(AppTheme.border)
-                    }
-                }
-                .frame(height: 110)
-                .clipped()
-
-                LinearGradient(
-                    colors: [.black.opacity(0.7), .clear],
-                    startPoint: .bottom,
-                    endPoint: .top
-                )
-                .frame(height: 110)
-
-                // Category chip (top-left) + vote count chip (top-right)
-                VStack {
-                    HStack {
-                        HStack(spacing: 4) {
-                            Image(systemName: item.category.symbol)
-                                .font(.caption2.bold())
-                            Text(item.category.rawValue)
-                                .font(.caption.bold())
-                        }
-                        .foregroundStyle(.white)
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 4)
-                        .background(.black.opacity(0.4))
-                        .clipShape(RoundedRectangle(cornerRadius: 6))
-                        Spacer()
-                        HStack(spacing: 4) {
-                            Image(systemName: "person.2.fill")
-                                .font(.caption2.bold())
-                            Text(item.votesCount.formatted())
-                                .font(.caption.bold())
-                        }
-                        .foregroundStyle(.white)
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 4)
-                        .background(.black.opacity(0.4))
-                        .clipShape(RoundedRectangle(cornerRadius: 6))
-                    }
-                    .padding(8)
-                    Spacer()
-                }
-
-                // Title — pinned bottom-left
-                VStack {
-                    Spacer()
-                    Text(item.title)
-                        .font(.headline.bold())
-                        .foregroundStyle(.white)
-                        .lineLimit(2)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal, 10)
-                        .padding(.bottom, 8)
+        ZStack(alignment: .bottom) {
+            // Full-bleed image
+            AsyncImage(url: URL(string: item.imageURL)) { phase in
+                switch phase {
+                case .success(let img): img.resizable().scaledToFill()
+                default: Rectangle().fill(AppTheme.border)
                 }
             }
-            .frame(height: 110)
+            .frame(maxWidth: .infinity)
             .clipped()
 
-            // Below image
+            // Gradient overlay: clear top → black bottom 60%
+            LinearGradient(
+                stops: [
+                    .init(color: .clear, location: 0.0),
+                    .init(color: .clear, location: 0.35),
+                    .init(color: .black.opacity(0.85), location: 1.0)
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+
+            // Top chips (category + vote count)
+            VStack {
+                HStack {
+                    HStack(spacing: 4) {
+                        Image(systemName: item.category.symbol)
+                            .font(.caption2.bold())
+                        Text(item.category.rawValue)
+                            .font(.caption.bold())
+                    }
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .background(.black.opacity(0.4))
+                    .clipShape(RoundedRectangle(cornerRadius: 6))
+
+                    Spacer()
+
+                    HStack(spacing: 4) {
+                        Image(systemName: "person.2.fill")
+                            .font(.caption2.bold())
+                        Text(item.votesCount.formatted())
+                            .font(.caption.bold())
+                    }
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .background(.black.opacity(0.4))
+                    .clipShape(RoundedRectangle(cornerRadius: 6))
+                }
+                .padding(12)
+                Spacer()
+            }
+
+            // Bottom-aligned content
             VStack(alignment: .leading, spacing: 10) {
-                // Prediction question
+                // News title — subtle
+                Text(item.title)
+                    .font(.subheadline)
+                    .foregroundStyle(.white.opacity(0.65))
+                    .lineLimit(2)
+
+                // Question — hero
                 Text(item.question)
-                    .font(.subheadline.bold())
-                    .foregroundStyle(AppTheme.textPrimary)
+                    .font(.title3.bold())
+                    .foregroundStyle(.white)
                     .lineLimit(3)
                     .fixedSize(horizontal: false, vertical: true)
-                    .padding(.top, 4)
 
-                // AI analytics badge
-                if let analysis = item.aiAnalysis {
-                    Button { showAnalytics = true } label: {
-                        HStack(spacing: 6) {
-                            Image(systemName: "sparkles")
-                                .font(.caption.bold())
-                                .foregroundStyle(AppTheme.accent)
-                            Text(analysis.summary)
-                                .font(.caption.bold())
-                                .foregroundStyle(AppTheme.accent)
-                                .lineLimit(1)
-                            Spacer(minLength: 0)
-                            Image(systemName: "chevron.right")
-                                .font(.caption2)
-                                .foregroundStyle(AppTheme.textSecondary)
-                        }
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 7)
-                        .background(AppTheme.accent.opacity(0.1))
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .strokeBorder(AppTheme.accent.opacity(0.25), lineWidth: 1)
-                        )
-                    }
-                    .buttonStyle(.plain)
-                }
-
-                // Vote buttons in HStack
+                // Vote buttons
                 if item.options.count >= 2 {
+                    let colors: [Color] = [AppTheme.success, AppTheme.danger]
                     HStack(spacing: 8) {
-                        ForEach(item.options.prefix(2)) { option in
+                        ForEach(Array(item.options.prefix(2).enumerated()), id: \.element.id) { idx, option in
                             VoteButton(
                                 option: option,
                                 isSelected: votedOptionId == option.id,
                                 isVoted: isVoted,
-                                showSubtitle: false
+                                showSubtitle: false,
+                                tintColor: colors[idx]
                             ) {
                                 onVote(option)
                             }
@@ -205,10 +172,26 @@ struct FeedCardView: View {
                     }
                 }
 
+                // AI analytics badge
+                if let analysis = item.aiAnalysis {
+                    Button { showAnalytics = true } label: {
+                        HStack(spacing: 5) {
+                            Image(systemName: "sparkles")
+                                .font(.caption2.bold())
+                                .foregroundStyle(AppTheme.accent)
+                            Text(analysis.summary)
+                                .font(.caption)
+                                .foregroundStyle(.white.opacity(0.55))
+                                .lineLimit(1)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    .buttonStyle(.plain)
+                }
             }
-            .padding(12)
+            .padding(14)
         }
-        .background(AppTheme.card)
+        .frame(minHeight: 360)
         .clipShape(RoundedRectangle(cornerRadius: AppTheme.cardRadius))
         .overlay(
             RoundedRectangle(cornerRadius: AppTheme.cardRadius)
