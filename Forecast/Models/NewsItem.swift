@@ -56,6 +56,7 @@ struct NewsItem: Identifiable, Hashable {
     let isBreaking: Bool
     let question: String
     let options: [VoteOption]
+    let aiShortAnswer: String?
     let aiAnalysis: AIAnalysis?
 
     init(
@@ -70,20 +71,22 @@ struct NewsItem: Identifiable, Hashable {
         isBreaking: Bool = false,
         question: String,
         options: [VoteOption],
+        aiShortAnswer: String? = nil,
         aiAnalysis: AIAnalysis? = nil
     ) {
-        self.id         = id
-        self.title      = title
-        self.subtitle   = subtitle
-        self.imageURL   = imageURL
-        self.source     = source
-        self.timeAgo    = timeAgo
-        self.votesCount = votesCount
-        self.category   = category
-        self.isBreaking = isBreaking
-        self.question   = question
-        self.options    = options
-        self.aiAnalysis = aiAnalysis
+        self.id            = id
+        self.title         = title
+        self.subtitle      = subtitle
+        self.imageURL      = imageURL
+        self.source        = source
+        self.timeAgo       = timeAgo
+        self.votesCount    = votesCount
+        self.category      = category
+        self.isBreaking    = isBreaking
+        self.question      = question
+        self.options       = options
+        self.aiShortAnswer = aiShortAnswer
+        self.aiAnalysis    = aiAnalysis
     }
 
     static func == (lhs: NewsItem, rhs: NewsItem) -> Bool { lhs.id == rhs.id }

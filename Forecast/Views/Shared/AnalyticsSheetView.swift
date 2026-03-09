@@ -2,54 +2,68 @@ import SwiftUI
 
 struct AnalyticsSheetView: View {
     let analysis: AIAnalysis
+    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         ZStack {
             AppTheme.bg.ignoresSafeArea()
 
-            ScrollView {
-                VStack(alignment: .leading, spacing: 20) {
+            VStack(spacing: 0) {
+                // Handle
+                Capsule()
+                    .fill(AppTheme.border)
+                    .frame(width: 40, height: 4)
+                    .padding(.top, 10)
+                    .padding(.bottom, 16)
 
-                    // Handle
-                    Capsule()
-                        .fill(AppTheme.border)
-                        .frame(width: 40, height: 4)
-                        .frame(maxWidth: .infinity)
-                        .padding(.top, 8)
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 20) {
 
-                    // Header
-                    HStack(spacing: 10) {
-                        Image(systemName: "sparkles")
-                            .font(.title2)
-                            .foregroundStyle(AppTheme.accent)
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text("ИИ-Аналитика")
-                                .font(.headline)
-                                .foregroundStyle(AppTheme.textPrimary)
-                            Text(analysis.summary)
-                                .font(.subheadline)
-                                .foregroundStyle(AppTheme.accent)
+                        // Header + close button
+                        HStack(alignment: .top) {
+                            HStack(spacing: 10) {
+                                Image(systemName: "sparkles")
+                                    .font(.title2)
+                                    .foregroundStyle(AppTheme.accent)
+                                VStack(alignment: .leading, spacing: 3) {
+                                    Text("ИИ-Аналитика")
+                                        .font(.headline)
+                                        .foregroundStyle(AppTheme.textPrimary)
+                                    Text(analysis.summary)
+                                        .font(.subheadline)
+                                        .foregroundStyle(AppTheme.accent)
+                                }
+                            }
+                            Spacer()
+                            Button {
+                                dismiss()
+                            } label: {
+                                Image(systemName: "xmark.circle.fill")
+                                    .font(.title3)
+                                    .foregroundStyle(AppTheme.textSecondary)
+                            }
+                            .buttonStyle(.plain)
                         }
+
+                        // Pros block
+                        proConBlock(
+                            title: "Аргументы «За»",
+                            items: analysis.pros,
+                            icon: "checkmark.circle.fill",
+                            color: AppTheme.success
+                        )
+
+                        // Cons block
+                        proConBlock(
+                            title: "Аргументы «Против»",
+                            items: analysis.cons,
+                            icon: "xmark.circle.fill",
+                            color: AppTheme.danger
+                        )
                     }
-
-                    // Why Yes
-                    proConBlock(
-                        title: "Аргументы «За»",
-                        items: analysis.pros,
-                        icon: "checkmark.circle.fill",
-                        color: AppTheme.success
-                    )
-
-                    // Why No
-                    proConBlock(
-                        title: "Аргументы «Против»",
-                        items: analysis.cons,
-                        icon: "xmark.circle.fill",
-                        color: AppTheme.danger
-                    )
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 32)
                 }
-                .padding(.horizontal, 20)
-                .padding(.bottom, 32)
             }
         }
         .presentationDetents([.medium, .large])

@@ -4,6 +4,7 @@ struct FeedView: View {
     @EnvironmentObject private var viewModel: FeedViewModel
     @State private var scrollProxy: ScrollViewProxy? = nil
     @State private var selectedArticle: Article? = nil
+    @State private var flashCardsRemaining = MockData.flashCards.count
     private let tabsAnchor = "categoryTabs"
 
     var body: some View {
@@ -15,15 +16,35 @@ struct FeedView: View {
                     ScrollView {
                         LazyVStack(spacing: 16) {
 
-                            // Hero
-                            HeroCardView(
-                                item: viewModel.heroItem,
-                                votedOptionId: viewModel.heroVotedOptionId,
-                                article: viewModel.heroArticle()
-                            ) { option in
-                                viewModel.castHeroVote(option: option)
+                            // ── Flash section header ─────────────────────
+                            let flashCurrent = min(MockData.flashCards.count - flashCardsRemaining + 1, MockData.flashCards.count)
+                            HStack(spacing: 8) {
+                                Image(systemName: "bolt.fill")
+                                    .font(.system(size: 22, weight: .bold))
+                                    .foregroundStyle(.yellow)
+                                Text("Daily Flash")
+                                    .font(.system(size: 28, weight: .bold))
+                                    .foregroundStyle(AppTheme.textPrimary)
+                                Text("· \(flashCurrent)/\(MockData.flashCards.count)")
+                                    .font(.system(size: 28, weight: .bold))
+                                    .foregroundStyle(AppTheme.textSecondary)
                             }
-                            .padding(.top, 12)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal, 16)
+                            .padding(.top, 20)
+                            .padding(.bottom, 4)
+
+                            // Flash Hero Block
+                            FlashHeroView(cardsRemaining: $flashCardsRemaining)
+
+                            // ── Feed section header ───────────────────────
+                            Text("Feed")
+                                .font(.system(size: 28, weight: .bold))
+                                .foregroundStyle(AppTheme.textPrimary)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.horizontal, 16)
+                                .padding(.top, 20)
+                                .padding(.bottom, 4)
 
                             // Category tabs — anchored
                             CategoryTabsView(selected: $viewModel.selectedCategory) { _ in

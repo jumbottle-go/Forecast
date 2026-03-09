@@ -7,6 +7,10 @@ struct ArticleView: View {
 
     private var vm: ArticleViewModel { ArticleViewModel(article: article) }
 
+    private var newsItem: NewsItem { vm.newsItem }
+    private var votedOptionId: UUID? { feedViewModel.votedOptionId(for: newsItem.id) }
+    private var isVoted: Bool { votedOptionId != nil }
+
     var body: some View {
         ZStack(alignment: .topLeading) {
             AppTheme.bg.ignoresSafeArea()
@@ -15,7 +19,7 @@ struct ArticleView: View {
                 VStack(alignment: .leading, spacing: 0) {
 
                     // MARK: Header image
-                    AsyncImage(url: URL(string: vm.newsItem.imageURL)) { phase in
+                    AsyncImage(url: URL(string: newsItem.imageURL)) { phase in
                         switch phase {
                         case .success(let img): img.resizable().scaledToFill()
                         default: Rectangle().fill(AppTheme.card)
@@ -24,13 +28,12 @@ struct ArticleView: View {
                     .frame(height: 200)
                     .clipped()
 
-                    // Category + title + meta — below image, no overlap possible
+                    // Category + title + meta
                     VStack(alignment: .leading, spacing: 8) {
-                        // Category tag
                         HStack(spacing: 4) {
-                            Image(systemName: vm.newsItem.category.symbol)
+                            Image(systemName: newsItem.category.symbol)
                                 .font(.caption2.bold())
-                            Text(vm.newsItem.category.rawValue)
+                            Text(newsItem.category.rawValue)
                                 .font(.caption.bold())
                         }
                         .foregroundStyle(AppTheme.accent)
@@ -39,16 +42,16 @@ struct ArticleView: View {
                         .background(AppTheme.accent.opacity(0.12))
                         .clipShape(RoundedRectangle(cornerRadius: 6))
 
-                        Text(vm.newsItem.title)
+                        Text(newsItem.title)
                             .font(.title2.bold())
                             .foregroundStyle(AppTheme.textPrimary)
                             .lineLimit(3)
                             .fixedSize(horizontal: false, vertical: true)
 
                         HStack(spacing: 6) {
-                            Text(vm.newsItem.source)
+                            Text(newsItem.source)
                             Text("·")
-                            Text(vm.newsItem.timeAgo)
+                            Text(newsItem.timeAgo)
                         }
                         .font(.caption)
                         .foregroundStyle(AppTheme.textSecondary)
@@ -63,6 +66,7 @@ struct ArticleView: View {
                             ForEach(vm.keyFacts) { fact in
                                 HStack(spacing: 6) {
                                     Text(fact.emoji)
+                                        .font(.body)
                                     Text(fact.text)
                                         .font(.caption)
                                         .foregroundStyle(AppTheme.textPrimary)
@@ -119,15 +123,13 @@ struct ArticleView: View {
                     .padding(.horizontal, 16)
                     .padding(.bottom, 24)
 
-                    Color.clear.frame(height: 40)
+                    Color.clear.frame(height: 100) // space for sticky bar
                 }
             }
             .scrollIndicators(.hidden)
 
-            // Back button — pinned top-left, only as large as itself
-            Button {
-                dismiss()
-            } label: {
+            // Back button — pinned top-left
+            Button { dismiss() } label: {
                 HStack(spacing: 6) {
                     Image(systemName: "chevron.left")
                         .font(.subheadline.bold())
@@ -144,6 +146,55 @@ struct ArticleView: View {
             .padding(.top, 56)
         }
         .navigationBarHidden(true)
+        .safeAreaInset(edge: .bottom, spacing: 0) {
+            stickyVoteBar
+        }
     }
 
+    // MARK: Sticky Vote Bar
+
+    @ViewBuilder
+    private var stickyVoteBar: some View {
+        if newsItem.options.count >= 2 {
+            VStack(spacing: 0) {
+                // Top border
+                Rectangle()
+                    .fill(AppTheme.border)
+                    .frame(height: 1)
+
+                VStack(alignment: .leading, spacing: 10) {
+                    // Question label
+                    Text(newsItem.question)
+                        .font(.subheadline.bold())
+                        .foregroundStyle(AppTheme.textPrimary)
+                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
+
+                    // Vote buttons
+                    let colors: [Color] = [AppTheme.success, AppTheme.danger]
+                    HStack(spacing: 8) {
+                        ForEach(Array(newsItem.options.prefix(2).enumerated()), id: \.element.id) { idx, option in
+                            VoteButton(
+                                option: option,
+                                isSelected: votedOptionId == option.id,
+                                isVoted: isVoted,
+                                showSubtitle: false,
+                                tintColor: colors[idx]
+                            ) {
+                                feedViewModel.castVote(for: newsItem.id, option: option)
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    dismiss()
+                                }
+                            }
+                            .frame(maxWidth: .infinity)
+                        }
+                    }
+                }
+                .padding(.horizontal, 16)
+                .padding(.top, 24)
+                .padding(.bottom, 16)
+            }
+            .background(AppTheme.bg)
+        }
+    }
 }

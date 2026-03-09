@@ -1,5 +1,17 @@
 import Foundation
 
+// MARK: - Flash Card Model
+
+struct FlashCard: Identifiable {
+    let id: UUID
+    let question: String
+    let category: String
+    let symbol: String
+    let imageURL: String
+    let aiShortAnswer: String
+    let aiAnalysis: AIAnalysis
+}
+
 // MARK: - Mock News Items
 
 enum MockData {
@@ -17,9 +29,9 @@ enum MockData {
         question: "When will China formally retaliate to the new US tariffs?",
         options: [
             VoteOption(iconName: "bolt.fill", text: "За 48ч", subtitle: "Резкий ответ", percent: 62),
-            VoteOption(iconName: "bubble.left.and.bubble.right.fill", text: "Переговоры", subtitle: "Дипломатия", percent: 24),
-            VoteOption(iconName: "clock.fill", text: "Позже", subtitle: "Отложенный удар", percent: 14)
+            VoteOption(iconName: "bubble.left.and.bubble.right.fill", text: "Переговоры", subtitle: "Дипломатия", percent: 38)
         ],
+        aiShortAnswer: "За 48ч",
         aiAnalysis: AIAnalysis(
             summary: "62% за «За 48ч»",
             pros: [
@@ -49,6 +61,7 @@ enum MockData {
                 VoteOption(iconName: "arrow.down.circle.fill", text: "Снизит", subtitle: "Охлаждение экономики", percent: 44),
                 VoteOption(iconName: "lock.fill", text: "Заморозит", subtitle: "Риск инфляции", percent: 56)
             ],
+                aiShortAnswer: "Заморозит",
             aiAnalysis: AIAnalysis(
                 summary: "56% за «Заморозит»",
                 pros: [
@@ -74,6 +87,7 @@ enum MockData {
                 VoteOption(iconName: "arrow.up.circle.fill", text: "$150k+", subtitle: "Тенденция в силе", percent: 58),
                 VoteOption(iconName: "arrow.down.circle.fill", text: "Коррекция", subtitle: "Перегрев рынка", percent: 42)
             ],
+            aiShortAnswer: "$150k+",
             aiAnalysis: AIAnalysis(
                 summary: "58% за «$150k+»",
                 pros: [
@@ -100,6 +114,7 @@ enum MockData {
                 VoteOption(iconName: "chart.line.uptrend.xyaxis", text: "$200+", subtitle: "ИИ-бум продолжается", percent: 71),
                 VoteOption(iconName: "chart.bar.fill", text: "Плато", subtitle: "Давление конкурентов", percent: 29)
             ],
+            aiShortAnswer: "$200+",
             aiAnalysis: AIAnalysis(
                 summary: "71% за «$200+»",
                 pros: [
@@ -130,6 +145,7 @@ enum MockData {
                 VoteOption(iconName: "hammer.fill", text: "Запрет", subtitle: "Жёсткие меры", percent: 53),
                 VoteOption(iconName: "cpu", text: "Интеграция", subtitle: "Регуляторы отстают", percent: 47)
             ],
+            aiShortAnswer: "Запрет",
             aiAnalysis: AIAnalysis(
                 summary: "53% за «Запрет»",
                 pros: [
@@ -155,6 +171,7 @@ enum MockData {
                 VoteOption(iconName: "star.fill", text: "> 1 млн", subtitle: "Сниженная цена", percent: 39),
                 VoteOption(iconName: "dollarsign.circle.fill", text: "< 1 млн", subtitle: "Всё ещё ниша", percent: 61)
             ],
+            aiShortAnswer: "< 1 млн",
             aiAnalysis: AIAnalysis(
                 summary: "61% за «< 1 млн»",
                 pros: [
@@ -180,6 +197,7 @@ enum MockData {
                 VoteOption(iconName: "lock.open.fill", text: "Взломают", subtitle: "Ускорение прогресса", percent: 35),
                 VoteOption(iconName: "shield.fill", text: "Устоят", subtitle: "Крипто-защита готова", percent: 65)
             ],
+            aiShortAnswer: "Устоят",
             aiAnalysis: AIAnalysis(
                 summary: "65% за «Устоят»",
                 pros: [
@@ -209,6 +227,7 @@ enum MockData {
                 VoteOption(iconName: "checkmark.seal.fill", text: "Ратифицируют", subtitle: "Общая угроза", percent: 67),
                 VoteOption(iconName: "xmark.circle.fill", text: "Заблокируют", subtitle: "Венгерское вето", percent: 33)
             ],
+            aiShortAnswer: "Ратифицируют",
             aiAnalysis: AIAnalysis(
                 summary: "67% за «Ратифицируют»",
                 pros: [
@@ -234,6 +253,7 @@ enum MockData {
                 VoteOption(iconName: "checkmark.circle.fill", text: "Примут", subtitle: "Геополитика", percent: 41),
                 VoteOption(iconName: "minus.circle.fill", text: "Отложат", subtitle: "Сложности консенсуса", percent: 59)
             ],
+            aiShortAnswer: "Отложат",
             aiAnalysis: AIAnalysis(
                 summary: "59% за «Отложат»",
                 pros: [
@@ -259,6 +279,7 @@ enum MockData {
                 VoteOption(iconName: "doc.fill", text: "Примут", subtitle: "США и ЕС", percent: 28),
                 VoteOption(iconName: "hand.raised.fill", text: "Вето", subtitle: "Китай и РФ", percent: 72)
             ],
+            aiShortAnswer: "Вето",
             aiAnalysis: AIAnalysis(
                 summary: "72% за «Вето»",
                 pros: [
@@ -288,6 +309,7 @@ enum MockData {
                 VoteOption(iconName: "soccerball", text: "Реал", subtitle: "Опыт и класс", percent: 55),
                 VoteOption(iconName: "circle.fill", text: "Арсенал", subtitle: "Молодая злость", percent: 45)
             ],
+            aiShortAnswer: "Реал",
             aiAnalysis: AIAnalysis(
                 summary: "55% за «Реал»",
                 pros: [
@@ -313,6 +335,7 @@ enum MockData {
                 VoteOption(iconName: "car.fill", text: "Ferrari", subtitle: "Новый регламент", percent: 38),
                 VoteOption(iconName: "trophy.fill", text: "Другие", subtitle: "Merc/Red Bull", percent: 62)
             ],
+            aiShortAnswer: "Ferrari",
             aiAnalysis: AIAnalysis(
                 summary: "62% за «Другие»",
                 pros: [
@@ -338,6 +361,7 @@ enum MockData {
                 VoteOption(iconName: "star.fill", text: "Чемпионы", subtitle: "Убойный дуэт", percent: 61),
                 VoteOption(iconName: "snowflake", text: "Провал", subtitle: "Нет химии", percent: 39)
             ],
+            aiShortAnswer: "Чемпионы",
             aiAnalysis: AIAnalysis(
                 summary: "61% за «Чемпионы»",
                 pros: [
@@ -367,6 +391,7 @@ enum MockData {
                 VoteOption(iconName: "sparkles", text: "Найдут", subtitle: "Подходящая среда", percent: 34),
                 VoteOption(iconName: "moon.fill", text: "Стерильно", subtitle: "Соль и радиация", percent: 66)
             ],
+            aiShortAnswer: "Стерильно",
             aiAnalysis: AIAnalysis(
                 summary: "66% за «Стерильно»",
                 pros: [
@@ -392,6 +417,7 @@ enum MockData {
                 VoteOption(iconName: "syringe.fill", text: "Одобрение", subtitle: "Данные Phase 3", percent: 78),
                 VoteOption(iconName: "pause.circle.fill", text: "Задержка", subtitle: "Нужны доп. тесты", percent: 22)
             ],
+            aiShortAnswer: "Одобрение",
             aiAnalysis: AIAnalysis(
                 summary: "78% за «Одобрение»",
                 pros: [
@@ -417,6 +443,7 @@ enum MockData {
                 VoteOption(iconName: "water.waves", text: "Коллапс", subtitle: "Тренды неумолимы", percent: 47),
                 VoteOption(iconName: "leaf.fill", text: "Выстоит", subtitle: "Поможет спад CO2", percent: 53)
             ],
+            aiShortAnswer: "Выстоит",
             aiAnalysis: AIAnalysis(
                 summary: "53% за «Выстоит»",
                 pros: [
@@ -427,6 +454,75 @@ enum MockData {
                 "Скорость АМОК на историческом минимуме за 1600 лет",
                 "Таяние льда Гренландии ускоряется быстрее прогнозов"
                 ]
+            )
+        )
+    ]
+
+    // MARK: Flash Cards
+    static let flashCards: [FlashCard] = [
+        FlashCard(
+            id: UUID(),
+            question: "Will S&P 500 close green today?",
+            category: "Finance",
+            symbol: "chart.line.uptrend.xyaxis",
+            imageURL: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80",
+            aiShortAnswer: "Зелёный",
+            aiAnalysis: AIAnalysis(
+                summary: "61% за зелёное закрытие",
+                pros: ["Фьючерсы на S&P растут с утра", "ФРС не будет повышать ставку"],
+                cons: ["Геополитическая напряжённость давит на настроения", "Объём торгов ниже среднего"]
+            )
+        ),
+        FlashCard(
+            id: UUID(),
+            question: "Will Arsenal win tonight?",
+            category: "Sports",
+            symbol: "sportscourt.fill",
+            imageURL: "https://images.unsplash.com/photo-1529900748604-07564a03e7a6?w=800&q=80",
+            aiShortAnswer: "Победа",
+            aiAnalysis: AIAnalysis(
+                summary: "58% за победу Арсенала",
+                pros: ["Арсенал не проигрывает дома 11 матчей", "Соперник без ключевых игроков"],
+                cons: ["Усталость после выездного тура", "Исторически проигрывают в кубковых играх"]
+            )
+        ),
+        FlashCard(
+            id: UUID(),
+            question: "Will BTC touch $130k today?",
+            category: "Crypto",
+            symbol: "bitcoinsign.circle.fill",
+            imageURL: "https://images.unsplash.com/photo-1518544866330-4e716499f800?w=800&q=80",
+            aiShortAnswer: "Нет, рано",
+            aiAnalysis: AIAnalysis(
+                summary: "74% — BTC не достигнет $130k сегодня",
+                pros: ["До цели остаётся >8% роста за один день", "Сильное сопротивление на $125k"],
+                cons: ["Институциональный спрос стабильно растёт", "ETF-притоки за неделю превысили $2 млрд"]
+            )
+        ),
+        FlashCard(
+            id: UUID(),
+            question: "Will Apple announce Vision Pro 2 this week?",
+            category: "Tech",
+            symbol: "desktopcomputer",
+            imageURL: "https://images.unsplash.com/photo-1617802690992-15d93263d3a9?w=800&q=80",
+            aiShortAnswer: "Не на неделе",
+            aiAnalysis: AIAnalysis(
+                summary: "82% — анонса на этой неделе не будет",
+                pros: ["Apple не анонсировала мероприятие", "Производственный цикл ещё не завершён"],
+                cons: ["Слухи от надёжных инсайдеров усилились", "Конкуренты уже выпустили аналоги"]
+            )
+        ),
+        FlashCard(
+            id: UUID(),
+            question: "Will EUR/USD stay above 1.09 at close?",
+            category: "Finance",
+            symbol: "eurosign.circle.fill",
+            imageURL: "https://images.unsplash.com/photo-1620321023374-d1a68fbc720d?w=800&q=80",
+            aiShortAnswer: "Да, выше",
+            aiAnalysis: AIAnalysis(
+                summary: "66% — EUR/USD выше 1.09 на закрытии",
+                pros: ["ЕЦБ сохраняет «ястребиную» риторику", "Слабый отчёт по занятости в США"],
+                cons: ["Доллар укрепляется на фоне тарифных рисков", "Технически пара на ключевой поддержке"]
             )
         )
     ]

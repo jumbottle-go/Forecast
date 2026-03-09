@@ -24,8 +24,9 @@ struct VoteButton: View {
 
     var body: some View {
         Button(action: onTap) {
-            HStack(spacing: 4) {
-                VStack(alignment: .leading, spacing: 2) {
+            ZStack {
+                // Centered label
+                VStack(spacing: 2) {
                     HStack(spacing: 6) {
                         Image(systemName: option.iconName)
                             .foregroundStyle(textColor)
@@ -45,13 +46,16 @@ struct VoteButton: View {
                             .lineLimit(1)
                     }
                 }
+                .frame(maxWidth: .infinity, alignment: .center)
 
-                Spacer(minLength: 0)
-
-                Text("\(Int(option.percent))%")
-                    .font(.headline.bold())
-                    .foregroundStyle(fillColor)
-                    .opacity(isVoted ? 1 : 0)
+                // Trailing percentage (visible after vote)
+                HStack {
+                    Spacer()
+                    Text("\(Int(option.percent))%")
+                        .font(.headline.bold())
+                        .foregroundStyle(fillColor)
+                        .opacity(isVoted ? 1 : 0)
+                }
             }
             .padding(.horizontal, 8)
             .padding(.vertical, showSubtitle ? 16 : 14)

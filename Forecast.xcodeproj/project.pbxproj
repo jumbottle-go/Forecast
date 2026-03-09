@@ -22,6 +22,7 @@
 		EE0000000000000000000015 /* ArticleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000015 /* ArticleView.swift */; };
 		EE0000000000000000000018 /* VoteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000018 /* VoteButton.swift */; };
 		EE000000000000000000001A /* AnalyticsSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000000000000000000001A /* AnalyticsSheetView.swift */; };
+		EE000000000000000000001B /* FlashHeroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000000000000000000001B /* FlashHeroView.swift */; };
 		EE0000000000000000000020 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000020 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +42,7 @@
 		DD0000000000000000000015 /* ArticleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleView.swift; sourceTree = "<group>"; };
 		DD0000000000000000000018 /* VoteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteButton.swift; sourceTree = "<group>"; };
 		DD000000000000000000001A /* AnalyticsSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsSheetView.swift; sourceTree = "<group>"; };
+		DD000000000000000000001B /* FlashHeroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashHeroView.swift; sourceTree = "<group>"; };
 		DD0000000000000000000020 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DD0000000000000000000021 /* Forecast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Forecast.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -139,6 +141,7 @@
 				DD0000000000000000000012 /* CategoryTabsView.swift */,
 				DD0000000000000000000013 /* FeedCardView.swift */,
 				DD0000000000000000000014 /* ShareSheetView.swift */,
+				DD000000000000000000001B /* FlashHeroView.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -251,6 +254,7 @@
 				EE0000000000000000000015 /* ArticleView.swift in Sources */,
 				EE0000000000000000000018 /* VoteButton.swift in Sources */,
 				EE000000000000000000001A /* AnalyticsSheetView.swift in Sources */,
+				EE000000000000000000001B /* FlashHeroView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
