@@ -24,7 +24,6 @@ struct LeaderboardView: View {
     private let bronzeColor = Color(hex: "CD7F32")
     private let grayLine    = Color.white.opacity(0.15)
     private let rowHeight: CGFloat = 48
-    private let calRowHeight: CGFloat = 60
 
     private struct FeatureCard {
         let icon: String
@@ -55,15 +54,15 @@ struct LeaderboardView: View {
                         .padding(.top, 20)
                         .padding(.bottom, 16)
 
-                    // Block 2 — League track
+                    // Block 2 — Bronze progress
+                    bronzeProgressBlock
+                        .padding(.top, 0)
+
+                    // Block 3 — League track
                     leagueTrackBlock
-
-                    // CTA button
-                    ctaButton
                         .padding(.top, 16)
-                        .padding(.horizontal, 16)
 
-                    // Block 3 — Feature preview
+                    // Block 4 — Feature preview
                     featuresBlock
                         .padding(.top, 24)
 
@@ -74,7 +73,73 @@ struct LeaderboardView: View {
         }
     }
 
-    // MARK: Block 2 — League track
+    // MARK: Block 2 — Bronze progress
+
+    private var bronzeProgressBlock: some View {
+        VStack(alignment: .leading, spacing: 0) {
+
+            // Icon + title row
+            HStack(spacing: 12) {
+                Image(systemName: "star.fill")
+                    .font(.system(size: 28))
+                    .foregroundStyle(bronzeColor)
+                Text("До Bronze лиги")
+                    .font(.system(size: 18, weight: .bold))
+                    .foregroundStyle(AppTheme.textPrimary)
+            }
+
+            // Subtitle
+            Text("Сделай ещё 3 верных прогноза в Daily Flash")
+                .font(.system(size: 14))
+                .foregroundStyle(AppTheme.textSecondary)
+                .padding(.top, 8)
+
+            // Progress bar
+            GeometryReader { geo in
+                ZStack(alignment: .leading) {
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(Color.white.opacity(0.10))
+                        .frame(height: 8)
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(bronzeColor)
+                        .frame(width: geo.size.width * 0.4, height: 8)
+                }
+            }
+            .frame(height: 8)
+            .padding(.top, 14)
+
+            Text("2 / 5")
+                .font(.system(size: 12))
+                .foregroundStyle(AppTheme.textSecondary)
+                .frame(maxWidth: .infinity, alignment: .trailing)
+                .padding(.top, 6)
+
+            // CTA button
+            Button {
+                selectedTab = 0
+            } label: {
+                HStack(spacing: 8) {
+                    Text("Перейти к прогнозам")
+                        .font(.system(size: 16, weight: .semibold))
+                    Image(systemName: "arrow.right")
+                        .font(.system(size: 16, weight: .semibold))
+                }
+                .foregroundStyle(.white)
+                .frame(maxWidth: .infinity)
+                .frame(height: 48)
+                .background(bronzeColor)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+            }
+            .buttonStyle(.plain)
+            .padding(.top, 16)
+        }
+        .padding(16)
+        .background(Color.white.opacity(0.04))
+        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .padding(.horizontal, 16)
+    }
+
+    // MARK: Block 3 — League track
 
     private var leagueTrackBlock: some View {
         VStack(spacing: 0) {
@@ -140,30 +205,24 @@ struct LeaderboardView: View {
                 VStack(spacing: 0) {
                     Rectangle()
                         .fill(bronzeColor)
-                        .frame(width: 2, height: calRowHeight / 2)
+                        .frame(width: 2, height: rowHeight / 2)
                     Rectangle()
                         .fill(Color.clear)
-                        .frame(width: 2, height: calRowHeight / 2)
+                        .frame(width: 2, height: rowHeight / 2)
                 }
                 Circle()
                     .fill(bronzeColor)
                     .frame(width: 14, height: 14)
                     .opacity(dotPulse ? 1.0 : 0.5)
             }
-            .frame(width: 20, height: calRowHeight)
+            .frame(width: 20, height: rowHeight)
 
-            // Text
-            VStack(alignment: .leading, spacing: 3) {
-                Text("Калибровка")
-                    .font(.system(size: 16, weight: .semibold))
-                    .foregroundStyle(AppTheme.textPrimary)
-                Text("2 из 5 прогнозов до Bronze")
-                    .font(.system(size: 13))
-                    .foregroundStyle(AppTheme.textSecondary)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
+            Text("Калибровка")
+                .font(.system(size: 16, weight: .semibold))
+                .foregroundStyle(AppTheme.textPrimary)
+                .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .frame(height: calRowHeight)
+        .frame(height: rowHeight)
         .onAppear {
             withAnimation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true)) {
                 dotPulse = true
@@ -171,28 +230,7 @@ struct LeaderboardView: View {
         }
     }
 
-    // MARK: CTA button
-
-    private var ctaButton: some View {
-        Button {
-            selectedTab = 0
-        } label: {
-            HStack(spacing: 8) {
-                Text("Перейти к прогнозам")
-                    .font(.system(size: 16, weight: .semibold))
-                Image(systemName: "arrow.right")
-                    .font(.system(size: 16, weight: .semibold))
-            }
-            .foregroundStyle(.white)
-            .frame(maxWidth: .infinity)
-            .frame(height: 48)
-            .background(bronzeColor)
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-        }
-        .buttonStyle(.plain)
-    }
-
-    // MARK: Block 3 — Feature preview
+    // MARK: Block 4 — Feature preview
 
     private var featuresBlock: some View {
         VStack(alignment: .leading, spacing: 10) {
