@@ -24,39 +24,45 @@ struct VoteButton: View {
 
     var body: some View {
         Button(action: onTap) {
-            ZStack {
-                // Centered label
-                VStack(spacing: 2) {
-                    HStack(spacing: 6) {
-                        Image(systemName: option.iconName)
-                            .foregroundStyle(textColor)
-                        Text(option.text)
-                            .fontWeight(.semibold)
-                            .foregroundStyle(textColor)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.65)
-                            .allowsTightening(true)
-                    }
-                    .font(.headline)
-
-                    if showSubtitle {
-                        Text(option.subtitle)
-                            .font(.caption)
-                            .foregroundStyle(AppTheme.textSecondary)
-                            .lineLimit(1)
+            VStack(spacing: 2) {
+                Group {
+                    if isVoted {
+                        // After vote: percentage + text, no icon
+                        HStack(spacing: 6) {
+                            Text("\(Int(option.percent))%")
+                                .font(.headline.bold())
+                                .foregroundStyle(fillColor)
+                            Text(option.text)
+                                .font(.subheadline.weight(.semibold))
+                                .foregroundStyle(textColor)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.65)
+                                .allowsTightening(true)
+                        }
+                    } else {
+                        // Before vote: icon + text
+                        HStack(spacing: 6) {
+                            Image(systemName: option.iconName)
+                                .foregroundStyle(textColor)
+                            Text(option.text)
+                                .fontWeight(.semibold)
+                                .foregroundStyle(textColor)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.65)
+                                .allowsTightening(true)
+                        }
+                        .font(.headline)
                     }
                 }
-                .frame(maxWidth: .infinity, alignment: .center)
 
-                // Trailing percentage (visible after vote)
-                HStack {
-                    Spacer()
-                    Text("\(Int(option.percent))%")
-                        .font(.headline.bold())
-                        .foregroundStyle(fillColor)
-                        .opacity(isVoted ? 1 : 0)
+                if showSubtitle {
+                    Text(option.subtitle)
+                        .font(.caption)
+                        .foregroundStyle(AppTheme.textSecondary)
+                        .lineLimit(1)
                 }
             }
+            .frame(maxWidth: .infinity, alignment: .center)
             .padding(.horizontal, 8)
             .padding(.vertical, showSubtitle ? 16 : 14)
             .background(alignment: .leading) {

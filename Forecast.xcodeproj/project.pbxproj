@@ -23,6 +23,9 @@
 		EE0000000000000000000018 /* VoteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000018 /* VoteButton.swift */; };
 		EE000000000000000000001A /* AnalyticsSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000000000000000000001A /* AnalyticsSheetView.swift */; };
 		EE000000000000000000001B /* FlashHeroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000000000000000000001B /* FlashHeroView.swift */; };
+		EE000000000000000000001C /* VotingBlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000000000000000000001C /* VotingBlockView.swift */; };
+		EE000000000000000000001D /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000000000000000000001D /* ProfileView.swift */; };
+		EE000000000000000000001E /* LeaderboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000000000000000000001E /* LeaderboardView.swift */; };
 		EE0000000000000000000020 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000020 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +46,9 @@
 		DD0000000000000000000018 /* VoteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteButton.swift; sourceTree = "<group>"; };
 		DD000000000000000000001A /* AnalyticsSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsSheetView.swift; sourceTree = "<group>"; };
 		DD000000000000000000001B /* FlashHeroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashHeroView.swift; sourceTree = "<group>"; };
+		DD000000000000000000001C /* VotingBlockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VotingBlockView.swift; sourceTree = "<group>"; };
+		DD000000000000000000001D /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		DD000000000000000000001E /* LeaderboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardView.swift; sourceTree = "<group>"; };
 		DD0000000000000000000020 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DD0000000000000000000021 /* Forecast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Forecast.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -129,6 +135,8 @@
 				CC0000000000000000000008 /* Article */,
 				CC0000000000000000000009 /* Deck */,
 				CC0000000000000000000010 /* Shared */,
+				CC0000000000000000000011 /* Profile */,
+				CC0000000000000000000012 /* Leaderboard */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -165,9 +173,26 @@
 			isa = PBXGroup;
 			children = (
 				DD0000000000000000000018 /* VoteButton.swift */,
+				DD000000000000000000001C /* VotingBlockView.swift */,
 				DD000000000000000000001A /* AnalyticsSheetView.swift */,
 			);
 			path = Shared;
+			sourceTree = "<group>";
+		};
+		CC0000000000000000000011 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				DD000000000000000000001D /* ProfileView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		CC0000000000000000000012 /* Leaderboard */ = {
+			isa = PBXGroup;
+			children = (
+				DD000000000000000000001E /* LeaderboardView.swift */,
+			);
+			path = Leaderboard;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -255,6 +280,9 @@
 				EE0000000000000000000018 /* VoteButton.swift in Sources */,
 				EE000000000000000000001A /* AnalyticsSheetView.swift in Sources */,
 				EE000000000000000000001B /* FlashHeroView.swift in Sources */,
+				EE000000000000000000001C /* VotingBlockView.swift in Sources */,
+				EE000000000000000000001D /* ProfileView.swift in Sources */,
+				EE000000000000000000001E /* LeaderboardView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

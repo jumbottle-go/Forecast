@@ -11,29 +11,26 @@ struct ForecastApp: App {
 
 struct ContentView: View {
     @StateObject private var feedViewModel = FeedViewModel()
+    @State private var selectedTab = 0
 
     var body: some View {
-        TabView {
+        TabView(selection: $selectedTab) {
             FeedView()
                 .environmentObject(feedViewModel)
-                .tabItem {
-                    Label("Лента", systemImage: "newspaper")
-                }
+                .tabItem { Label("Лента", systemImage: "newspaper") }
+                .tag(0)
 
             StubView(title: "Explore", icon: "safari")
-                .tabItem {
-                    Label("Explore", systemImage: "safari")
-                }
+                .tabItem { Label("Explore", systemImage: "safari") }
+                .tag(1)
 
-            StubView(title: "Лидерборд", icon: "trophy")
-                .tabItem {
-                    Label("Лидерборд", systemImage: "trophy")
-                }
+            LeaderboardView(selectedTab: $selectedTab)
+                .tabItem { Label("Лидерборд", systemImage: "trophy") }
+                .tag(2)
 
-            StubView(title: "Профиль", icon: "person.circle")
-                .tabItem {
-                    Label("Профиль", systemImage: "person.circle")
-                }
+            ProfileView()
+                .tabItem { Label("Профиль", systemImage: "person.circle") }
+                .tag(3)
         }
         .tint(AppTheme.accent)
         .preferredColorScheme(.dark)

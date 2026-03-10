@@ -4,6 +4,13 @@ struct AnalyticsSheetView: View {
     let analysis: AIAnalysis
     @Environment(\.dismiss) private var dismiss
 
+    // Optional vote block
+    var voteQuestion: String? = nil
+    var voteOptions: [VoteOption] = []
+    var votesCount: Int = 0
+    var votedOptionId: UUID? = nil
+    var onVote: ((VoteOption) -> Void)? = nil
+
     var body: some View {
         ZStack {
             AppTheme.bg.ignoresSafeArea()
@@ -29,15 +36,13 @@ struct AnalyticsSheetView: View {
                                     Text("ИИ-Аналитика")
                                         .font(.headline)
                                         .foregroundStyle(AppTheme.textPrimary)
-                                    Text(analysis.summary)
+                                    Text("AI уверен на \(analysis.confidencePercent)%: \(analysis.summary)")
                                         .font(.subheadline)
                                         .foregroundStyle(AppTheme.accent)
                                 }
                             }
                             Spacer()
-                            Button {
-                                dismiss()
-                            } label: {
+                            Button { dismiss() } label: {
                                 Image(systemName: "xmark.circle.fill")
                                     .font(.title3)
                                     .foregroundStyle(AppTheme.textSecondary)
@@ -47,7 +52,7 @@ struct AnalyticsSheetView: View {
 
                         // Pros block
                         proConBlock(
-                            title: "Аргументы «За»",
+                            title: analysis.prosLabel,
                             items: analysis.pros,
                             icon: "checkmark.circle.fill",
                             color: AppTheme.success
@@ -55,20 +60,44 @@ struct AnalyticsSheetView: View {
 
                         // Cons block
                         proConBlock(
-                            title: "Аргументы «Против»",
+                            title: analysis.consLabel,
                             items: analysis.cons,
                             icon: "xmark.circle.fill",
                             color: AppTheme.danger
                         )
+
+                        // Vote block
+                        if let question = voteQuestion, !voteOptions.isEmpty {
+                            VStack(alignment: .leading, spacing: 10) {
+                                Rectangle()
+                                    .fill(AppTheme.border)
+                                    .frame(height: 1)
+                                    .padding(.bottom, 2)
+
+                                VotingBlockView(
+                                    question: question,
+                                    options: voteOptions,
+                                    votesCount: votesCount,
+                                    votedOptionId: votedOptionId
+                                ) { option in
+                                    onVote?(option)
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                        dismiss()
+                                    }
+                                }
+                            }
+                        }
                     }
                     .padding(.horizontal, 20)
-                    .padding(.bottom, 32)
+                    .padding(.bottom, 50)
                 }
             }
         }
-        .presentationDetents([.medium, .large])
+        .presentationDetents([.fraction(0.65), .large])
         .presentationDragIndicator(.hidden)
     }
+
+    // MARK: Pro/Con Block
 
     @ViewBuilder
     private func proConBlock(title: String, items: [String], icon: String, color: Color) -> some View {

@@ -61,7 +61,14 @@ struct FeedCardView: View {
         }
         .sheet(isPresented: $showAnalytics) {
             if let analysis = item.aiAnalysis {
-                AnalyticsSheetView(analysis: analysis)
+                AnalyticsSheetView(
+                    analysis: analysis,
+                    voteQuestion: item.question,
+                    voteOptions: item.options,
+                    votesCount: item.votesCount,
+                    votedOptionId: votedOptionId,
+                    onVote: { option in onVote(option) }
+                )
             }
         }
     }

@@ -1,7 +1,10 @@
 import Foundation
 
 struct AIAnalysis: Hashable {
-    let summary: String
+    let summary: String           // short predicted answer, e.g. "Заморозит", "< 1 млн"
+    let confidencePercent: Int    // e.g. 61 → "AI уверен на 61%: …"
+    let prosLabel: String         // header for green pros block, e.g. "Заморозит"
+    let consLabel: String         // header for red cons block, e.g. "Снизит"
     let pros: [String]
     let cons: [String]
 }

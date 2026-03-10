@@ -8,8 +8,8 @@ struct FlashHeroView: View {
     @State private var cards: [FlashCard] = MockData.flashCards
     @State private var dragOffset: CGSize = .zero
     @State private var isSwiping = false
-    @State private var showAnalytics = false
-    @State private var activeAnalysis: AIAnalysis? = nil
+    @State private var activeCard: FlashCard? = nil
+    @State private var activeVotedOptionId: UUID? = nil
 
     private let totalCount = MockData.flashCards.count
     private let swipeThreshold: CGFloat = 100
@@ -38,10 +38,18 @@ struct FlashHeroView: View {
         .animation(.spring(response: 0.45, dampingFraction: 0.78), value: cards.isEmpty)
         .padding(.horizontal, 16)
         .onChange(of: cards.count) { _, _ in cardsRemaining = cards.count }
-        .sheet(isPresented: $showAnalytics) {
-            if let analysis = activeAnalysis {
-                AnalyticsSheetView(analysis: analysis)
-            }
+        .sheet(item: $activeCard) { card in
+            AnalyticsSheetView(
+                analysis: card.aiAnalysis,
+                voteQuestion: card.question,
+                voteOptions: flashVoteOptions(for: card),
+                votesCount: card.votesCount,
+                votedOptionId: activeVotedOptionId,
+                onVote: { option in
+                    activeVotedOptionId = option.id
+                    swipe(to: option.text == "НЕТ" ? .left : .right)
+                }
+            )
         }
     }
 
@@ -94,6 +102,23 @@ struct FlashHeroView: View {
             }
             isSwiping = false
         }
+    }
+
+    // MARK: Vote options helper
+
+    // Constructs [ДА, НЕТ] VoteOption pair for a flash card.
+    // Order matches VotingBlockView's [success, danger] color assignment.
+    // Percentages are derived from AI confidence so the bar fills correctly after voting.
+    private func flashVoteOptions(for card: FlashCard) -> [VoteOption] {
+        let ai = card.aiAnalysis
+        let daPercent = ai.prosLabel == "ДА"
+            ? Double(ai.confidencePercent)
+            : Double(100 - ai.confidencePercent)
+        let netPercent = 100.0 - daPercent
+        return [
+            VoteOption(iconName: "checkmark.circle.fill", text: "ДА",  subtitle: "", percent: daPercent),
+            VoteOption(iconName: "xmark.circle.fill",    text: "НЕТ", subtitle: "", percent: netPercent)
+        ]
     }
 
     // MARK: Category helpers
@@ -174,8 +199,8 @@ struct FlashHeroView: View {
 
                     // AI analytics button (top-right)
                     Button {
-                        activeAnalysis = card.aiAnalysis
-                        showAnalytics = true
+                        activeVotedOptionId = nil
+                        activeCard = card
                     } label: {
                         HStack(spacing: 4) {
                             Image(systemName: "sparkles")

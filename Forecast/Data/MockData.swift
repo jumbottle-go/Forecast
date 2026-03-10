@@ -8,6 +8,7 @@ struct FlashCard: Identifiable {
     let category: String
     let symbol: String
     let imageURL: String
+    let votesCount: Int
     let aiShortAnswer: String
     let aiAnalysis: AIAnalysis
 }
@@ -33,7 +34,10 @@ enum MockData {
         ],
         aiShortAnswer: "За 48ч",
         aiAnalysis: AIAnalysis(
-            summary: "62% за «За 48ч»",
+            summary: "За 48ч",
+            confidencePercent: 62,
+            prosLabel: "За 48ч",
+            consLabel: "Переговоры",
             pros: [
             "В 2018–2019 гг. Пекин отвечал в течение 24 ч.",
             "Госсовет КНР созвал экстренное заседание",
@@ -63,7 +67,10 @@ enum MockData {
             ],
                 aiShortAnswer: "Заморозит",
             aiAnalysis: AIAnalysis(
-                summary: "56% за «Заморозит»",
+                summary: "Заморозит",
+                confidencePercent: 56,
+                prosLabel: "Заморозит",
+                consLabel: "Снизит",
                 pros: [
                 "Тарифы создают инфляционный риск",
                 "Рынок труда остаётся перегретым"
@@ -89,7 +96,10 @@ enum MockData {
             ],
             aiShortAnswer: "$150k+",
             aiAnalysis: AIAnalysis(
-                summary: "58% за «$150k+»",
+                summary: "$150k+",
+                confidencePercent: 58,
+                prosLabel: "$150k+",
+                consLabel: "Коррекция",
                 pros: [
                 "Post-halving цикл исторически пиковый через 12–18 мес.",
                 "Рекордный приток в ETF: $3.2B за неделю",
@@ -116,7 +126,10 @@ enum MockData {
             ],
             aiShortAnswer: "$200+",
             aiAnalysis: AIAnalysis(
-                summary: "71% за «$200+»",
+                summary: "$200+",
+                confidencePercent: 71,
+                prosLabel: "$200+",
+                consLabel: "Плато",
                 pros: [
                 "Форвардный P/E 32x — ниже 3-летнего среднего 40x",
                 "Запуск GB300 в Q3 добавит ключевой катализатор",
@@ -147,7 +160,10 @@ enum MockData {
             ],
             aiShortAnswer: "Запрет",
             aiAnalysis: AIAnalysis(
-                summary: "53% за «Запрет»",
+                summary: "Запрет",
+                confidencePercent: 53,
+                prosLabel: "Запрет",
+                consLabel: "Интеграция",
                 pros: [
                 "EU AI Act уже требует аудита для топ-моделей",
                 "Расследование GPT-4 ускоряет процесс"
@@ -173,7 +189,10 @@ enum MockData {
             ],
             aiShortAnswer: "< 1 млн",
             aiAnalysis: AIAnalysis(
-                summary: "61% за «< 1 млн»",
+                summary: "< 1 млн",
+                confidencePercent: 61,
+                prosLabel: "< 1 млн",
+                consLabel: "> 1 млн",
                 pros: [
                 "Любая VR-гарнитура выше $1K остаётся нишевой",
                 "Meta Quest Pro стоит вдвое дешевле"
@@ -199,7 +218,10 @@ enum MockData {
             ],
             aiShortAnswer: "Устоят",
             aiAnalysis: AIAnalysis(
-                summary: "65% за «Устоят»",
+                summary: "Устоят",
+                confidencePercent: 65,
+                prosLabel: "Устоят",
+                consLabel: "Взломают",
                 pros: [
                 "Post-quantum криграфия стандартизирована NIST",
                 "Корпоративный сектор внедряет крипто-агильность"
@@ -229,7 +251,10 @@ enum MockData {
             ],
             aiShortAnswer: "Ратифицируют",
             aiAnalysis: AIAnalysis(
-                summary: "67% за «Ратифицируют»",
+                summary: "Ратифицируют",
+                confidencePercent: 67,
+                prosLabel: "Ратифицируют",
+                consLabel: "Заблокируют",
                 pros: [
                 "Давление Трампа исторически объединяет ЕС",
                 "Угроза со стороны РФ — сильнейший катализатор"
@@ -255,7 +280,10 @@ enum MockData {
             ],
             aiShortAnswer: "Отложат",
             aiAnalysis: AIAnalysis(
-                summary: "59% за «Отложат»",
+                summary: "Отложат",
+                confidencePercent: 59,
+                prosLabel: "Отложат",
+                consLabel: "Примут",
                 pros: [
                 "Консенсус всех 32 членов исторически труднодостижим",
                 "Выборы в Венгрии и Словакии создают риск вето"
@@ -281,7 +309,10 @@ enum MockData {
             ],
             aiShortAnswer: "Вето",
             aiAnalysis: AIAnalysis(
-                summary: "72% за «Вето»",
+                summary: "Вето",
+                confidencePercent: 72,
+                prosLabel: "Вето",
+                consLabel: "Примут",
                 pros: [
                 "Китай и Россия обладают правом вето",
                 "КНР продвигает конкурирующую резолюцию"
@@ -311,7 +342,10 @@ enum MockData {
             ],
             aiShortAnswer: "Реал",
             aiAnalysis: AIAnalysis(
-                summary: "55% за «Реал»",
+                summary: "Реал",
+                confidencePercent: 55,
+                prosLabel: "Реал",
+                consLabel: "Арсенал",
                 pros: [
                 "18 побед в 22 домашних еврокубковых матчах",
                 "Опыт финалов ЛЧ: 15 участий за историю клуба"
@@ -337,7 +371,10 @@ enum MockData {
             ],
             aiShortAnswer: "Ferrari",
             aiAnalysis: AIAnalysis(
-                summary: "62% за «Другие»",
+                summary: "Другие",
+                confidencePercent: 62,
+                prosLabel: "Другие",
+                consLabel: "Ferrari",
                 pros: [
                 "Mercedes и Red Bull разработали кардинальные обновления",
                 "Феррари исторически теряет очки из-за ошибок стратегии"
@@ -363,7 +400,10 @@ enum MockData {
             ],
             aiShortAnswer: "Чемпионы",
             aiAnalysis: AIAnalysis(
-                summary: "61% за «Чемпионы»",
+                summary: "Чемпионы",
+                confidencePercent: 61,
+                prosLabel: "Чемпионы",
+                consLabel: "Провал",
                 pros: [
                 "ЛеБрон кардинально меняет баланс сил на Западе",
                 "Дуэт Карри + ЛеБрон — беспрецедентный в истории НБА"
@@ -393,7 +433,10 @@ enum MockData {
             ],
             aiShortAnswer: "Стерильно",
             aiAnalysis: AIAnalysis(
-                summary: "66% за «Стерильно»",
+                summary: "Стерильно",
+                confidencePercent: 66,
+                prosLabel: "Стерильно",
+                consLabel: "Найдут",
                 pros: [
                 "Нужна буровая миссия — не ранее 2035 г.",
                 "Радиация и перхлораты губительны для большинства организмов"
@@ -419,7 +462,10 @@ enum MockData {
             ],
             aiShortAnswer: "Одобрение",
             aiAnalysis: AIAnalysis(
-                summary: "78% за «Одобрение»",
+                summary: "Одобрение",
+                confidencePercent: 78,
+                prosLabel: "Одобрение",
+                consLabel: "Задержка",
                 pros: [
                 "Данные Phase 3: снижение смертности на 41%",
                 "FDA предоставило статус прорывной терапии"
@@ -445,7 +491,10 @@ enum MockData {
             ],
             aiShortAnswer: "Выстоит",
             aiAnalysis: AIAnalysis(
-                summary: "53% за «Выстоит»",
+                summary: "Выстоит",
+                confidencePercent: 53,
+                prosLabel: "Выстоит",
+                consLabel: "Коллапс",
                 pros: [
                 "Снижение выбросов CO2 может стабилизировать течение",
                 "Климатические модели показывают высокую неопределённость"
@@ -466,9 +515,13 @@ enum MockData {
             category: "Finance",
             symbol: "chart.line.uptrend.xyaxis",
             imageURL: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80",
+            votesCount: 3_240,
             aiShortAnswer: "Зелёный",
             aiAnalysis: AIAnalysis(
-                summary: "61% за зелёное закрытие",
+                summary: "Зелёный",
+                confidencePercent: 61,
+                prosLabel: "ДА",
+                consLabel: "НЕТ",
                 pros: ["Фьючерсы на S&P растут с утра", "ФРС не будет повышать ставку"],
                 cons: ["Геополитическая напряжённость давит на настроения", "Объём торгов ниже среднего"]
             )
@@ -479,9 +532,13 @@ enum MockData {
             category: "Sports",
             symbol: "sportscourt.fill",
             imageURL: "https://images.unsplash.com/photo-1529900748604-07564a03e7a6?w=800&q=80",
+            votesCount: 7_815,
             aiShortAnswer: "Победа",
             aiAnalysis: AIAnalysis(
-                summary: "58% за победу Арсенала",
+                summary: "Победа",
+                confidencePercent: 58,
+                prosLabel: "ДА",
+                consLabel: "НЕТ",
                 pros: ["Арсенал не проигрывает дома 11 матчей", "Соперник без ключевых игроков"],
                 cons: ["Усталость после выездного тура", "Исторически проигрывают в кубковых играх"]
             )
@@ -492,9 +549,13 @@ enum MockData {
             category: "Crypto",
             symbol: "bitcoinsign.circle.fill",
             imageURL: "https://images.unsplash.com/photo-1518544866330-4e716499f800?w=800&q=80",
+            votesCount: 14_520,
             aiShortAnswer: "Нет, рано",
             aiAnalysis: AIAnalysis(
-                summary: "74% — BTC не достигнет $130k сегодня",
+                summary: "Не достигнет",
+                confidencePercent: 74,
+                prosLabel: "НЕТ",
+                consLabel: "ДА",
                 pros: ["До цели остаётся >8% роста за один день", "Сильное сопротивление на $125k"],
                 cons: ["Институциональный спрос стабильно растёт", "ETF-притоки за неделю превысили $2 млрд"]
             )
@@ -505,9 +566,13 @@ enum MockData {
             category: "Tech",
             symbol: "desktopcomputer",
             imageURL: "https://images.unsplash.com/photo-1617802690992-15d93263d3a9?w=800&q=80",
+            votesCount: 5_103,
             aiShortAnswer: "Не на неделе",
             aiAnalysis: AIAnalysis(
-                summary: "82% — анонса на этой неделе не будет",
+                summary: "Анонса не будет",
+                confidencePercent: 82,
+                prosLabel: "НЕТ",
+                consLabel: "ДА",
                 pros: ["Apple не анонсировала мероприятие", "Производственный цикл ещё не завершён"],
                 cons: ["Слухи от надёжных инсайдеров усилились", "Конкуренты уже выпустили аналоги"]
             )
@@ -518,9 +583,13 @@ enum MockData {
             category: "Finance",
             symbol: "eurosign.circle.fill",
             imageURL: "https://images.unsplash.com/photo-1620321023374-d1a68fbc720d?w=800&q=80",
+            votesCount: 2_890,
             aiShortAnswer: "Да, выше",
             aiAnalysis: AIAnalysis(
-                summary: "66% — EUR/USD выше 1.09 на закрытии",
+                summary: "Выше 1.09",
+                confidencePercent: 66,
+                prosLabel: "ДА",
+                consLabel: "НЕТ",
                 pros: ["ЕЦБ сохраняет «ястребиную» риторику", "Слабый отчёт по занятости в США"],
                 cons: ["Доллар укрепляется на фоне тарифных рисков", "Технически пара на ключевой поддержке"]
             )
@@ -540,11 +609,11 @@ enum MockData {
         let breakingArticle = Article(
             newsItem: breakingHero,
             keyFacts: [
-                KeyFact(emoji: "📦", text: "145% tariff on chips"),
-                KeyFact(emoji: "💵", text: "$380B trade volume at risk"),
-                KeyFact(emoji: "⚠️", text: "TSMC supply chains affected"),
-                KeyFact(emoji: "🇨🇳", text: "Beijing: 'firm countermeasures'"),
-                KeyFact(emoji: "📉", text: "Nasdaq -3.2% on open")
+                KeyFact(emoji: "percent",                       text: "145% tariff on chips"),
+                KeyFact(emoji: "dollarsign.circle.fill",         text: "$380B trade volume at risk"),
+                KeyFact(emoji: "exclamationmark.triangle.fill",  text: "TSMC supply chains affected"),
+                KeyFact(emoji: "flag.fill",                      text: "Beijing: 'firm countermeasures'"),
+                KeyFact(emoji: "chart.line.downtrend.xyaxis",    text: "Nasdaq -3.2% on open")
             ],
             bodyParagraphs: [
                 .text(UUID(), "The White House announced Monday a sweeping tariff package targeting Chinese technology imports, covering semiconductors, smartphones, laptops, and advanced manufacturing equipment. The 145% rate — nearly double the previous ceiling — takes effect Friday, giving importers less than 96 hours to adjust supply chains."),
@@ -561,10 +630,10 @@ enum MockData {
         dict[fed.id] = Article(
             newsItem: fed,
             keyFacts: [
-                KeyFact(emoji: "📊", text: "Rate: 4.75% unchanged"),
-                KeyFact(emoji: "📈", text: "Core CPI: 3.1% YoY"),
-                KeyFact(emoji: "💼", text: "Unemployment: 3.8%"),
-                KeyFact(emoji: "🏦", text: "2 cuts priced in 2026")
+                KeyFact(emoji: "lock.fill",                  text: "Rate: 4.75% unchanged"),
+                KeyFact(emoji: "chart.line.uptrend.xyaxis", text: "Core CPI: 3.1% YoY"),
+                KeyFact(emoji: "person.2.fill",              text: "Unemployment: 3.8%"),
+                KeyFact(emoji: "building.columns.fill",      text: "2 cuts priced in 2026")
             ],
             bodyParagraphs: [
                 .text(UUID(), "The Federal Open Market Committee voted unanimously to hold the benchmark federal funds rate at 4.75–5.00%, matching market expectations. Chair Jerome Powell struck a cautious tone at the press conference, emphasising that the committee needs 'greater confidence' that inflation is sustainably moving toward its 2% target before reducing rates."),
@@ -579,10 +648,10 @@ enum MockData {
         dict[btc.id] = Article(
             newsItem: btc,
             keyFacts: [
-                KeyFact(emoji: "₿", text: "Price: $128,400"),
-                KeyFact(emoji: "📥", text: "$3.2B ETF inflows this week"),
-                KeyFact(emoji: "🏦", text: "BlackRock holds 312K BTC"),
-                KeyFact(emoji: "🔄", text: "Halving: 14 months ago")
+                KeyFact(emoji: "bitcoinsign.circle.fill",  text: "Price: $128,400"),
+                KeyFact(emoji: "arrow.down.circle.fill",   text: "$3.2B ETF inflows this week"),
+                KeyFact(emoji: "building.columns.fill",    text: "BlackRock holds 312K BTC"),
+                KeyFact(emoji: "clock.arrow.circlepath",   text: "Halving: 14 months ago")
             ],
             bodyParagraphs: [
                 .text(UUID(), "Bitcoin surged past $128,000 for the first time on Tuesday, driven by record weekly inflows into spot Bitcoin ETFs and growing institutional allocation from sovereign wealth funds. The move extends a rally that began in mid-January following the approval of a BTC strategic reserve by the U.S. government."),
@@ -596,10 +665,10 @@ enum MockData {
         dict[nvda.id] = Article(
             newsItem: nvda,
             keyFacts: [
-                KeyFact(emoji: "💰", text: "Revenue: $42.1B (+122% YoY)"),
-                KeyFact(emoji: "🖥️", text: "Data center: $35.8B"),
-                KeyFact(emoji: "📊", text: "EPS: $0.89 vs $0.84 est."),
-                KeyFact(emoji: "🚀", text: "Q2 guide: $45B+")
+                KeyFact(emoji: "dollarsign.circle.fill",      text: "Revenue: $42.1B (+122% YoY)"),
+                KeyFact(emoji: "desktopcomputer",             text: "Data center: $35.8B"),
+                KeyFact(emoji: "chart.bar.fill",              text: "EPS: $0.89 vs $0.84 est."),
+                KeyFact(emoji: "arrow.up.right.circle.fill",  text: "Q2 guide: $45B+")
             ],
             bodyParagraphs: [
                 .text(UUID(), "Nvidia reported fiscal Q4 2026 revenue of $42.1 billion, smashing analyst estimates of $38.2 billion and delivering its eighth consecutive quarter of triple-digit year-over-year data center growth. CEO Jensen Huang described demand as 'insatiable', pointing to the global build-out of AI inference infrastructure as an accelerating rather than decelerating force."),
@@ -613,10 +682,10 @@ enum MockData {
         dict[gpt.id] = Article(
             newsItem: gpt,
             keyFacts: [
-                KeyFact(emoji: "🧠", text: "97% Bar Exam score"),
-                KeyFact(emoji: "⚡", text: "10x faster than GPT-4"),
-                KeyFact(emoji: "🌍", text: "Supports 50 languages"),
-                KeyFact(emoji: "🔬", text: "Passes PhD-level science evals")
+                KeyFact(emoji: "brain.head.profile",  text: "97% Bar Exam score"),
+                KeyFact(emoji: "bolt.fill",           text: "10x faster than GPT-4"),
+                KeyFact(emoji: "globe",               text: "Supports 50 languages"),
+                KeyFact(emoji: "sparkles",            text: "Passes PhD-level science evals")
             ],
             bodyParagraphs: [
                 .text(UUID(), "OpenAI released GPT-5 to ChatGPT Plus and API customers simultaneously, describing it as 'the first model to demonstrate genuine multi-step reasoning in real time'. In benchmark testing, GPT-5 scored 97th percentile on the LSAT, 94th on the USMLE medical board exam, and achieved a perfect score on the International Mathematical Olympiad qualifier for the first time by any AI system."),
@@ -630,10 +699,10 @@ enum MockData {
         dict[cl.id] = Article(
             newsItem: cl,
             keyFacts: [
-                KeyFact(emoji: "🏟️", text: "Venue: Santiago Bernabéu"),
-                KeyFact(emoji: "⚽", text: "Arsenal: unbeaten in UCL"),
-                KeyFact(emoji: "🤕", text: "Vinicius: doubtful (hamstring)"),
-                KeyFact(emoji: "📺", text: "Kick-off: 21:00 CET Tuesday")
+                KeyFact(emoji: "sportscourt.fill",  text: "Venue: Santiago Bernabéu"),
+                KeyFact(emoji: "soccerball",        text: "Arsenal: unbeaten in UCL"),
+                KeyFact(emoji: "stethoscope",       text: "Vinicius: doubtful (hamstring)"),
+                KeyFact(emoji: "clock.fill",        text: "Kick-off: 21:00 CET Tuesday")
             ],
             bodyParagraphs: [
                 .text(UUID(), "Real Madrid host Arsenal in the first leg of a hotly anticipated Champions League semi-final that has captivated European football fans. Arsenal, managed by Mikel Arteta, arrive in Madrid unbeaten in the competition — winning all eight group and knockout stage matches — while Real Madrid are seeking their fourth Champions League title in eight seasons."),
@@ -647,10 +716,10 @@ enum MockData {
         dict[mars.id] = Article(
             newsItem: mars,
             keyFacts: [
-                KeyFact(emoji: "💧", text: "30km wide brine lake"),
-                KeyFact(emoji: "📡", text: "Detected by MAVEN-2 radar"),
-                KeyFact(emoji: "🌡️", text: "Temp: -20°C, salt-saturated"),
-                KeyFact(emoji: "🧊", text: "1.5km below surface ice")
+                KeyFact(emoji: "drop.fill",                          text: "30km wide brine lake"),
+                KeyFact(emoji: "antenna.radiowaves.left.and.right",   text: "Detected by MAVEN-2 radar"),
+                KeyFact(emoji: "thermometer",                         text: "Temp: -20°C, salt-saturated"),
+                KeyFact(emoji: "snowflake",                           text: "1.5km below surface ice")
             ],
             bodyParagraphs: [
                 .text(UUID(), "Scientists at NASA's Jet Propulsion Laboratory confirmed Tuesday that MAVEN-2's shallow radar instrument has detected a coherent reflector 1.5 kilometres beneath the Martian south polar layered deposits consistent with a body of liquid water spanning approximately 30 kilometres in width. The finding, published in Nature Astronomy, represents the most significant discovery of accessible Martian water to date."),
@@ -675,10 +744,10 @@ enum MockData {
 
     private static func defaultKeyFacts(for item: NewsItem) -> [KeyFact] {
         [
-            KeyFact(emoji: "📰", text: item.source),
-            KeyFact(emoji: "⏱️", text: item.timeAgo),
-            KeyFact(emoji: "🗳️", text: "\(item.votesCount) голосов"),
-            KeyFact(emoji: "🏷️", text: item.category.rawValue)
+            KeyFact(emoji: "newspaper.fill",  text: item.source),
+            KeyFact(emoji: "clock.fill",      text: item.timeAgo),
+            KeyFact(emoji: "person.2.fill",   text: "\(item.votesCount) голосов"),
+            KeyFact(emoji: "tag.fill",        text: item.category.rawValue)
         ]
     }
 

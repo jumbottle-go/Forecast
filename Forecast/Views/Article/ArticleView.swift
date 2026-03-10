@@ -60,31 +60,6 @@ struct ArticleView: View {
                     .padding(.horizontal, 16)
                     .padding(.vertical, 14)
 
-                    // MARK: Key Facts
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 8) {
-                            ForEach(vm.keyFacts) { fact in
-                                HStack(spacing: 6) {
-                                    Text(fact.emoji)
-                                        .font(.body)
-                                    Text(fact.text)
-                                        .font(.caption)
-                                        .foregroundStyle(AppTheme.textPrimary)
-                                }
-                                .padding(.horizontal, 12)
-                                .padding(.vertical, 8)
-                                .background(AppTheme.card)
-                                .clipShape(RoundedRectangle(cornerRadius: AppTheme.chipRadius))
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: AppTheme.chipRadius)
-                                        .strokeBorder(AppTheme.border, lineWidth: 1)
-                                )
-                            }
-                        }
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 14)
-                    }
-
                     // MARK: Body
                     VStack(alignment: .leading, spacing: 18) {
                         ForEach(vm.bodyParagraphs) { element in
@@ -130,20 +105,15 @@ struct ArticleView: View {
 
             // Back button — pinned top-left
             Button { dismiss() } label: {
-                HStack(spacing: 6) {
-                    Image(systemName: "chevron.left")
-                        .font(.subheadline.bold())
-                    Text("Назад")
-                        .font(.subheadline.bold())
-                }
-                .foregroundStyle(.white)
-                .padding(.horizontal, 14)
-                .padding(.vertical, 9)
-                .background(.black.opacity(0.50))
-                .clipShape(Capsule())
+                Image(systemName: "chevron.left")
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundStyle(.white)
+                    .frame(width: 38, height: 38)
+                    .background(.ultraThinMaterial)
+                    .clipShape(Circle())
             }
             .padding(.leading, 16)
-            .padding(.top, 56)
+            .padding(.top, 8)
         }
         .navigationBarHidden(true)
         .safeAreaInset(edge: .bottom, spacing: 0) {
@@ -157,44 +127,26 @@ struct ArticleView: View {
     private var stickyVoteBar: some View {
         if newsItem.options.count >= 2 {
             VStack(spacing: 0) {
-                // Top border
                 Rectangle()
-                    .fill(AppTheme.border)
-                    .frame(height: 1)
+                    .fill(.white.opacity(0.15))
+                    .frame(height: 0.5)
 
-                VStack(alignment: .leading, spacing: 10) {
-                    // Question label
-                    Text(newsItem.question)
-                        .font(.subheadline.bold())
-                        .foregroundStyle(AppTheme.textPrimary)
-                        .lineLimit(2)
-                        .fixedSize(horizontal: false, vertical: true)
-
-                    // Vote buttons
-                    let colors: [Color] = [AppTheme.success, AppTheme.danger]
-                    HStack(spacing: 8) {
-                        ForEach(Array(newsItem.options.prefix(2).enumerated()), id: \.element.id) { idx, option in
-                            VoteButton(
-                                option: option,
-                                isSelected: votedOptionId == option.id,
-                                isVoted: isVoted,
-                                showSubtitle: false,
-                                tintColor: colors[idx]
-                            ) {
-                                feedViewModel.castVote(for: newsItem.id, option: option)
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                    dismiss()
-                                }
-                            }
-                            .frame(maxWidth: .infinity)
-                        }
+                VotingBlockView(
+                    question: newsItem.question,
+                    options: newsItem.options,
+                    votesCount: newsItem.votesCount,
+                    votedOptionId: votedOptionId
+                ) { option in
+                    feedViewModel.castVote(for: newsItem.id, option: option)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        dismiss()
                     }
                 }
                 .padding(.horizontal, 16)
-                .padding(.top, 24)
+                .padding(.top, 16)
                 .padding(.bottom, 16)
             }
-            .background(AppTheme.bg)
+            .background(.ultraThinMaterial)
         }
     }
 }
