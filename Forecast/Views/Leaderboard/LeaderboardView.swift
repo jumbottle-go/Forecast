@@ -3,6 +3,7 @@ import SwiftUI
 struct LeaderboardView: View {
 
     @Binding var selectedTab: Int
+    @State private var dotPulse = false
 
     // MARK: - Mock data
 
@@ -13,17 +14,17 @@ struct LeaderboardView: View {
     }
 
     private let leagues: [League] = [
-        League(iconName: "suit.diamond.fill", name: "Diamond",  color: Color(hex: "B9F2FF")),
-        League(iconName: "shield.fill",       name: "Platinum", color: Color(hex: "E5E4E2")),
-        League(iconName: "medal.fill",        name: "Gold",     color: Color(hex: "FFD700")),
-        League(iconName: "medal.fill",        name: "Silver",   color: Color(hex: "C0C0C0")),
-        League(iconName: "medal.fill",        name: "Bronze",   color: Color(hex: "CD7F32"))
+        League(iconName: "crown.fill",  name: "Diamond",  color: Color(hex: "B9F2FF")),
+        League(iconName: "trophy.fill", name: "Platinum", color: Color(hex: "E5E4E2")),
+        League(iconName: "medal.fill",  name: "Gold",     color: Color(hex: "FFD700")),
+        League(iconName: "shield.fill", name: "Silver",   color: Color(hex: "C0C0C0")),
+        League(iconName: "star.fill",   name: "Bronze",   color: Color(hex: "CD7F32"))
     ]
 
     private let bronzeColor = Color(hex: "CD7F32")
-    private let bronzeProgress: CGFloat = 0.4   // 2 of 5
-    private let bronzeDone   = 2
-    private let bronzeTotal  = 5
+    private let grayLine    = Color.white.opacity(0.15)
+    private let rowHeight: CGFloat = 48
+    private let calRowHeight: CGFloat = 60
 
     private struct FeatureCard {
         let icon: String
@@ -31,9 +32,9 @@ struct LeaderboardView: View {
     }
 
     private let features: [FeatureCard] = [
-        FeatureCard(icon: "chart.bar.fill",       text: "Соревнуйся с игроками твоего уровня"),
-        FeatureCard(icon: "arrow.up.circle.fill",  text: "Повышайся в лигах каждый месяц"),
-        FeatureCard(icon: "flame.fill",            text: "Множители очков в высших лигах")
+        FeatureCard(icon: "chart.bar.fill",      text: "Соревнуйся с игроками твоего уровня"),
+        FeatureCard(icon: "arrow.up.circle.fill", text: "Повышайся в лигах каждый месяц"),
+        FeatureCard(icon: "flame.fill",           text: "Множители очков в высших лигах")
     ]
 
     // MARK: - Body
@@ -54,14 +55,15 @@ struct LeaderboardView: View {
                         .padding(.top, 20)
                         .padding(.bottom, 16)
 
-                    // Block 2 — League ladder
-                    leagueBlock
+                    // Block 2 — League track
+                    leagueTrackBlock
 
-                    // Block 3 — Bronze CTA
-                    bronzeBlock
+                    // CTA button
+                    ctaButton
                         .padding(.top, 16)
+                        .padding(.horizontal, 16)
 
-                    // Block 4 — Feature preview
+                    // Block 3 — Feature preview
                     featuresBlock
                         .padding(.top, 24)
 
@@ -72,19 +74,16 @@ struct LeaderboardView: View {
         }
     }
 
-    // MARK: Block 2 — League ladder
+    // MARK: Block 2 — League track
 
-    private var leagueBlock: some View {
+    private var leagueTrackBlock: some View {
         VStack(spacing: 0) {
             ForEach(Array(leagues.enumerated()), id: \.offset) { idx, league in
-                leagueRow(league)
-                if idx < leagues.count - 1 {
-                    Rectangle()
-                        .fill(Color.white.opacity(0.08))
-                        .frame(height: 1)
-                        .padding(.horizontal, 4)
-                }
+                let isFirst  = idx == 0
+                let isBronze = idx == leagues.count - 1
+                leagueTrackRow(league, isFirst: isFirst, isBronze: isBronze)
             }
+            calibrationRow
         }
         .padding(16)
         .background(Color.white.opacity(0.04))
@@ -92,92 +91,108 @@ struct LeaderboardView: View {
         .padding(.horizontal, 16)
     }
 
-    private func leagueRow(_ league: League) -> some View {
-        HStack(spacing: 16) {
-            Image(systemName: league.iconName)
-                .font(.system(size: 24))
-                .foregroundStyle(league.color)
-            Text(league.name)
-                .font(.system(size: 16, weight: .semibold))
-                .foregroundStyle(league.color)
-            Spacer()
+    // Regular league row
+    @ViewBuilder
+    private func leagueTrackRow(_ league: League, isFirst: Bool, isBronze: Bool) -> some View {
+        HStack(spacing: 12) {
+
+            // Track column: continuous line + dot
+            ZStack {
+                VStack(spacing: 0) {
+                    Rectangle()
+                        .fill(isFirst ? Color.clear : grayLine)
+                        .frame(width: 2, height: rowHeight / 2)
+                    Rectangle()
+                        .fill(isBronze ? bronzeColor : grayLine)
+                        .frame(width: 2, height: rowHeight / 2)
+                }
+                Circle()
+                    .fill(isBronze ? bronzeColor : grayLine)
+                    .frame(width: 10, height: 10)
+            }
+            .frame(width: 20, height: rowHeight)
+
+            // League icon + name
+            HStack(spacing: 10) {
+                Image(systemName: league.iconName)
+                    .font(.system(size: 20))
+                    .foregroundStyle(league.color)
+                Text(league.name)
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundStyle(league.color)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+
+            // Lock
+            Image(systemName: "lock.fill")
+                .font(.system(size: 14))
+                .foregroundStyle(Color.white.opacity(0.25))
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .frame(height: 56)
+        .frame(height: rowHeight)
     }
 
-    // MARK: Block 3 — Bronze progress CTA
+    // "You are here" calibration row
+    private var calibrationRow: some View {
+        HStack(spacing: 12) {
 
-    private var bronzeBlock: some View {
-        VStack(spacing: 0) {
-
-            // Icon
-            Image(systemName: "target")
-                .font(.system(size: 40, weight: .regular))
-                .foregroundStyle(bronzeColor)
-                .frame(maxWidth: .infinity, alignment: .center)
-
-            // Title
-            Text("Попади в Bronze лигу")
-                .font(.system(size: 18, weight: .bold))
-                .foregroundStyle(AppTheme.textPrimary)
-                .multilineTextAlignment(.center)
-                .padding(.top, 12)
-
-            // Subtitle
-            Text("Сделай ещё 3 верных прогноза в Daily Flash")
-                .font(.system(size: 14))
-                .foregroundStyle(AppTheme.textSecondary)
-                .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .padding(.top, 8)
-
-            // Progress bar
-            VStack(alignment: .trailing, spacing: 6) {
-                GeometryReader { geo in
-                    ZStack(alignment: .leading) {
-                        RoundedRectangle(cornerRadius: 4)
-                            .fill(Color.white.opacity(0.10))
-                            .frame(height: 8)
-                        RoundedRectangle(cornerRadius: 4)
-                            .fill(bronzeColor)
-                            .frame(width: geo.size.width * bronzeProgress, height: 8)
-                    }
+            // Track column: bronze top line + pulsating dot
+            ZStack {
+                VStack(spacing: 0) {
+                    Rectangle()
+                        .fill(bronzeColor)
+                        .frame(width: 2, height: calRowHeight / 2)
+                    Rectangle()
+                        .fill(Color.clear)
+                        .frame(width: 2, height: calRowHeight / 2)
                 }
-                .frame(height: 8)
+                Circle()
+                    .fill(bronzeColor)
+                    .frame(width: 14, height: 14)
+                    .opacity(dotPulse ? 1.0 : 0.5)
+            }
+            .frame(width: 20, height: calRowHeight)
 
-                Text("\(bronzeDone) / \(bronzeTotal)")
-                    .font(.system(size: 12))
+            // Text
+            VStack(alignment: .leading, spacing: 3) {
+                Text("Калибровка")
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundStyle(AppTheme.textPrimary)
+                Text("2 из 5 прогнозов до Bronze")
+                    .font(.system(size: 13))
                     .foregroundStyle(AppTheme.textSecondary)
             }
-            .padding(.top, 16)
-
-            // CTA button
-            Button {
-                selectedTab = 0
-            } label: {
-                HStack(spacing: 8) {
-                    Text("Перейти к прогнозам")
-                        .font(.system(size: 16, weight: .semibold))
-                    Image(systemName: "arrow.right")
-                        .font(.system(size: 16, weight: .semibold))
-                }
-                .foregroundStyle(.white)
-                .frame(maxWidth: .infinity)
-                .frame(height: 48)
-                .background(bronzeColor)
-                .clipShape(RoundedRectangle(cornerRadius: 12))
-            }
-            .buttonStyle(.plain)
-            .padding(.top, 16)
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .padding(20)
-        .background(Color.white.opacity(0.04))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
-        .padding(.horizontal, 16)
+        .frame(height: calRowHeight)
+        .onAppear {
+            withAnimation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true)) {
+                dotPulse = true
+            }
+        }
     }
 
-    // MARK: Block 4 — Feature preview
+    // MARK: CTA button
+
+    private var ctaButton: some View {
+        Button {
+            selectedTab = 0
+        } label: {
+            HStack(spacing: 8) {
+                Text("Перейти к прогнозам")
+                    .font(.system(size: 16, weight: .semibold))
+                Image(systemName: "arrow.right")
+                    .font(.system(size: 16, weight: .semibold))
+            }
+            .foregroundStyle(.white)
+            .frame(maxWidth: .infinity)
+            .frame(height: 48)
+            .background(bronzeColor)
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+        }
+        .buttonStyle(.plain)
+    }
+
+    // MARK: Block 3 — Feature preview
 
     private var featuresBlock: some View {
         VStack(alignment: .leading, spacing: 10) {
