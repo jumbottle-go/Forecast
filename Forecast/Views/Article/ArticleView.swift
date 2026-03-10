@@ -138,8 +138,11 @@ struct ArticleView: View {
                     votedOptionId: votedOptionId
                 ) { option in
                     feedViewModel.castVote(for: newsItem.id, option: option)
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                         dismiss()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                            NotificationCenter.default.post(name: NSNotification.Name("ArticleDismissedSwipe"), object: nil)
+                        }
                     }
                 }
                 .padding(.horizontal, 16)

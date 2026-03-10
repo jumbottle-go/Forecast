@@ -4,12 +4,12 @@ struct FlashHeroView: View {
 
     var onReadArticle: ((FlashCard) -> Void)? = nil
     @Binding var cardsRemaining: Int
+    @EnvironmentObject private var feedViewModel: FeedViewModel
 
     @State private var cards: [FlashCard] = MockData.flashCards
     @State private var dragOffset: CGSize = .zero
     @State private var isSwiping = false
     @State private var activeCard: FlashCard? = nil
-    @State private var activeVotedOptionId: UUID? = nil
 
     private let totalCount = MockData.flashCards.count
     private let swipeThreshold: CGFloat = 100
@@ -37,6 +37,16 @@ struct FlashHeroView: View {
         }
         .animation(.spring(response: 0.45, dampingFraction: 0.78), value: cards.isEmpty)
         .padding(.horizontal, 16)
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("ArticleDismissedSwipe"))) { _ in
+            if let topCard = cards.last,
+               let votedOptionId = feedViewModel.votedOptionId(for: topCard.id),
+               let newsItem = feedViewModel.allNews.first(where: { $0.id == topCard.id }),
+               let option = newsItem.options.first(where: { $0.id == votedOptionId }) {
+
+                cards.removeAll { $0.id != topCard.id && feedViewModel.isVoted(for: $0.id) }
+                swipe(to: option.text == "НЕТ" ? .left : .right)
+            }
+        }
         .onChange(of: cards.count) { _, _ in cardsRemaining = cards.count }
         .sheet(item: $activeCard) { card in
             AnalyticsSheetView(
@@ -44,9 +54,9 @@ struct FlashHeroView: View {
                 voteQuestion: card.question,
                 voteOptions: flashVoteOptions(for: card),
                 votesCount: card.votesCount,
-                votedOptionId: activeVotedOptionId,
+                votedOptionId: feedViewModel.votedOptionId(for: card.id),
                 onVote: { option in
-                    activeVotedOptionId = option.id
+                    feedViewModel.castVote(for: card.id, option: option)
                     swipe(to: option.text == "НЕТ" ? .left : .right)
                 }
             )
@@ -199,7 +209,6 @@ struct FlashHeroView: View {
 
                     // AI analytics button (top-right)
                     Button {
-                        activeVotedOptionId = nil
                         activeCard = card
                     } label: {
                         HStack(spacing: 4) {
@@ -247,10 +256,29 @@ struct FlashHeroView: View {
                 // ── Swipe buttons ────────────────────────────────────
                 HStack(spacing: 12) {
 
-                    // ← НЕТ
+                    // ДА (успех)
+                    Button { swipe(to: .right) } label: {
+                        HStack(spacing: 6) {
+                            Image(systemName: "checkmark")
+                            Text("ДА")
+                        }
+                        .font(.subheadline.bold())
+                        .foregroundStyle(AppTheme.success)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 13)
+                        .background(AppTheme.success.opacity(0.15))
+                        .clipShape(RoundedRectangle(cornerRadius: 14))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 14)
+                                .strokeBorder(AppTheme.success.opacity(0.35), lineWidth: 1)
+                        )
+                    }
+                    .buttonStyle(.plain)
+
+                    // НЕТ (отказ)
                     Button { swipe(to: .left) } label: {
                         HStack(spacing: 6) {
-                            Image(systemName: "arrow.left")
+                            Image(systemName: "xmark")
                             Text("НЕТ")
                         }
                         .font(.subheadline.bold())
@@ -262,25 +290,6 @@ struct FlashHeroView: View {
                         .overlay(
                             RoundedRectangle(cornerRadius: 14)
                                 .strokeBorder(AppTheme.danger.opacity(0.35), lineWidth: 1)
-                        )
-                    }
-                    .buttonStyle(.plain)
-
-                    // ДА →
-                    Button { swipe(to: .right) } label: {
-                        HStack(spacing: 6) {
-                            Text("ДА")
-                            Image(systemName: "arrow.right")
-                        }
-                        .font(.subheadline.bold())
-                        .foregroundStyle(AppTheme.success)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 13)
-                        .background(AppTheme.success.opacity(0.15))
-                        .clipShape(RoundedRectangle(cornerRadius: 14))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 14)
-                                .strokeBorder(AppTheme.success.opacity(0.35), lineWidth: 1)
                         )
                     }
                     .buttonStyle(.plain)

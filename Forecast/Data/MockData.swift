@@ -508,14 +508,21 @@ enum MockData {
     ]
 
     // MARK: Flash Cards
-    static let flashCards: [FlashCard] = [
-        FlashCard(
-            id: UUID(),
-            question: "Will S&P 500 close green today?",
-            category: "Finance",
-            symbol: "chart.line.uptrend.xyaxis",
+
+    static let flashNews: [NewsItem] = [
+        NewsItem(
+            title: "Will S&P 500 close green today?",
+            subtitle: "Фьючерсы на S&P растут с утра",
             imageURL: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80",
+            source: "Daily Flash",
+            timeAgo: "сегодня",
             votesCount: 3_240,
+            category: .finance,
+            question: "Will S&P 500 close green today?",
+            options: [
+                VoteOption(iconName: "checkmark.circle.fill", text: "ДА",  subtitle: "", percent: 61),
+                VoteOption(iconName: "xmark.circle.fill",    text: "НЕТ", subtitle: "", percent: 39)
+            ],
             aiShortAnswer: "Зелёный",
             aiAnalysis: AIAnalysis(
                 summary: "Зелёный",
@@ -526,13 +533,19 @@ enum MockData {
                 cons: ["Геополитическая напряжённость давит на настроения", "Объём торгов ниже среднего"]
             )
         ),
-        FlashCard(
-            id: UUID(),
-            question: "Will Arsenal win tonight?",
-            category: "Sports",
-            symbol: "sportscourt.fill",
+        NewsItem(
+            title: "Will Arsenal win tonight?",
+            subtitle: "Арсенал не проигрывает дома 11 матчей",
             imageURL: "https://images.unsplash.com/photo-1529900748604-07564a03e7a6?w=800&q=80",
+            source: "Daily Flash",
+            timeAgo: "сегодня",
             votesCount: 7_815,
+            category: .sports,
+            question: "Will Arsenal win tonight?",
+            options: [
+                VoteOption(iconName: "checkmark.circle.fill", text: "ДА",  subtitle: "", percent: 58),
+                VoteOption(iconName: "xmark.circle.fill",    text: "НЕТ", subtitle: "", percent: 42)
+            ],
             aiShortAnswer: "Победа",
             aiAnalysis: AIAnalysis(
                 summary: "Победа",
@@ -543,13 +556,19 @@ enum MockData {
                 cons: ["Усталость после выездного тура", "Исторически проигрывают в кубковых играх"]
             )
         ),
-        FlashCard(
-            id: UUID(),
-            question: "Will BTC touch $130k today?",
-            category: "Crypto",
-            symbol: "bitcoinsign.circle.fill",
+        NewsItem(
+            title: "Will BTC touch $130k today?",
+            subtitle: "До цели остаётся >8% роста за один день",
             imageURL: "https://images.unsplash.com/photo-1518544866330-4e716499f800?w=800&q=80",
+            source: "Daily Flash",
+            timeAgo: "сегодня",
             votesCount: 14_520,
+            category: .finance,
+            question: "Will BTC touch $130k today?",
+            options: [
+                VoteOption(iconName: "checkmark.circle.fill", text: "ДА",  subtitle: "", percent: 26),
+                VoteOption(iconName: "xmark.circle.fill",    text: "НЕТ", subtitle: "", percent: 74)
+            ],
             aiShortAnswer: "Нет, рано",
             aiAnalysis: AIAnalysis(
                 summary: "Не достигнет",
@@ -560,13 +579,19 @@ enum MockData {
                 cons: ["Институциональный спрос стабильно растёт", "ETF-притоки за неделю превысили $2 млрд"]
             )
         ),
-        FlashCard(
-            id: UUID(),
-            question: "Will Apple announce Vision Pro 2 this week?",
-            category: "Tech",
-            symbol: "desktopcomputer",
+        NewsItem(
+            title: "Will Apple announce Vision Pro 2 this week?",
+            subtitle: "Apple не анонсировала мероприятие",
             imageURL: "https://images.unsplash.com/photo-1617802690992-15d93263d3a9?w=800&q=80",
+            source: "Daily Flash",
+            timeAgo: "сегодня",
             votesCount: 5_103,
+            category: .tech,
+            question: "Will Apple announce Vision Pro 2 this week?",
+            options: [
+                VoteOption(iconName: "checkmark.circle.fill", text: "ДА",  subtitle: "", percent: 18),
+                VoteOption(iconName: "xmark.circle.fill",    text: "НЕТ", subtitle: "", percent: 82)
+            ],
             aiShortAnswer: "Не на неделе",
             aiAnalysis: AIAnalysis(
                 summary: "Анонса не будет",
@@ -577,13 +602,19 @@ enum MockData {
                 cons: ["Слухи от надёжных инсайдеров усилились", "Конкуренты уже выпустили аналоги"]
             )
         ),
-        FlashCard(
-            id: UUID(),
-            question: "Will EUR/USD stay above 1.09 at close?",
-            category: "Finance",
-            symbol: "eurosign.circle.fill",
+        NewsItem(
+            title: "Will EUR/USD stay above 1.09 at close?",
+            subtitle: "ЕЦБ сохраняет «ястребиную» риторику",
             imageURL: "https://images.unsplash.com/photo-1620321023374-d1a68fbc720d?w=800&q=80",
+            source: "Daily Flash",
+            timeAgo: "сегодня",
             votesCount: 2_890,
+            category: .finance,
+            question: "Will EUR/USD stay above 1.09 at close?",
+            options: [
+                VoteOption(iconName: "checkmark.circle.fill", text: "ДА",  subtitle: "", percent: 66),
+                VoteOption(iconName: "xmark.circle.fill",    text: "НЕТ", subtitle: "", percent: 34)
+            ],
             aiShortAnswer: "Да, выше",
             aiAnalysis: AIAnalysis(
                 summary: "Выше 1.09",
@@ -596,9 +627,31 @@ enum MockData {
         )
     ]
 
+    static var flashCards: [FlashCard] {
+        let meta: [(category: String, symbol: String)] = [
+            ("Finance", "chart.line.uptrend.xyaxis"),
+            ("Sports",  "sportscourt.fill"),
+            ("Crypto",  "bitcoinsign.circle.fill"),
+            ("Tech",    "desktopcomputer"),
+            ("Finance", "eurosign.circle.fill")
+        ]
+        return zip(flashNews, meta).map { news, m in
+            FlashCard(
+                id: news.id,
+                question: news.question,
+                category: m.category,
+                symbol: m.symbol,
+                imageURL: news.imageURL,
+                votesCount: news.votesCount,
+                aiShortAnswer: news.aiShortAnswer ?? "",
+                aiAnalysis: news.aiAnalysis!
+            )
+        }
+    }
+
     // MARK: All news (excluding hero)
     static var allNews: [NewsItem] {
-        financeNews + techNews + politicsNews + sportsNews + scienceNews
+        financeNews + techNews + politicsNews + sportsNews + scienceNews + flashNews
     }
 
     // MARK: Articles
@@ -730,6 +783,15 @@ enum MockData {
 
         // Fill remaining news items with concise articles
         for item in techNews.dropFirst() + politicsNews + sportsNews.dropFirst() + scienceNews.dropFirst() {
+            dict[item.id] = Article(
+                newsItem: item,
+                keyFacts: defaultKeyFacts(for: item),
+                bodyParagraphs: defaultBody(for: item)
+            )
+        }
+
+        // Flash articles
+        for item in flashNews {
             dict[item.id] = Article(
                 newsItem: item,
                 keyFacts: defaultKeyFacts(for: item),

@@ -186,6 +186,7 @@ struct LeaderboardView: View {
                     .font(.system(size: 16, weight: .semibold))
                     .foregroundStyle(league.color)
             }
+            .opacity(isBronze ? 1.0 : 0.3)
             .frame(maxWidth: .infinity, alignment: .leading)
 
             // Lock
