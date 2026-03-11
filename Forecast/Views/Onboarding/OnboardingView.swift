@@ -11,19 +11,23 @@ struct OnboardingView: View {
     @State private var showLine3 = false
     @State private var showCategories = false
 
-    private let categories: [(emoji: String, name: String)] = [
-        ("📈", "Finance"),
-        ("💻", "Tech"),
-        ("₿",  "Crypto"),
-        ("🏛",  "Politics"),
-        ("⚽", "Sports"),
-        ("🍿", "Pop Culture")
+    private struct Topic {
+        let name: String
+        let icon: String
+    }
+
+    private let topics: [Topic] = [
+        Topic(name: "Finance",     icon: "chart.line.uptrend.xyaxis"),
+        Topic(name: "Tech",        icon: "desktopcomputer"),
+        Topic(name: "Crypto",      icon: "bitcoinsign.circle.fill"),
+        Topic(name: "Politics",    icon: "building.columns.fill"),
+        Topic(name: "Sports",      icon: "sportscourt.fill"),
+        Topic(name: "Pop Culture", icon: "popcorn.fill")
     ]
 
-    // Category grid rows: [2, 2, 2]
-    private var categoryRows: [[(emoji: String, name: String)]] {
-        stride(from: 0, to: categories.count, by: 2).map {
-            Array(categories[$0 ..< min($0 + 2, categories.count)])
+    private var topicRows: [[Topic]] {
+        stride(from: 0, to: topics.count, by: 2).map {
+            Array(topics[$0 ..< min($0 + 2, topics.count)])
         }
     }
 
@@ -53,10 +57,10 @@ struct OnboardingView: View {
                             .foregroundStyle(AppTheme.textSecondary)
 
                         VStack(alignment: .leading, spacing: 10) {
-                            ForEach(categoryRows.indices, id: \.self) { rowIdx in
+                            ForEach(topicRows.indices, id: \.self) { rowIdx in
                                 HStack(spacing: 10) {
-                                    ForEach(categoryRows[rowIdx], id: \.name) { cat in
-                                        categoryPill(cat)
+                                    ForEach(topicRows[rowIdx], id: \.name) { topic in
+                                        topicPill(topic)
                                     }
                                 }
                             }
@@ -65,14 +69,14 @@ struct OnboardingView: View {
                     .padding(.top, 40)
                     .padding(.horizontal, 24)
                     .transition(.opacity.combined(with: .offset(y: 10)))
+
+                    // ── Continue button ─────────────────────────────────
+                    continueButton
+                        .padding(.horizontal, 24)
+                        .padding(.top, 40)
                 }
 
                 Spacer()
-
-                // ── Continue button ─────────────────────────────────────
-                continueButton
-                    .padding(.horizontal, 24)
-                    .padding(.bottom, 40)
             }
         }
         .onAppear {
@@ -102,24 +106,25 @@ struct OnboardingView: View {
             .offset(y: show ? 0 : 10)
     }
 
-    // MARK: Category pill
+    // MARK: Topic pill
 
     @ViewBuilder
-    private func categoryPill(_ cat: (emoji: String, name: String)) -> some View {
-        let selected = selectedCategories.contains(cat.name)
+    private func topicPill(_ topic: Topic) -> some View {
+        let selected = selectedCategories.contains(topic.name)
         Button {
             withAnimation(.easeInOut(duration: 0.2)) {
                 if selected {
-                    selectedCategories.remove(cat.name)
+                    selectedCategories.remove(topic.name)
                 } else {
-                    selectedCategories.insert(cat.name)
+                    selectedCategories.insert(topic.name)
                 }
             }
         } label: {
             HStack(spacing: 6) {
-                Text(cat.emoji)
+                Image(systemName: topic.icon)
                     .font(.subheadline)
-                Text(cat.name)
+                    .foregroundStyle(selected ? AppTheme.accent : .white)
+                Text(topic.name)
                     .font(.subheadline.bold())
                     .foregroundStyle(selected ? AppTheme.accent : .white)
             }
