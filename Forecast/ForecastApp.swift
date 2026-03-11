@@ -10,13 +10,13 @@ struct ForecastApp: App {
 }
 
 struct ContentView: View {
-    @AppStorage(AppFlags.hasSeenOnboarding) private var hasSeenOnboarding = false
+    @AppStorage(AppFlags.hasSeenOnboarding) private var hasSeenOnboarding = 0
     @StateObject private var feedViewModel = FeedViewModel()
     @State private var selectedTab = 0
 
     var body: some View {
-        if !hasSeenOnboarding {
-            OnboardingView { hasSeenOnboarding = true }
+        if hasSeenOnboarding == 0 {
+            OnboardingView { hasSeenOnboarding = 1 }
         } else {
         TabView(selection: $selectedTab) {
             FeedView()
