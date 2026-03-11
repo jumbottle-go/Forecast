@@ -45,7 +45,7 @@ struct FlashHeroView: View {
 
                 cards.removeAll { $0.id != topCard.id && feedViewModel.isVoted(for: $0.id) }
                 let isFirstOption = newsItem.options.first?.id == votedOptionId
-                swipe(to: isFirstOption ? .right : .left)
+                swipe(to: isFirstOption ? .left : .right)
             }
         }
         .onChange(of: cards.count) { _, _ in cardsRemaining = cards.count }
@@ -60,7 +60,7 @@ struct FlashHeroView: View {
                     feedViewModel.castVote(for: card.id, option: option)
                     let opts = flashVoteOptions(for: card)
                     let isFirst = opts.first?.id == option.id
-                    swipe(to: isFirst ? .right : .left)
+                    swipe(to: isFirst ? .left : .right)
                 }
             )
         }
@@ -260,7 +260,7 @@ struct FlashHeroView: View {
                 HStack(spacing: 12) {
 
                     // ДА (успех)
-                    Button { swipe(to: .right) } label: {
+                    Button { swipe(to: .left) } label: {
                         HStack(spacing: 6) {
                             Image(systemName: "checkmark")
                             Text("ДА")
@@ -279,7 +279,7 @@ struct FlashHeroView: View {
                     .buttonStyle(.plain)
 
                     // НЕТ (отказ)
-                    Button { swipe(to: .left) } label: {
+                    Button { swipe(to: .right) } label: {
                         HStack(spacing: 6) {
                             Image(systemName: "xmark")
                             Text("НЕТ")
