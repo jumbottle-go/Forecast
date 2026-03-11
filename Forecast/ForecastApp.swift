@@ -10,7 +10,7 @@ struct ForecastApp: App {
 }
 
 struct ContentView: View {
-    @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
+    @AppStorage(AppFlags.hasSeenOnboarding) private var hasSeenOnboarding = false
     @StateObject private var feedViewModel = FeedViewModel()
     @State private var selectedTab = 0
 
