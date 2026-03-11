@@ -1,5 +1,55 @@
 import SwiftUI
 
+// MARK: - Topic model (file-private)
+
+private struct Topic {
+    let name: String
+    let icon: String
+}
+
+// MARK: - TopicPillView
+
+private struct TopicPillView: View {
+
+    let topic: Topic
+    @Binding var selectedCategories: Set<String>
+
+    private var selected: Bool { selectedCategories.contains(topic.name) }
+
+    var body: some View {
+        Button {
+            withAnimation(.easeInOut(duration: 0.2)) {
+                if selected {
+                    selectedCategories.remove(topic.name)
+                } else {
+                    selectedCategories.insert(topic.name)
+                }
+            }
+        } label: {
+            HStack(spacing: 12) {
+                Image(systemName: topic.icon)
+                    .imageScale(.large)
+                    .font(.system(size: 20, weight: .bold))
+                    .foregroundStyle(selected ? AppTheme.accent : .white)
+                Text(topic.name)
+                    .font(.system(size: 20, weight: .bold))
+                    .foregroundStyle(selected ? AppTheme.accent : .white)
+            }
+            .padding(.horizontal, 28)
+            .padding(.vertical, 18)
+            .background(selected ? AppTheme.accent.opacity(0.2) : Color.white.opacity(0.05))
+            .clipShape(Capsule())
+            .overlay(
+                Capsule()
+                    .strokeBorder(selected ? AppTheme.accent : Color.white.opacity(0.1), lineWidth: 1)
+            )
+        }
+        .buttonStyle(.plain)
+    }
+}
+
+// MARK: - OnboardingView
+
 struct OnboardingView: View {
 
     var onFinish: () -> Void
@@ -11,11 +61,6 @@ struct OnboardingView: View {
     @State private var showLine3 = false
     @State private var showCategories = false
 
-    private struct Topic {
-        let name: String
-        let icon: String
-    }
-
     private let topics: [Topic] = [
         Topic(name: "Finance",     icon: "chart.line.uptrend.xyaxis"),
         Topic(name: "Tech",        icon: "desktopcomputer"),
@@ -24,12 +69,6 @@ struct OnboardingView: View {
         Topic(name: "Sports",      icon: "sportscourt.fill"),
         Topic(name: "Pop Culture", icon: "popcorn.fill")
     ]
-
-    private var topicRows: [[Topic]] {
-        stride(from: 0, to: topics.count, by: 2).map {
-            Array(topics[$0 ..< min($0 + 2, topics.count)])
-        }
-    }
 
     private var canContinue: Bool { selectedCategories.count >= 2 }
 
@@ -56,13 +95,19 @@ struct OnboardingView: View {
                             .font(.title3.bold())
                             .foregroundStyle(AppTheme.textSecondary)
 
+                        // Static rows — natural pill width, no grid stretching
                         VStack(alignment: .leading, spacing: 16) {
-                            ForEach(topicRows.indices, id: \.self) { rowIdx in
-                                HStack(spacing: 16) {
-                                    ForEach(topicRows[rowIdx], id: \.name) { topic in
-                                        topicPill(topic)
-                                    }
-                                }
+                            HStack(spacing: 16) {
+                                TopicPillView(topic: topics[0], selectedCategories: $selectedCategories)
+                                TopicPillView(topic: topics[1], selectedCategories: $selectedCategories)
+                            }
+                            HStack(spacing: 16) {
+                                TopicPillView(topic: topics[2], selectedCategories: $selectedCategories)
+                                TopicPillView(topic: topics[3], selectedCategories: $selectedCategories)
+                            }
+                            HStack(spacing: 16) {
+                                TopicPillView(topic: topics[4], selectedCategories: $selectedCategories)
+                                TopicPillView(topic: topics[5], selectedCategories: $selectedCategories)
                             }
                         }
                     }
@@ -104,41 +149,6 @@ struct OnboardingView: View {
             .foregroundStyle(color)
             .opacity(show ? 1 : 0)
             .offset(y: show ? 0 : 10)
-    }
-
-    // MARK: Topic pill
-
-    @ViewBuilder
-    private func topicPill(_ topic: Topic) -> some View {
-        let selected = selectedCategories.contains(topic.name)
-        Button {
-            withAnimation(.easeInOut(duration: 0.2)) {
-                if selected {
-                    selectedCategories.remove(topic.name)
-                } else {
-                    selectedCategories.insert(topic.name)
-                }
-            }
-        } label: {
-            HStack(spacing: 12) {
-                Image(systemName: topic.icon)
-                    .imageScale(.large)
-                    .font(.system(size: 20, weight: .bold))
-                    .foregroundStyle(selected ? AppTheme.accent : .white)
-                Text(topic.name)
-                    .font(.system(size: 20, weight: .bold))
-                    .foregroundStyle(selected ? AppTheme.accent : .white)
-            }
-            .padding(.horizontal, 28)
-            .padding(.vertical, 18)
-            .background(selected ? AppTheme.accent.opacity(0.2) : Color.white.opacity(0.05))
-            .clipShape(Capsule())
-            .overlay(
-                Capsule()
-                    .strokeBorder(selected ? AppTheme.accent : Color.white.opacity(0.1), lineWidth: 1)
-            )
-        }
-        .buttonStyle(.plain)
     }
 
     // MARK: Continue button
