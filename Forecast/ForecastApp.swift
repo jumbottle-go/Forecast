@@ -39,25 +39,3 @@ struct ContentView: View {
         }
     }
 }
-
-struct StubView: View {
-    let title: String
-    let icon: String
-
-    var body: some View {
-        ZStack {
-            AppTheme.bg.ignoresSafeArea()
-            VStack(spacing: 16) {
-                Image(systemName: icon)
-                    .font(.system(size: 48))
-                    .foregroundStyle(AppTheme.textSecondary)
-                Text(title)
-                    .font(.title2.bold())
-                    .foregroundStyle(AppTheme.textPrimary)
-                Text("Скоро")
-                    .font(.subheadline)
-                    .foregroundStyle(AppTheme.textSecondary)
-            }
-        }
-    }
-}
