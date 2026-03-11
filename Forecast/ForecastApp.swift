@@ -17,20 +17,16 @@ struct ContentView: View {
         TabView(selection: $selectedTab) {
             FeedView()
                 .environmentObject(feedViewModel)
-                .tabItem { Label("Лента", systemImage: "newspaper") }
+                .tabItem { Label("Лента", systemImage: "doc.text.image") }
                 .tag(0)
 
-            StubView(title: "Explore", icon: "safari")
-                .tabItem { Label("Explore", systemImage: "safari") }
+            LeaderboardView(selectedTab: $selectedTab)
+                .tabItem { Label("Лидерборд", systemImage: "trophy.fill") }
                 .tag(1)
 
-            LeaderboardView(selectedTab: $selectedTab)
-                .tabItem { Label("Лидерборд", systemImage: "trophy") }
-                .tag(2)
-
             ProfileView()
-                .tabItem { Label("Профиль", systemImage: "person.circle") }
-                .tag(3)
+                .tabItem { Label("Профиль", systemImage: "person.fill") }
+                .tag(2)
         }
         .tint(AppTheme.accent)
         .preferredColorScheme(.dark)
