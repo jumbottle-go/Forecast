@@ -41,11 +41,12 @@ struct FlashHeroView: View {
             if let topCard = cards.last,
                let votedOptionId = feedViewModel.votedOptionId(for: topCard.id),
                let newsItem = feedViewModel.allNews.first(where: { $0.id == topCard.id }),
-               newsItem.options.contains(where: { $0.id == votedOptionId }) {
+               let option = newsItem.options.first(where: { $0.id == votedOptionId }) {
 
                 cards.removeAll { $0.id != topCard.id && feedViewModel.isVoted(for: $0.id) }
-                let isFirstOption = newsItem.options.first?.id == votedOptionId
-                swipe(to: isFirstOption ? .left : .right)
+                let options = newsItem.options
+                let isLeftOption = options.first?.text == option.text
+                swipe(to: isLeftOption ? .left : .right)
             }
         }
         .onChange(of: cards.count) { _, _ in cardsRemaining = cards.count }
@@ -58,9 +59,9 @@ struct FlashHeroView: View {
                 votedOptionId: feedViewModel.votedOptionId(for: card.id),
                 onVote: { option in
                     feedViewModel.castVote(for: card.id, option: option)
-                    let opts = flashVoteOptions(for: card)
-                    let isFirst = opts.first?.id == option.id
-                    swipe(to: isFirst ? .left : .right)
+                    let options = flashVoteOptions(for: card)
+                    let isLeftOption = options.first?.text == option.text
+                    swipe(to: isLeftOption ? .left : .right)
                 }
             )
         }
