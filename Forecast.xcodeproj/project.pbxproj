@@ -27,6 +27,8 @@
 		EE000000000000000000001D /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000000000000000000001D /* ProfileView.swift */; };
 		EE000000000000000000001E /* LeaderboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000000000000000000001E /* LeaderboardView.swift */; };
 		EE0000000000000000000020 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000020 /* Assets.xcassets */; };
+		EE0000000000000000001F /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000001F /* OnboardingView.swift */; };
+		EE000000000000000000021 /* AppFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000000000000000000021 /* AppFlags.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +53,8 @@
 		DD000000000000000000001E /* LeaderboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardView.swift; sourceTree = "<group>"; };
 		DD0000000000000000000020 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DD0000000000000000000021 /* Forecast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Forecast.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD0000000000000000001F /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		DD000000000000000000021 /* AppFlags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlags.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +94,7 @@
 				CC0000000000000000000004 /* Data */,
 				CC0000000000000000000005 /* ViewModels */,
 				CC0000000000000000000006 /* Views */,
+				CC000000000000000000014 /* Storage */,
 			);
 			path = Forecast;
 			sourceTree = "<group>";
@@ -137,6 +142,7 @@
 				CC0000000000000000000010 /* Shared */,
 				CC0000000000000000000011 /* Profile */,
 				CC0000000000000000000012 /* Leaderboard */,
+				CC000000000000000000013 /* Onboarding */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -193,6 +199,22 @@
 				DD000000000000000000001E /* LeaderboardView.swift */,
 			);
 			path = Leaderboard;
+			sourceTree = "<group>";
+		};
+		CC000000000000000000013 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				DD0000000000000000001F /* OnboardingView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		CC000000000000000000014 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				DD000000000000000000021 /* AppFlags.swift */,
+			);
+			path = Storage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -284,6 +306,7 @@
 				EE000000000000000000001D /* ProfileView.swift in Sources */,
 				EE000000000000000000001E /* LeaderboardView.swift in Sources */,
 				EE0000000000000000001F /* OnboardingView.swift in Sources */,
+				EE000000000000000000021 /* AppFlags.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
