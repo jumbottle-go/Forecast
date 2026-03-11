@@ -26,17 +26,18 @@ private struct TopicPillView: View {
                 }
             }
         } label: {
-            HStack(spacing: 12) {
+            HStack(spacing: 6) {
                 Image(systemName: topic.icon)
-                    .imageScale(.large)
-                    .font(.system(size: 20, weight: .bold))
+                    .imageScale(.medium)
                     .foregroundStyle(selected ? AppTheme.accent : .white)
                 Text(topic.name)
-                    .font(.system(size: 20, weight: .bold))
+                    .lineLimit(1)
+                    .fixedSize(horizontal: true, vertical: false)
                     .foregroundStyle(selected ? AppTheme.accent : .white)
             }
-            .padding(.horizontal, 28)
-            .padding(.vertical, 18)
+            .font(.system(size: 17, weight: .semibold))
+            .padding(.vertical, 11)
+            .padding(.horizontal, 16)
             .background(selected ? AppTheme.accent.opacity(0.2) : Color.white.opacity(0.05))
             .clipShape(Capsule())
             .overlay(
