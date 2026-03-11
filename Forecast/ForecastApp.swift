@@ -10,10 +10,14 @@ struct ForecastApp: App {
 }
 
 struct ContentView: View {
+    @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
     @StateObject private var feedViewModel = FeedViewModel()
     @State private var selectedTab = 0
 
     var body: some View {
+        if !hasSeenOnboarding {
+            OnboardingView { hasSeenOnboarding = true }
+        } else {
         TabView(selection: $selectedTab) {
             FeedView()
                 .environmentObject(feedViewModel)
@@ -37,5 +41,6 @@ struct ContentView: View {
             UITabBar.appearance().standardAppearance = appearance
             UITabBar.appearance().scrollEdgeAppearance = appearance
         }
+        } // end else
     }
 }
