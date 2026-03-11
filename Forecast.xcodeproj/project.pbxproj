@@ -283,6 +283,7 @@
 				EE000000000000000000001C /* VotingBlockView.swift in Sources */,
 				EE000000000000000000001D /* ProfileView.swift in Sources */,
 				EE000000000000000000001E /* LeaderboardView.swift in Sources */,
+				EE0000000000000000001F /* OnboardingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
