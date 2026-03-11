@@ -26,7 +26,7 @@ struct ShareSheetView: View {
                         Image(systemName: "square.and.arrow.up.circle.fill")
                             .font(.title2)
                             .foregroundStyle(AppTheme.accent)
-                        Text("Поделиться предсказанием!")
+                        Text("Share your prediction!")
                             .font(.headline)
                             .foregroundStyle(AppTheme.textPrimary)
                     }
@@ -71,7 +71,7 @@ struct ShareSheetView: View {
                     VStack(alignment: .trailing, spacing: 6) {
                         ZStack(alignment: .topLeading) {
                             if comment.isEmpty {
-                                Text("Мой комментарий...")
+                                Text("My comment...")
                                     .foregroundStyle(AppTheme.textSecondary)
                                     .padding(10)
                                     .allowsHitTesting(false)
@@ -104,7 +104,7 @@ struct ShareSheetView: View {
                         ShareCircle(symbol: "x.circle.fill",       label: "X")
                         ShareCircle(symbol: "paperplane.fill",      label: "Telegram")
                         ShareCircle(symbol: "message.fill",         label: "WhatsApp")
-                        ShareCircle(symbol: "doc.on.doc.fill",      label: "Скопировать")
+                        ShareCircle(symbol: "doc.on.doc.fill",      label: "Copy")
                     }
                     .onTapGesture { isPresented = false }
 
@@ -112,7 +112,7 @@ struct ShareSheetView: View {
                     Button {
                         isPresented = false
                     } label: {
-                        Text("Пропустить")
+                        Text("Skip")
                             .font(.subheadline)
                             .foregroundStyle(AppTheme.textSecondary)
                     }

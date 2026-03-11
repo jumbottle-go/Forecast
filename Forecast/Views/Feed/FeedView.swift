@@ -80,6 +80,7 @@ struct FeedView: View {
                 ArticleView(article: article)
             }
         }
+        .task { viewModel.loadData() }
         .sheet(isPresented: $viewModel.showShareSheet) {
             ShareSheetView(
                 chosenOption: viewModel.heroChosenOption,

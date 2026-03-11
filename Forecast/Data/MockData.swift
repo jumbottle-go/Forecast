@@ -23,29 +23,29 @@ enum MockData {
         subtitle: "Washington imposes sweeping new duties on semiconductors and consumer electronics as Beijing vows immediate retaliation.",
         imageURL: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&q=80",
         source: "Reuters",
-        timeAgo: "14 мин.",
+        publishedAt: Date(timeIntervalSinceNow: -840),
         votesCount: 8_412,
         category: .politics,
         isBreaking: true,
         question: "When will China formally retaliate to the new US tariffs?",
         options: [
-            VoteOption(iconName: "bolt.fill", text: "За 48ч", subtitle: "Резкий ответ", percent: 62),
-            VoteOption(iconName: "bubble.left.and.bubble.right.fill", text: "Переговоры", subtitle: "Дипломатия", percent: 38)
+            VoteOption(iconName: "bolt.fill", text: "Within 48h", subtitle: "Swift response", percent: 62),
+            VoteOption(iconName: "bubble.left.and.bubble.right.fill", text: "Negotiations", subtitle: "Diplomacy", percent: 38)
         ],
-        aiShortAnswer: "За 48ч",
+        aiShortAnswer: "Within 48h",
         aiAnalysis: AIAnalysis(
-            summary: "За 48ч",
+            summary: "Within 48h",
             confidencePercent: 62,
-            prosLabel: "За 48ч",
-            consLabel: "Переговоры",
+            prosLabel: "Within 48h",
+            consLabel: "Negotiations",
             pros: [
-            "В 2018–2019 гг. Пекин отвечал в течение 24 ч.",
-            "Госсовет КНР созвал экстренное заседание",
-            "Ограничения на редкозёмы готовы к подписанию"
+            "In 2018–2019 Beijing responded within 24 hours",
+            "China's State Council convened an emergency session",
+            "Rare earth restrictions ready to be signed"
             ],
             cons: [
-            "Идут тайные дипломатические переговоры",
-            "Пекин может предпочесть нетарифное давление"
+            "Secret diplomatic talks are underway",
+            "Beijing may prefer non-tariff pressure"
             ]
         )
     )
@@ -57,27 +57,27 @@ enum MockData {
             subtitle: "Powell signals 'wait-and-see' stance as jobs data remains strong and core inflation ticks upward.",
             imageURL: "https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=800&q=80",
             source: "Bloomberg",
-            timeAgo: "1 ч.",
+            publishedAt: Date(timeIntervalSinceNow: -3600),
             votesCount: 4_231,
             category: .finance,
             question: "What will the Fed do with rates before Q3 2026?",
             options: [
-                VoteOption(iconName: "arrow.down.circle.fill", text: "Снизит", subtitle: "Охлаждение экономики", percent: 44),
-                VoteOption(iconName: "lock.fill", text: "Заморозит", subtitle: "Риск инфляции", percent: 56)
+                VoteOption(iconName: "arrow.down.circle.fill", text: "Cut", subtitle: "Economic cooling", percent: 44),
+                VoteOption(iconName: "lock.fill", text: "Hold", subtitle: "Inflation risk", percent: 56)
             ],
-                aiShortAnswer: "Заморозит",
+            aiShortAnswer: "Hold",
             aiAnalysis: AIAnalysis(
-                summary: "Заморозит",
+                summary: "Hold",
                 confidencePercent: 56,
-                prosLabel: "Заморозит",
-                consLabel: "Снизит",
+                prosLabel: "Hold",
+                consLabel: "Cut",
                 pros: [
-                "Тарифы создают инфляционный риск",
-                "Рынок труда остаётся перегретым"
+                "Tariffs create inflationary risk",
+                "Labour market remains overheated"
                 ],
                 cons: [
-                "Core PCE ниже 3% с декабря 2025",
-                "Исторически ФРС снижает через 2 заседания после пика"
+                "Core PCE below 3% since Dec 2025",
+                "Historically Fed cuts 2 meetings after peak"
                 ]
             )
         ),
@@ -86,28 +86,28 @@ enum MockData {
             subtitle: "Institutional demand and ETF inflows push BTC to historic levels, with analysts eyeing $150K next.",
             imageURL: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80",
             source: "CoinDesk",
-            timeAgo: "2 ч.",
+            publishedAt: Date(timeIntervalSinceNow: -7200),
             votesCount: 12_870,
             category: .finance,
             question: "What's next for Bitcoin in the next 60 days?",
             options: [
-                VoteOption(iconName: "arrow.up.circle.fill", text: "$150k+", subtitle: "Тенденция в силе", percent: 58),
-                VoteOption(iconName: "arrow.down.circle.fill", text: "Коррекция", subtitle: "Перегрев рынка", percent: 42)
+                VoteOption(iconName: "arrow.up.circle.fill", text: "$150k+", subtitle: "Trend intact", percent: 58),
+                VoteOption(iconName: "arrow.down.circle.fill", text: "Correction", subtitle: "Market overheating", percent: 42)
             ],
             aiShortAnswer: "$150k+",
             aiAnalysis: AIAnalysis(
                 summary: "$150k+",
                 confidencePercent: 58,
                 prosLabel: "$150k+",
-                consLabel: "Коррекция",
+                consLabel: "Correction",
                 pros: [
-                "Post-halving цикл исторически пиковый через 12–18 мес.",
-                "Рекордный приток в ETF: $3.2B за неделю",
-                "Stock-to-flow: цель $180K–$220K"
+                "Post-halving cycle historically peaks in 12–18 months",
+                "Record ETF inflow: $3.2B in one week",
+                "Stock-to-flow: target $180K–$220K"
                 ],
                 cons: [
-                "Индикатор жадности 89/100 — перекупленность",
-                "BTC-доминация вблизи исторического ротационного пика"
+                "Fear & greed index 89/100 — overbought",
+                "BTC dominance near historical rotation peak"
                 ]
             )
         ),
@@ -116,28 +116,28 @@ enum MockData {
             subtitle: "Data center revenue soars 122% YoY as demand for AI chips continues to outpace supply globally.",
             imageURL: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
             source: "CNBC",
-            timeAgo: "3 ч.",
+            publishedAt: Date(timeIntervalSinceNow: -10800),
             votesCount: 6_540,
             category: .finance,
             question: "Where will NVDA stock be by the end of 2026?",
             options: [
-                VoteOption(iconName: "chart.line.uptrend.xyaxis", text: "$200+", subtitle: "ИИ-бум продолжается", percent: 71),
-                VoteOption(iconName: "chart.bar.fill", text: "Плато", subtitle: "Давление конкурентов", percent: 29)
+                VoteOption(iconName: "chart.line.uptrend.xyaxis", text: "$200+", subtitle: "AI boom continues", percent: 71),
+                VoteOption(iconName: "chart.bar.fill", text: "Plateau", subtitle: "Competitor pressure", percent: 29)
             ],
             aiShortAnswer: "$200+",
             aiAnalysis: AIAnalysis(
                 summary: "$200+",
                 confidencePercent: 71,
                 prosLabel: "$200+",
-                consLabel: "Плато",
+                consLabel: "Plateau",
                 pros: [
-                "Форвардный P/E 32x — ниже 3-летнего среднего 40x",
-                "Запуск GB300 в Q3 добавит ключевой катализатор",
-                "Гиперскейлеры продолжают наращивать капзатраты"
+                "Forward P/E 32x — below 3-year avg 40x",
+                "GB300 launch in Q3 adds key catalyst",
+                "Hyperscalers continue raising capex"
                 ],
                 cons: [
-                "Тарифы повышают стоимость аппаратного обеспечения",
-                "AMD набирает долю рынка в инференс-нагрузках"
+                "Tariffs raise hardware costs",
+                "AMD gaining share in inference workloads"
                 ]
             )
         )
@@ -150,27 +150,27 @@ enum MockData {
             subtitle: "The new model demonstrates unprecedented reasoning and multi-step problem solving, raising new alignment concerns.",
             imageURL: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80",
             source: "The Verge",
-            timeAgo: "30 мин.",
+            publishedAt: Date(timeIntervalSinceNow: -1800),
             votesCount: 21_050,
             category: .tech,
             question: "How will the EU react to GPT-5 in the next 6 months?",
             options: [
-                VoteOption(iconName: "hammer.fill", text: "Запрет", subtitle: "Жёсткие меры", percent: 53),
-                VoteOption(iconName: "cpu", text: "Интеграция", subtitle: "Регуляторы отстают", percent: 47)
+                VoteOption(iconName: "hammer.fill", text: "Ban", subtitle: "Strict measures", percent: 53),
+                VoteOption(iconName: "cpu", text: "Integration", subtitle: "Regulators lag behind", percent: 47)
             ],
-            aiShortAnswer: "Запрет",
+            aiShortAnswer: "Ban",
             aiAnalysis: AIAnalysis(
-                summary: "Запрет",
+                summary: "Ban",
                 confidencePercent: 53,
-                prosLabel: "Запрет",
-                consLabel: "Интеграция",
+                prosLabel: "Ban",
+                consLabel: "Integration",
                 pros: [
-                "EU AI Act уже требует аудита для топ-моделей",
-                "Расследование GPT-4 ускоряет процесс"
+                "EU AI Act already requires audits for top models",
+                "GPT-4 investigation accelerates the process"
                 ],
                 cons: [
-                "Штрафы за 6 мес. — исторически быстро для ЕС",
-                "Лоббирование крупного бизнеса тормозит исполнение"
+                "Fines within 6 months — historically fast for EU",
+                "Big business lobbying slows enforcement"
                 ]
             )
         ),
@@ -179,27 +179,27 @@ enum MockData {
             subtitle: "Internal documents suggest a spring release at $2,499 with a new 'spatial OS' optimized for professional workflows.",
             imageURL: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80",
             source: "9to5Mac",
-            timeAgo: "4 ч.",
+            publishedAt: Date(timeIntervalSinceNow: -14400),
             votesCount: 9_103,
             category: .tech,
             question: "First-year sales forecast for Apple Vision Pro 2?",
             options: [
-                VoteOption(iconName: "star.fill", text: "> 1 млн", subtitle: "Сниженная цена", percent: 39),
-                VoteOption(iconName: "dollarsign.circle.fill", text: "< 1 млн", subtitle: "Всё ещё ниша", percent: 61)
+                VoteOption(iconName: "star.fill", text: "> 1M", subtitle: "Lower price", percent: 39),
+                VoteOption(iconName: "dollarsign.circle.fill", text: "< 1M", subtitle: "Still niche", percent: 61)
             ],
-            aiShortAnswer: "< 1 млн",
+            aiShortAnswer: "< 1M",
             aiAnalysis: AIAnalysis(
-                summary: "< 1 млн",
+                summary: "< 1M",
                 confidencePercent: 61,
-                prosLabel: "< 1 млн",
-                consLabel: "> 1 млн",
+                prosLabel: "< 1M",
+                consLabel: "> 1M",
                 pros: [
-                "Любая VR-гарнитура выше $1K остаётся нишевой",
-                "Meta Quest Pro стоит вдвое дешевле"
+                "Any VR headset above $1K remains niche",
+                "Meta Quest Pro costs half the price"
                 ],
                 cons: [
-                "Цена снижена vs первого поколения",
-                "Экосистема приложений значительно расширилась"
+                "Price reduced vs first generation",
+                "App ecosystem has grown significantly"
                 ]
             )
         ),
@@ -208,27 +208,27 @@ enum MockData {
             subtitle: "The 1,000-qubit processor solves in minutes what classical supercomputers would need 10²⁵ years for.",
             imageURL: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80",
             source: "Nature",
-            timeAgo: "6 ч.",
+            publishedAt: Date(timeIntervalSinceNow: -21600),
             votesCount: 3_782,
             category: .tech,
             question: "Will quantum computing break current encryption by 2030?",
             options: [
-                VoteOption(iconName: "lock.open.fill", text: "Взломают", subtitle: "Ускорение прогресса", percent: 35),
-                VoteOption(iconName: "shield.fill", text: "Устоят", subtitle: "Крипто-защита готова", percent: 65)
+                VoteOption(iconName: "lock.open.fill", text: "Break it", subtitle: "Accelerating progress", percent: 35),
+                VoteOption(iconName: "shield.fill", text: "Holds up", subtitle: "Crypto protection ready", percent: 65)
             ],
-            aiShortAnswer: "Устоят",
+            aiShortAnswer: "Holds up",
             aiAnalysis: AIAnalysis(
-                summary: "Устоят",
+                summary: "Holds up",
                 confidencePercent: 65,
-                prosLabel: "Устоят",
-                consLabel: "Взломают",
+                prosLabel: "Holds up",
+                consLabel: "Break it",
                 pros: [
-                "Post-quantum криграфия стандартизирована NIST",
-                "Корпоративный сектор внедряет крипто-агильность"
+                "Post-quantum cryptography standardized by NIST",
+                "Enterprise sector adopting crypto-agility"
                 ],
                 cons: [
-                "Темп развития квантовых вычислений ускоряется",
-                "Google Willow: 1000 кубитов с рекордной коррекцией"
+                "Quantum computing progress accelerating",
+                "Google Willow: 1000 qubits with record error correction"
                 ]
             )
         )
@@ -241,27 +241,27 @@ enum MockData {
             subtitle: "European leaders reach historic consensus after months of deadlock, signalling a major shift in continental security policy.",
             imageURL: "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=800&q=80",
             source: "Politico EU",
-            timeAgo: "5 ч.",
+            publishedAt: Date(timeIntervalSinceNow: -18000),
             votesCount: 5_329,
             category: .politics,
             question: "Will all 27 EU members ratify the defense fund?",
             options: [
-                VoteOption(iconName: "checkmark.seal.fill", text: "Ратифицируют", subtitle: "Общая угроза", percent: 67),
-                VoteOption(iconName: "xmark.circle.fill", text: "Заблокируют", subtitle: "Венгерское вето", percent: 33)
+                VoteOption(iconName: "checkmark.seal.fill", text: "Ratify", subtitle: "Common threat", percent: 67),
+                VoteOption(iconName: "xmark.circle.fill", text: "Block", subtitle: "Hungarian veto", percent: 33)
             ],
-            aiShortAnswer: "Ратифицируют",
+            aiShortAnswer: "Ratify",
             aiAnalysis: AIAnalysis(
-                summary: "Ратифицируют",
+                summary: "Ratify",
                 confidencePercent: 67,
-                prosLabel: "Ратифицируют",
-                consLabel: "Заблокируют",
+                prosLabel: "Ratify",
+                consLabel: "Block",
                 pros: [
-                "Давление Трампа исторически объединяет ЕС",
-                "Угроза со стороны РФ — сильнейший катализатор"
+                "Trump pressure historically unifies EU",
+                "Russia threat — strongest catalyst"
                 ],
                 cons: [
-                "Венгрия систематически блокирует оборонные инициативы",
-                "Турецкий фактор усложняет консенсус"
+                "Hungary systematically blocks defense initiatives",
+                "Turkish factor complicates consensus"
                 ]
             )
         ),
@@ -270,27 +270,27 @@ enum MockData {
             subtitle: "Alliance foreign ministers convene in Brussels as Russia warns of 'red lines' if former Soviet states join.",
             imageURL: "https://images.unsplash.com/photo-1565339852682-03d741248e71?w=800&q=80",
             source: "AP News",
-            timeAgo: "8 ч.",
+            publishedAt: Date(timeIntervalSinceNow: -28800),
             votesCount: 4_014,
             category: .politics,
             question: "Will Georgia and Moldova join NATO in 2026?",
             options: [
-                VoteOption(iconName: "checkmark.circle.fill", text: "Примут", subtitle: "Геополитика", percent: 41),
-                VoteOption(iconName: "minus.circle.fill", text: "Отложат", subtitle: "Сложности консенсуса", percent: 59)
+                VoteOption(iconName: "checkmark.circle.fill", text: "Accept", subtitle: "Geopolitics", percent: 41),
+                VoteOption(iconName: "minus.circle.fill", text: "Delay", subtitle: "Consensus difficulties", percent: 59)
             ],
-            aiShortAnswer: "Отложат",
+            aiShortAnswer: "Delay",
             aiAnalysis: AIAnalysis(
-                summary: "Отложат",
+                summary: "Delay",
                 confidencePercent: 59,
-                prosLabel: "Отложат",
-                consLabel: "Примут",
+                prosLabel: "Delay",
+                consLabel: "Accept",
                 pros: [
-                "Консенсус всех 32 членов исторически труднодостижим",
-                "Выборы в Венгрии и Словакии создают риск вето"
+                "Consensus of all 32 members historically hard to achieve",
+                "Elections in Hungary and Slovakia create veto risk"
                 ],
                 cons: [
-                "Геополитическое давление создаёт политический импульс",
-                "США и Великобритания выразили поддержку"
+                "Geopolitical pressure creates political momentum",
+                "US and UK expressed support"
                 ]
             )
         ),
@@ -299,27 +299,27 @@ enum MockData {
             subtitle: "China and Russia's expected veto threatens to derail the first international framework for frontier AI systems.",
             imageURL: "https://images.unsplash.com/photo-1562907550-096453ea34f6?w=800&q=80",
             source: "Guardian",
-            timeAgo: "10 ч.",
+            publishedAt: Date(timeIntervalSinceNow: -36000),
             votesCount: 2_883,
             category: .politics,
             question: "Outcome of the UN Security Council vote on AI Treaty?",
             options: [
-                VoteOption(iconName: "doc.fill", text: "Примут", subtitle: "США и ЕС", percent: 28),
-                VoteOption(iconName: "hand.raised.fill", text: "Вето", subtitle: "Китай и РФ", percent: 72)
+                VoteOption(iconName: "doc.fill", text: "Pass", subtitle: "US & EU", percent: 28),
+                VoteOption(iconName: "hand.raised.fill", text: "Veto", subtitle: "China & Russia", percent: 72)
             ],
-            aiShortAnswer: "Вето",
+            aiShortAnswer: "Veto",
             aiAnalysis: AIAnalysis(
-                summary: "Вето",
+                summary: "Veto",
                 confidencePercent: 72,
-                prosLabel: "Вето",
-                consLabel: "Примут",
+                prosLabel: "Veto",
+                consLabel: "Pass",
                 pros: [
-                "Китай и Россия обладают правом вето",
-                "КНР продвигает конкурирующую резолюцию"
+                "China and Russia hold veto power",
+                "China is pushing a competing resolution"
                 ],
                 cons: [
-                "США и ЕС активно лоббируют договор",
-                "Общественное давление после инцидентов с ИИ растёт"
+                "US and EU actively lobbying for the treaty",
+                "Public pressure after AI incidents is growing"
                 ]
             )
         )
@@ -332,27 +332,27 @@ enum MockData {
             subtitle: "A classic European clash set for Tuesday; Madrid missing Vinicius, Arsenal unbeaten in the competition this season.",
             imageURL: "https://images.unsplash.com/photo-1461896836934-bd45ba0c5530?w=800&q=80",
             source: "Sky Sports",
-            timeAgo: "2 ч.",
+            publishedAt: Date(timeIntervalSinceNow: -7200),
             votesCount: 18_440,
             category: .sports,
             question: "Who will reach the Champions League final?",
             options: [
-                VoteOption(iconName: "soccerball", text: "Реал", subtitle: "Опыт и класс", percent: 55),
-                VoteOption(iconName: "circle.fill", text: "Арсенал", subtitle: "Молодая злость", percent: 45)
+                VoteOption(iconName: "soccerball", text: "Real", subtitle: "Experience & class", percent: 55),
+                VoteOption(iconName: "circle.fill", text: "Arsenal", subtitle: "Youthful hunger", percent: 45)
             ],
-            aiShortAnswer: "Реал",
+            aiShortAnswer: "Real",
             aiAnalysis: AIAnalysis(
-                summary: "Реал",
+                summary: "Real",
                 confidencePercent: 55,
-                prosLabel: "Реал",
-                consLabel: "Арсенал",
+                prosLabel: "Real",
+                consLabel: "Arsenal",
                 pros: [
-                "18 побед в 22 домашних еврокубковых матчах",
-                "Опыт финалов ЛЧ: 15 участий за историю клуба"
+                "18 wins in 22 home European matches",
+                "UCL final experience: 15 appearances in club history"
                 ],
                 cons: [
-                "Виньисиус Жр. под сомнением из-за травмы",
-                "Арсенал не пропустил гола в 3 гостевых матчах"
+                "Vinicius Jr. doubtful due to injury",
+                "Arsenal kept 3 clean sheets in away matches"
                 ]
             )
         ),
@@ -361,27 +361,27 @@ enum MockData {
             subtitle: "Teams complete mandatory homologation tests as analysts suggest the new hybrid power units favour Ferrari's design philosophy.",
             imageURL: "https://images.unsplash.com/photo-1461896836934-bd45ba0c5530?w=800&q=80",
             source: "F1.com",
-            timeAgo: "5 ч.",
+            publishedAt: Date(timeIntervalSinceNow: -18000),
             votesCount: 7_660,
             category: .sports,
             question: "Who will win the 2026 F1 Constructors' Championship?",
             options: [
-                VoteOption(iconName: "car.fill", text: "Ferrari", subtitle: "Новый регламент", percent: 38),
-                VoteOption(iconName: "trophy.fill", text: "Другие", subtitle: "Merc/Red Bull", percent: 62)
+                VoteOption(iconName: "car.fill", text: "Ferrari", subtitle: "New regulations", percent: 38),
+                VoteOption(iconName: "trophy.fill", text: "Others", subtitle: "Merc/Red Bull", percent: 62)
             ],
             aiShortAnswer: "Ferrari",
             aiAnalysis: AIAnalysis(
-                summary: "Другие",
+                summary: "Others",
                 confidencePercent: 62,
-                prosLabel: "Другие",
+                prosLabel: "Others",
                 consLabel: "Ferrari",
                 pros: [
-                "Mercedes и Red Bull разработали кардинальные обновления",
-                "Феррари исторически теряет очки из-за ошибок стратегии"
+                "Mercedes and Red Bull developed radical upgrades",
+                "Ferrari historically loses points through strategy errors"
                 ],
                 cons: [
-                "Новый двигатель 2026 идеально соответствует стилю Феррари",
-                "Дуэт Леклер–Хэмилтон — сильнейший за историю команды"
+                "2026 engine perfectly suits Ferrari's design philosophy",
+                "Leclerc–Hamilton duo — strongest in team history"
                 ]
             )
         ),
@@ -390,27 +390,27 @@ enum MockData {
             subtitle: "The blockbuster trade reunites LeBron James with a championship-calibre roster in what insiders call 'the deal of the decade'.",
             imageURL: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800&q=80",
             source: "ESPN",
-            timeAgo: "1 ч.",
+            publishedAt: Date(timeIntervalSinceNow: -3600),
             votesCount: 31_205,
             category: .sports,
             question: "Will the Warriors win the 2026 NBA Championship with LeBron?",
             options: [
-                VoteOption(iconName: "star.fill", text: "Чемпионы", subtitle: "Убойный дуэт", percent: 61),
-                VoteOption(iconName: "snowflake", text: "Провал", subtitle: "Нет химии", percent: 39)
+                VoteOption(iconName: "star.fill", text: "Champions", subtitle: "Deadly duo", percent: 61),
+                VoteOption(iconName: "snowflake", text: "Flop", subtitle: "No chemistry", percent: 39)
             ],
-            aiShortAnswer: "Чемпионы",
+            aiShortAnswer: "Champions",
             aiAnalysis: AIAnalysis(
-                summary: "Чемпионы",
+                summary: "Champions",
                 confidencePercent: 61,
-                prosLabel: "Чемпионы",
-                consLabel: "Провал",
+                prosLabel: "Champions",
+                consLabel: "Flop",
                 pros: [
-                "ЛеБрон кардинально меняет баланс сил на Западе",
-                "Дуэт Карри + ЛеБрон — беспрецедентный в истории НБА"
+                "LeBron dramatically shifts the Western Conference balance",
+                "Curry + LeBron duo — unprecedented in NBA history"
                 ],
                 cons: [
-                "Командная химия требует времени на построение",
-                "Оклахома и Денвер также являются претендентами"
+                "Team chemistry takes time to build",
+                "Oklahoma and Denver are also contenders"
                 ]
             )
         )
@@ -423,27 +423,27 @@ enum MockData {
             subtitle: "New radar data from MAVEN-2 reveals a 30km wide brine lake 1.5km below the surface — the largest confirmed body of Martian water.",
             imageURL: "https://images.unsplash.com/photo-1507413245164-6160d8298b31?w=800&q=80",
             source: "NASA JPL",
-            timeAgo: "3 ч.",
+            publishedAt: Date(timeIntervalSinceNow: -10800),
             votesCount: 14_722,
             category: .science,
             question: "Will microbial life be found in the Martian lake?",
             options: [
-                VoteOption(iconName: "sparkles", text: "Найдут", subtitle: "Подходящая среда", percent: 34),
-                VoteOption(iconName: "moon.fill", text: "Стерильно", subtitle: "Соль и радиация", percent: 66)
+                VoteOption(iconName: "sparkles", text: "Found", subtitle: "Suitable environment", percent: 34),
+                VoteOption(iconName: "moon.fill", text: "Sterile", subtitle: "Salt & radiation", percent: 66)
             ],
-            aiShortAnswer: "Стерильно",
+            aiShortAnswer: "Sterile",
             aiAnalysis: AIAnalysis(
-                summary: "Стерильно",
+                summary: "Sterile",
                 confidencePercent: 66,
-                prosLabel: "Стерильно",
-                consLabel: "Найдут",
+                prosLabel: "Sterile",
+                consLabel: "Found",
                 pros: [
-                "Нужна буровая миссия — не ранее 2035 г.",
-                "Радиация и перхлораты губительны для большинства организмов"
+                "Drilling mission needed — earliest 2035",
+                "Radiation and perchlorates lethal to most organisms"
                 ],
                 cons: [
-                "Условия схожи с земными гипергалинными средами",
-                "Органические молекулы уже найдены марсоходами"
+                "Conditions similar to Earth's hypersaline environments",
+                "Organic molecules already found by rovers"
                 ]
             )
         ),
@@ -452,27 +452,27 @@ enum MockData {
             subtitle: "BioNTech and Moderna's personalised tumour vaccine prevents recurrence in pancreatic and lung cancer patients for 3+ years.",
             imageURL: "https://images.unsplash.com/photo-1507413245164-6160d8298b31?w=800&q=80",
             source: "NEJM",
-            timeAgo: "7 ч.",
+            publishedAt: Date(timeIntervalSinceNow: -25200),
             votesCount: 9_881,
             category: .science,
             question: "FDA approval decision for the mRNA cancer vaccine in 2026?",
             options: [
-                VoteOption(iconName: "syringe.fill", text: "Одобрение", subtitle: "Данные Phase 3", percent: 78),
-                VoteOption(iconName: "pause.circle.fill", text: "Задержка", subtitle: "Нужны доп. тесты", percent: 22)
+                VoteOption(iconName: "syringe.fill", text: "Approve", subtitle: "Phase 3 data", percent: 78),
+                VoteOption(iconName: "pause.circle.fill", text: "Delay", subtitle: "More tests needed", percent: 22)
             ],
-            aiShortAnswer: "Одобрение",
+            aiShortAnswer: "Approve",
             aiAnalysis: AIAnalysis(
-                summary: "Одобрение",
+                summary: "Approve",
                 confidencePercent: 78,
-                prosLabel: "Одобрение",
-                consLabel: "Задержка",
+                prosLabel: "Approve",
+                consLabel: "Delay",
                 pros: [
-                "Данные Phase 3: снижение смертности на 41%",
-                "FDA предоставило статус прорывной терапии"
+                "Phase 3 data: 41% mortality reduction",
+                "FDA granted Breakthrough Therapy status"
                 ],
                 cons: [
-                "Комитет VRBPAC может запросить дополнительные данные",
-                "Прецеденты ускоренного одобрения вызывают споры"
+                "VRBPAC committee may request additional data",
+                "Precedents of accelerated approval are controversial"
                 ]
             )
         ),
@@ -481,27 +481,27 @@ enum MockData {
             subtitle: "New temperature gradient data from 1,200 buoys shows AMOC strength at its lowest point in 1,600 years, accelerating this decade.",
             imageURL: "https://images.unsplash.com/photo-1507413245164-6160d8298b31?w=800&q=80",
             source: "Nature Climate Change",
-            timeAgo: "9 ч.",
+            publishedAt: Date(timeIntervalSinceNow: -32400),
             votesCount: 6_103,
             category: .science,
             question: "Will the AMOC ocean current fully collapse before 2100?",
             options: [
-                VoteOption(iconName: "water.waves", text: "Коллапс", subtitle: "Тренды неумолимы", percent: 47),
-                VoteOption(iconName: "leaf.fill", text: "Выстоит", subtitle: "Поможет спад CO2", percent: 53)
+                VoteOption(iconName: "water.waves", text: "Collapse", subtitle: "Trends are relentless", percent: 47),
+                VoteOption(iconName: "leaf.fill", text: "Holds", subtitle: "CO2 decline will help", percent: 53)
             ],
-            aiShortAnswer: "Выстоит",
+            aiShortAnswer: "Holds",
             aiAnalysis: AIAnalysis(
-                summary: "Выстоит",
+                summary: "Holds",
                 confidencePercent: 53,
-                prosLabel: "Выстоит",
-                consLabel: "Коллапс",
+                prosLabel: "Holds",
+                consLabel: "Collapse",
                 pros: [
-                "Снижение выбросов CO2 может стабилизировать течение",
-                "Климатические модели показывают высокую неопределённость"
+                "CO2 emission reductions may stabilize the current",
+                "Climate models show high uncertainty"
                 ],
                 cons: [
-                "Скорость АМОК на историческом минимуме за 1600 лет",
-                "Таяние льда Гренландии ускоряется быстрее прогнозов"
+                "AMOC speed at historical low for 1600 years",
+                "Greenland ice melt accelerating faster than projected"
                 ]
             )
         )
@@ -512,135 +512,128 @@ enum MockData {
     static let flashNews: [NewsItem] = [
         NewsItem(
             title: "Will S&P 500 close green today?",
-            subtitle: "Фьючерсы на S&P растут с утра",
+            subtitle: "S&P futures rising this morning",
             imageURL: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80",
             source: "Daily Flash",
-            timeAgo: "сегодня",
+            publishedAt: Date(timeIntervalSinceNow: -1800),
             votesCount: 3_240,
             category: .finance,
             question: "Will S&P 500 close green today?",
             options: [
-                VoteOption(iconName: "checkmark.circle.fill", text: "ДА",  subtitle: "", percent: 61),
-                VoteOption(iconName: "xmark.circle.fill",    text: "НЕТ", subtitle: "", percent: 39)
+                VoteOption(iconName: "checkmark.circle.fill", text: "YES", subtitle: "", percent: 61),
+                VoteOption(iconName: "xmark.circle.fill",    text: "NO",  subtitle: "", percent: 39)
             ],
-            aiShortAnswer: "Зелёный",
+            aiShortAnswer: "Green",
             aiAnalysis: AIAnalysis(
-                summary: "Зелёный",
+                summary: "Green",
                 confidencePercent: 61,
-                prosLabel: "ДА",
-                consLabel: "НЕТ",
-                pros: ["Фьючерсы на S&P растут с утра", "ФРС не будет повышать ставку"],
-                cons: ["Геополитическая напряжённость давит на настроения", "Объём торгов ниже среднего"]
+                prosLabel: "YES",
+                consLabel: "NO",
+                pros: ["S&P futures rising this morning", "Fed won't raise rates"],
+                cons: ["Geopolitical tension weighing on sentiment", "Trading volume below average"]
             )
         ),
         NewsItem(
             title: "Will Arsenal win tonight?",
-            subtitle: "Арсенал не проигрывает дома 11 матчей",
+            subtitle: "Arsenal unbeaten at home for 11 matches",
             imageURL: "https://images.unsplash.com/photo-1529900748604-07564a03e7a6?w=800&q=80",
             source: "Daily Flash",
-            timeAgo: "сегодня",
+            publishedAt: Date(timeIntervalSinceNow: -1800),
             votesCount: 7_815,
             category: .sports,
             question: "Will Arsenal win tonight?",
             options: [
-                VoteOption(iconName: "checkmark.circle.fill", text: "ДА",  subtitle: "", percent: 58),
-                VoteOption(iconName: "xmark.circle.fill",    text: "НЕТ", subtitle: "", percent: 42)
+                VoteOption(iconName: "checkmark.circle.fill", text: "YES", subtitle: "", percent: 58),
+                VoteOption(iconName: "xmark.circle.fill",    text: "NO",  subtitle: "", percent: 42)
             ],
-            aiShortAnswer: "Победа",
+            aiShortAnswer: "Win",
             aiAnalysis: AIAnalysis(
-                summary: "Победа",
+                summary: "Win",
                 confidencePercent: 58,
-                prosLabel: "ДА",
-                consLabel: "НЕТ",
-                pros: ["Арсенал не проигрывает дома 11 матчей", "Соперник без ключевых игроков"],
-                cons: ["Усталость после выездного тура", "Исторически проигрывают в кубковых играх"]
+                prosLabel: "YES",
+                consLabel: "NO",
+                pros: ["Arsenal unbeaten at home for 11 matches", "Opponent missing key players"],
+                cons: ["Fatigue after away run", "Historically poor in cup games"]
             )
         ),
         NewsItem(
             title: "Will BTC touch $130k today?",
-            subtitle: "До цели остаётся >8% роста за один день",
+            subtitle: "Target still >8% away in one day",
             imageURL: "https://images.unsplash.com/photo-1518544866330-4e716499f800?w=800&q=80",
             source: "Daily Flash",
-            timeAgo: "сегодня",
+            publishedAt: Date(timeIntervalSinceNow: -1800),
             votesCount: 14_520,
             category: .finance,
             question: "Will BTC touch $130k today?",
             options: [
-                VoteOption(iconName: "checkmark.circle.fill", text: "ДА",  subtitle: "", percent: 26),
-                VoteOption(iconName: "xmark.circle.fill",    text: "НЕТ", subtitle: "", percent: 74)
+                VoteOption(iconName: "checkmark.circle.fill", text: "YES", subtitle: "", percent: 26),
+                VoteOption(iconName: "xmark.circle.fill",    text: "NO",  subtitle: "", percent: 74)
             ],
-            aiShortAnswer: "Нет, рано",
+            aiShortAnswer: "Too early",
             aiAnalysis: AIAnalysis(
-                summary: "Не достигнет",
+                summary: "Won't reach",
                 confidencePercent: 74,
-                prosLabel: "НЕТ",
-                consLabel: "ДА",
-                pros: ["До цели остаётся >8% роста за один день", "Сильное сопротивление на $125k"],
-                cons: ["Институциональный спрос стабильно растёт", "ETF-притоки за неделю превысили $2 млрд"]
+                prosLabel: "NO",
+                consLabel: "YES",
+                pros: ["Target still >8% away in one day", "Strong resistance at $125k"],
+                cons: ["Institutional demand steadily rising", "ETF inflows exceeded $2B this week"]
             )
         ),
         NewsItem(
             title: "Will Apple announce Vision Pro 2 this week?",
-            subtitle: "Apple не анонсировала мероприятие",
+            subtitle: "Apple hasn't announced an event",
             imageURL: "https://images.unsplash.com/photo-1617802690992-15d93263d3a9?w=800&q=80",
             source: "Daily Flash",
-            timeAgo: "сегодня",
+            publishedAt: Date(timeIntervalSinceNow: -1800),
             votesCount: 5_103,
             category: .tech,
             question: "Will Apple announce Vision Pro 2 this week?",
             options: [
-                VoteOption(iconName: "checkmark.circle.fill", text: "ДА",  subtitle: "", percent: 18),
-                VoteOption(iconName: "xmark.circle.fill",    text: "НЕТ", subtitle: "", percent: 82)
+                VoteOption(iconName: "checkmark.circle.fill", text: "YES", subtitle: "", percent: 18),
+                VoteOption(iconName: "xmark.circle.fill",    text: "NO",  subtitle: "", percent: 82)
             ],
-            aiShortAnswer: "Не на неделе",
+            aiShortAnswer: "Not this week",
             aiAnalysis: AIAnalysis(
-                summary: "Анонса не будет",
+                summary: "No announcement",
                 confidencePercent: 82,
-                prosLabel: "НЕТ",
-                consLabel: "ДА",
-                pros: ["Apple не анонсировала мероприятие", "Производственный цикл ещё не завершён"],
-                cons: ["Слухи от надёжных инсайдеров усилились", "Конкуренты уже выпустили аналоги"]
+                prosLabel: "NO",
+                consLabel: "YES",
+                pros: ["Apple hasn't announced an event", "Production cycle not yet complete"],
+                cons: ["Reliable insider rumours have intensified", "Competitors have already released alternatives"]
             )
         ),
         NewsItem(
             title: "Will EUR/USD stay above 1.09 at close?",
-            subtitle: "ЕЦБ сохраняет «ястребиную» риторику",
+            subtitle: "ECB maintains hawkish rhetoric",
             imageURL: "https://images.unsplash.com/photo-1620321023374-d1a68fbc720d?w=800&q=80",
             source: "Daily Flash",
-            timeAgo: "сегодня",
+            publishedAt: Date(timeIntervalSinceNow: -1800),
             votesCount: 2_890,
             category: .finance,
             question: "Will EUR/USD stay above 1.09 at close?",
             options: [
-                VoteOption(iconName: "checkmark.circle.fill", text: "ДА",  subtitle: "", percent: 66),
-                VoteOption(iconName: "xmark.circle.fill",    text: "НЕТ", subtitle: "", percent: 34)
+                VoteOption(iconName: "checkmark.circle.fill", text: "YES", subtitle: "", percent: 66),
+                VoteOption(iconName: "xmark.circle.fill",    text: "NO",  subtitle: "", percent: 34)
             ],
-            aiShortAnswer: "Да, выше",
+            aiShortAnswer: "Yes, above",
             aiAnalysis: AIAnalysis(
-                summary: "Выше 1.09",
+                summary: "Above 1.09",
                 confidencePercent: 66,
-                prosLabel: "ДА",
-                consLabel: "НЕТ",
-                pros: ["ЕЦБ сохраняет «ястребиную» риторику", "Слабый отчёт по занятости в США"],
-                cons: ["Доллар укрепляется на фоне тарифных рисков", "Технически пара на ключевой поддержке"]
+                prosLabel: "YES",
+                consLabel: "NO",
+                pros: ["ECB maintains hawkish rhetoric", "Weak US jobs report"],
+                cons: ["Dollar strengthening on tariff risks", "Pair technically at key support"]
             )
         )
     ]
 
     static var flashCards: [FlashCard] {
-        let meta: [(category: String, symbol: String)] = [
-            ("Finance", "chart.line.uptrend.xyaxis"),
-            ("Sports",  "sportscourt.fill"),
-            ("Crypto",  "bitcoinsign.circle.fill"),
-            ("Tech",    "desktopcomputer"),
-            ("Finance", "eurosign.circle.fill")
-        ]
-        return zip(flashNews, meta).map { news, m in
+        flashNews.map { news in
             FlashCard(
                 id: news.id,
                 question: news.question,
-                category: m.category,
-                symbol: m.symbol,
+                category: news.category.rawValue,
+                symbol: news.category.symbol,
                 imageURL: news.imageURL,
                 votesCount: news.votesCount,
                 aiShortAnswer: news.aiShortAnswer ?? "",
@@ -808,7 +801,7 @@ enum MockData {
         [
             KeyFact(emoji: "newspaper.fill",  text: item.source),
             KeyFact(emoji: "clock.fill",      text: item.timeAgo),
-            KeyFact(emoji: "person.2.fill",   text: "\(item.votesCount) голосов"),
+            KeyFact(emoji: "person.2.fill",   text: "\(item.votesCount) votes"),
             KeyFact(emoji: "tag.fill",        text: item.category.rawValue)
         ]
     }

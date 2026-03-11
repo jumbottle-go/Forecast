@@ -72,7 +72,7 @@ struct HeroCardView: View {
                     Text(item.timeAgo)
                     Text("·")
                     Image(systemName: "person.2.fill")
-                    Text("\(item.votesCount.formatted()) голосов")
+                    Text("\(item.votesCount.formatted()) votes")
                 }
                 .font(.caption)
                 .foregroundStyle(AppTheme.textSecondary)
@@ -101,7 +101,7 @@ struct HeroCardView: View {
                     NavigationLink {
                         ArticleView(article: article)
                     } label: {
-                        Text("Узнать больше →")
+                        Text("Read more →")
                             .font(.subheadline.bold())
                             .foregroundStyle(AppTheme.accent)
                     }
@@ -148,20 +148,3 @@ private struct BreakingBadge: View {
     }
 }
 
-private struct CategoryBadge: View {
-    let category: Category
-
-    var body: some View {
-        HStack(spacing: 4) {
-            Image(systemName: category.symbol)
-                .font(.caption2.bold())
-            Text(category.rawValue)
-                .font(.caption.bold())
-        }
-        .foregroundStyle(.white)
-        .padding(.horizontal, 10)
-        .padding(.vertical, 5)
-        .background(.black.opacity(0.45))
-        .clipShape(RoundedRectangle(cornerRadius: 6))
-    }
-}

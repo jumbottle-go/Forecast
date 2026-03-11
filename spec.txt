@@ -1,156 +1,639 @@
+Forecast — iOS Social Prediction App
+Current State Documentation (as of March 2026)
 
-You are a senior iOS developer. Build "Forecast" — an MVP social prediction app in SwiftUI. Users read news, predict outcomes, earn expertise. Mock data only, no backend.
+────────────────────────────────────────────────────────────────
+STACK
+────────────────────────────────────────────────────────────────
 
-Stack
-Swift, SwiftUI, iOS 17+, MVVM
-SF Symbols for icons, AsyncImage with Unsplash URLs
+Swift, SwiftUI, iOS 18+, MVVM
+SF Symbols for all icons (no emoji icons in UI)
+AsyncImage with Unsplash URLs for mock images
 No external dependencies
 
-File Structure
+Build:
+  swiftc -typecheck passes cleanly
+  xcodebuild -sdk iphoneos26.2 succeeds
+  Xcode.app UI build+run works normally
+
+────────────────────────────────────────────────────────────────
+FILE STRUCTURE
+────────────────────────────────────────────────────────────────
 
 Forecast/
-├── ForecastApp.swift
+├── ForecastApp.swift               # App entry, ContentView, onboarding gate, TabView
+├── Theme/
+│   ├── AppTheme.swift              # All design tokens + Color(hex:) extension
+│   └── LeagueTheme.swift           # League tier color constants
 ├── Models/
-│   ├── NewsItem.swift          # id, title, subtitle, imageURL, source, timeAgo, votesCount, category, isBreaking, question, options(emoji/text/percent)
-│   ├── PredictionCard.swift    # id, question, imageURL, deadline, yesPercent, noPercent, totalVotes, aiAnalysis
-│   └── Article.swift           # id, newsItem, keyFacts, bodyParagraphs(text+inlineImages), predictionQuestions
+│   ├── NewsItem.swift              # AIAnalysis, Category, VoteOption, NewsItem
+│   └── Article.swift               # KeyFact, BodyElement, Article
 ├── Data/
-│   └── MockData.swift          # All mock data. 1 breaking hero + 15+ news (3+ per category). Realistic topics: geopolitics, AI, finance, sports, science
+│   └── MockData.swift              # FlashCard model + all mock data
+├── Storage/
+│   └── AppFlags.swift              # AppFlag<T>, AppFlags registry, Notification.Name extension
 ├── ViewModels/
 │   ├── FeedViewModel.swift
-│   ├── ArticleViewModel.swift
-│   └── DeckViewModel.swift
-├── Views/
-│   ├── Feed/
-│   │   ├── FeedView.swift
-│   │   ├── HeroCardView.swift
-│   │   ├── CategoryTabsView.swift
-│   │   ├── FeedCardView.swift
-│   │   └── ShareSheetView.swift
-│   ├── Article/
-│   │   └── ArticleView.swift
-│   ├── Deck/
-│   │   ├── DeckView.swift
-│   │   └── SwipeCardView.swift
-│   └── Shared/
-│       ├── VoteButton.swift
-│       └── ProgressSegments.swift
-└── Theme/
-└── AppTheme.swift
+│   └── ArticleViewModel.swift
+└── Views/
+    ├── Feed/
+    │   ├── FeedView.swift
+    │   ├── HeroCardView.swift
+    │   ├── CategoryTabsView.swift
+    │   ├── FeedCardView.swift
+    │   ├── FlashHeroView.swift
+    │   └── ShareSheetView.swift
+    ├── Article/
+    │   └── ArticleView.swift
+    ├── Leaderboard/
+    │   └── LeaderboardView.swift
+    ├── Profile/
+    │   └── ProfileView.swift
+    ├── Onboarding/
+    │   └── OnboardingView.swift
+    └── Shared/
+        ├── VoteButton.swift
+        ├── VotingBlockView.swift
+        ├── CategoryBadge.swift
+        ├── AIInsightButton.swift
+        ├── ProgressBarView.swift
+        └── AnalyticsSheetView.swift
 
-Design Tokens (AppTheme.swift)
+────────────────────────────────────────────────────────────────
+DESIGN TOKENS (AppTheme.swift)
+────────────────────────────────────────────────────────────────
 
-Colors: bg #080B12, card #0C1018, border #1F2937, textPrimary #E2E8F0, textSecondary #64748B, accent #6366F1, breaking/danger #EF4444, success #22C55E
-Radii: cards 20, buttons 14, chips 10
-Typography: hero title .title2.bold, card title .headline, body .subheadline, caption .caption+secondary
+Colors:
+  bg           #080B12   dark navy background
+  card         #0C1018   card surface
+  border       #1F2937   subtle dividers
+  textPrimary  #E2E8F0   main text
+  textSecondary #64748B  muted / meta text
+  accent       #6366F1   indigo — primary action / selected state
+  danger       #EF4444   red — warnings, NO / rejection
+  success      #22C55E   green — YES / positive
 
-Screen 1: Feed (FeedView)
+Corner radii:
+  cardRadius   20
+  buttonRadius 14
+  chipRadius   10
 
-ScrollView → Hero → CategoryTabs → LazyVStack of cards.
+League tier colors (LeagueTheme.swift):
+  diamond  #B9F2FF
+  platinum #E5E4E2
+  gold     #FFD700
+  silver   #C0C0C0
+  bronze   #CD7F32
 
-Hero (HeroCardView)
-Full-width image 200pt, bottom gradient overlay (black 0.7→clear)
-If isBreaking: red "BREAKING" badge top-left with pulsating white dot (infinite opacity 0.3↔1.0). Else: category tag
-Title: white bold, lineLimit(2), over image bottom
-Meta line: source · time · 🗳 X votes — secondary color
-Prediction question — white .headline
-2-3 vote buttons in VStack: emoji + text + subtitle. Card bg, border, 14pt radius
-"Learn more →" link in accent
+────────────────────────────────────────────────────────────────
+DATA MODELS
+────────────────────────────────────────────────────────────────
 
-Hero Vote Flow
+NewsItem.swift defines four types:
 
-1. Tap option → 0.6s ease-out animation: selected gets accent border + accent bg 0.15 opacity, all buttons show fill bar + percent text, unselected dim
-2. After 0.6s → present ShareSheetView as .sheet
+  AIAnalysis
+    summary: String
+    confidencePercent: Int
+    prosLabel: String       # label for pros block (e.g. "Hold", "YES")
+    consLabel: String       # label for cons block
+    pros: [String]          # supporting bullet points
+    cons: [String]          # opposing bullet points
 
-ShareSheet (ONLY after Hero vote)
-Title with icon + "Share your prediction!"
-Preview widget: app logo + chosen answer + topic
-Comment TextEditor, 280 char limit with counter
-Share buttons HStack (circles): X, Telegram, WhatsApp, Copy (SF Symbols)
-"Skip" button — secondary text
-Any tap dismisses sheet
+  Category (enum, CaseIterable, Identifiable)
+    cases: forYou, finance, tech, politics, sports, science
+    .symbol → SF Symbol name (e.g. "chart.line.uptrend.xyaxis" for finance)
 
-CategoryTabs
-Horizontal ScrollView, chip style: SF Symbol + text
-Categories: For You (default), Finance, Tech, Politics, Sports, Science
-Active: white bg + black text. Inactive: card bg + secondary text
-On switch: ScrollViewReader scrolls page so tabs anchor to top, animated 0.3s easeInOut
+  VoteOption (struct, Identifiable)
+    id, iconName, text, subtitle, percent
 
-Feed Cards (FeedCardView) — 3 states
+  NewsItem (struct, Identifiable, Hashable by id)
+    id, title, subtitle, imageURL
+    source, timeAgo, votesCount
+    category: Category
+    isBreaking: Bool (default false)
+    question: String
+    options: [VoteOption]
+    aiShortAnswer: String?
+    aiAnalysis: AIAnalysis?
 
-DEFAULT:
-Image ~100pt full-width with gradient
-Category tag chip over image top-left
-Title over image bottom — white bold
-Meta: source + time + votes
-Two vote buttons in HStack
-Swipe hint: "← Option1 | Option2 →" small secondary text
+Article.swift defines three types:
 
-SWIPING:
-Card follows finger horizontally + rotation3DEffect max ±8°
-Behind card: option labels visible left/right
+  KeyFact (struct, Identifiable)
+    emoji: String (SF Symbol name), text: String
 
-VOTED (after tap or swipe):
-Card stays in place (no collapse, no removal)
-Selected option highlighted accent
-Percents animate in 0.6s
-Page scroll unchanged
-Tap card (not vote button) → NavigationLink to ArticleView.
+  BodyElement (enum, Identifiable, Hashable)
+    .text(UUID, String)
+    .image(UUID, url, caption)
 
-Screen 2: Article (ArticleView)
+  Article (struct, Identifiable, Hashable by id)
+    id, newsItem, keyFacts: [KeyFact], bodyParagraphs: [BodyElement]
 
-Custom back button (pill: semi-transparent + blur + "←")
-Header: image 200pt + gradient + category tag + title overlay + source/time
-Key facts: horizontal ScrollView of chips (emoji + text), card bg
-Article body: paragraphs + inline images (16pt radius, border, caption below)
-Bottom "Make Prediction" block:
-Gradient bg (accent 0.1 → card)
-🎯 icon, title, "X questions" subtitle
-Numbered preview of 3 questions
-Full-width CTA button "Start Predictions" — accent bg, white text, 14pt radius
-Tap → NavigationLink to DeckView
+FlashCard (struct, Identifiable — defined in MockData.swift)
+  id: UUID          # same UUID as its NewsItem — required for vote tracking
+  question, category, symbol, imageURL
+  votesCount, aiShortAnswer, aiAnalysis
 
-Screen 3: Deck (DeckView)
+────────────────────────────────────────────────────────────────
+MOCK DATA (MockData.swift)
+────────────────────────────────────────────────────────────────
 
-ProgressSegments top bar: segments = card count. Filled = accent, empty = border
-"✕ Close" button top-right → dismiss to root
-ZStack of cards center screen. Top card interactive, others scaled down + offset (stack effect)
+Static data only, no backend, no persistence.
 
-SwipeCard (~70% screen height)
-Top 45%: AsyncImage, top corners rounded 20pt, gradient overlay
-Bottom 55%: card bg, padded
-Deadline: red badge (clock icon + "X days left")
-Question: white .title3.bold
-Vote bar: horizontal — green portion (Yes%) + red (No%). Labels above: "Yes X%" left, "No Y%" right
-"🗳 X votes" secondary text
-Card border + 20pt radius
+Content:
+  breakingHero      1 breaking item (US-China trade war, politics)
+  financeNews       3 items (Fed rates, Bitcoin $128k, Nvidia $42B quarter)
+  techNews          3 items (GPT-5, Apple Vision Pro 2, Google Willow quantum)
+  politicsNews      3 items (EU defense fund, NATO expansion, UN AI treaty)
+  sportsNews        3 items (UCL Real vs Arsenal, F1 2026, NBA LeBron to Warriors)
+  scienceNews       3 items (Mars water, mRNA cancer vaccine, AMOC collapse)
+  flashNews         5 items (S&P today, Arsenal tonight, BTC $130k, Vision Pro, EUR/USD)
 
-Swipe Gesture
-DragGesture: offset + rotation max ±12°
-"YES" overlay: green, top-right, appears at offset.x > 20, opacity proportional, rotate +10°
-"NO" overlay: red, top-left, appears at offset.x < -20, opacity proportional, rotate -10°
-Threshold: |offset.x| > 120pt → card flies off, next card becomes active, progress updates
-Below threshold: spring back
-Hint below card: "← No | swipe | Yes →"
+allNews = financeNews + techNews + politicsNews + sportsNews + scienceNews + flashNews
 
-AI Analytics
-Button "🤖 AI Analytics" below card — card bg, accent text
-Tap toggles panel with mock analysis (2-3 paragraphs: historical context, key factors, probability estimate)
+articles: [UUID: Article]
+  Full articles for: breakingHero, financeNews[0..2], techNews[0], sportsNews[0], scienceNews[0]
+  Remaining items use defaultKeyFacts / defaultBody helpers (auto-generated from newsItem fields)
 
-After Last Card
-"Done! 🎉" screen with prediction count
-"Back to Feed" button → popToRoot
+flashCards: [FlashCard]
+  Computed from flashNews. Each FlashCard.id == its NewsItem.id.
+  This UUID parity is critical: FeedViewModel.cardVotes uses the same id for both.
 
-Screen 4: TabView
+Flash card YES/NO logic:
+  prosLabel == "YES" → YES gets confidencePercent, NO gets remainder
+  prosLabel == "NO"  → NO gets confidencePercent, YES gets remainder
+  flashVoteOptions() in FlashHeroView builds the [VoteOption] pair at runtime
 
-4 tabs: Feed (newspaper) WORKS | Explore (safari) STUB | Leaderboard (trophy) STUB | Profile (person.circle) STUB
-Dark tab bar, accent selected, secondary unselected.
+────────────────────────────────────────────────────────────────
+STORAGE & FLAGS (AppFlags.swift)
+────────────────────────────────────────────────────────────────
 
-Key Rules
+AppFlag<Value> struct
+  key: String
+  defaultValue: Value
 
-1. Share sheet triggers ONLY on Hero vote, never on feed cards
+AppFlags enum
+  hasSeenOnboarding   AppFlag<Int>   key "hasSeenOnboarding",  default 0
+  hasUserSwiped       AppFlag<Bool>  key "hasUserSwiped",      default false
+
+Methods: reset(_ flag), resetAll()
+
+DEBUG: ContentView.init() calls AppFlags.reset(hasSeenOnboarding) so onboarding
+       shows on every launch. Remove this line when onboarding debugging is done.
+
+Notification.Name extension
+  .articleDismissedSwipe   posted 0.6s after ArticleView dismisses
+
+────────────────────────────────────────────────────────────────
+VIEWMODELS
+────────────────────────────────────────────────────────────────
+
+FeedViewModel (final, ObservableObject)
+  @Published selectedCategory: Category = .forYou
+  @Published heroVotedOptionId: UUID?
+  @Published showShareSheet: Bool
+  @Published cardVotes: [UUID: UUID]     # newsItemId → optionId
+  @Published heroChosenOption: VoteOption?
+
+  Constant data: heroItem, allNews, articles
+
+  filteredNews: [NewsItem]    # filters allNews by selectedCategory (forYou = all)
+
+  castHeroVote(option)        # sets heroVotedOptionId, after 0.6s sets showShareSheet = true
+  castVote(for:option:)       # records vote in cardVotes with animation
+  votedOptionId(for:) → UUID?
+  isVoted(for:) → Bool
+  article(for:) → Article?
+
+  Injected via .environmentObject on FeedView; used by FlashHeroView, HeroCardView, FeedCardView, ArticleView
+
+ArticleViewModel (final, ObservableObject)
+  Wraps Article; exposes newsItem, keyFacts, bodyParagraphs as computed properties
+  Immutable after init
+
+────────────────────────────────────────────────────────────────
+APP ENTRY & NAVIGATION
+────────────────────────────────────────────────────────────────
+
+ContentView
+  @AppStorage(hasSeenOnboarding): Int
+  if hasSeenOnboarding == 0  →  OnboardingView { hasSeenOnboarding = 1 }
+  else                        →  TabView (3 tabs)
+
+TabView (3 tabs)
+  Tab 0 — Feed       icon: doc.text.image
+  Tab 1 — Leaderboard icon: trophy.fill
+  Tab 2 — Profile    icon: person.fill
+
+  Tint: AppTheme.accent
+  Color scheme: .dark (enforced)
+  Tab bar background: AppTheme.bg (UITabBarAppearance)
+
+Navigation within Feed: NavigationStack
+  Destination: ArticleView (value-based, NewsItem.id)
+  Presented as push (not sheet)
+
+────────────────────────────────────────────────────────────────
+SCREEN: ONBOARDING (OnboardingView)
+────────────────────────────────────────────────────────────────
+
+Shown once on first launch (hasSeenOnboarding == 0).
+Callback onFinish: () -> Void → ContentView sets flag to 1.
+
+Layout: dark full-screen (AppTheme.bg), VStack left-aligned
+
+Kinetic headline — 3 lines, staggered opacity + Y-offset animation:
+  0.0s  "Read the news."     (textPrimary)
+  0.5s  "Predict outcomes."  (textPrimary)
+  1.0s  "Compete."           (accent)
+
+Category block — springs in at 1.5s:
+  Label: "Choose your topics" (title3.bold, textSecondary)
+  6 topic pills in 3 static HStack rows (2 pills each):
+    Row 1: Finance (chart.line.uptrend.xyaxis), Tech (desktopcomputer)
+    Row 2: Crypto (bitcoinsign.circle.fill), Politics (building.columns.fill)
+    Row 3: Sports (sportscourt.fill), Pop Culture (popcorn.fill)
+  Pills: capsule, SF Symbol + text, font size 17 semibold
+  Selected: accent.opacity(0.2) bg + accent border + accent text
+  Unselected: white.opacity(0.05) bg + white.opacity(0.1) border + white text
+
+Continue button (appears with category block):
+  Disabled until 2+ topics selected
+  Label: "Continue →" (enabled) / "Select at least 2" (disabled)
+  Accent bg when enabled, dim bg when disabled
+  Height 52pt, cornerRadius 14, animated state change
+
+────────────────────────────────────────────────────────────────
+SCREEN: FEED (FeedView)
+────────────────────────────────────────────────────────────────
+
+NavigationStack, AppTheme.bg background.
+feedViewModel injected as @EnvironmentObject.
+
+Layout (ScrollView, top to bottom):
+
+1. Daily Flash header
+   Left: bolt.fill icon (yellow) + "Daily Flash" title (bold)
+   Right: pill counter showing cards remaining ("N left")
+   Only shows when flashCards array is non-empty
+
+2. FlashHeroView (flash card deck)
+   @Binding cardsRemaining, onReadArticle callback
+
+3. Feed section header
+   "Predictions" title left + record-circle icon right
+
+4. CategoryTabsView (@Binding selectedCategory)
+
+5. LazyVStack of FeedCardView
+   Filtered by selectedCategory (forYou = all)
+   Each card: onVote → feedViewModel.castVote, onCardTap → navigate to article
+
+Sheet: ShareSheetView
+  Triggered by feedViewModel.showShareSheet
+  Passes heroChosenOption + heroItem.title
+
+────────────────────────────────────────────────────────────────
+COMPONENT: CategoryTabsView
+────────────────────────────────────────────────────────────────
+
+Horizontal ScrollView, .scrollIndicators(.hidden)
+One ChipButton per Category (6 total: For You, Finance, Tech, Politics, Sports, Science)
+
+ChipButton:
+  SF Symbol + category name, .caption.bold
+  Selected: white bg, black text, 14pt radius
+  Unselected: AppTheme.card bg, AppTheme.textSecondary text, border
+
+On tap: updates @Binding, triggers onSelect callback
+
+────────────────────────────────────────────────────────────────
+COMPONENT: FlashHeroView
+────────────────────────────────────────────────────────────────
+
+Tinder-style swiping deck of FlashCards.
+Visible stack: up to 3 cards (Z-stack with scale + Y-offset depth effect).
+Top card: draggable. Others: static.
+
+Card depth effect per card in stack:
+  scale: 1.0 - depth * 0.035, anchor .top
+  Y offset: depth * 14pt
+  zIndex: idx
+
+Drag gesture (simultaneousGesture, minimumDistance 20):
+  Only activates for horizontal drags (|dx| > |dy| * 0.6)
+  Live: dragOffset tracks finger
+  Live: rotation = dragOffset.width / 28 degrees
+  Live: swipe tint color (success/danger) up to 0.20 opacity at 160pt
+  Live: YES/NO stamps fade in after ±20pt (full opacity at ±90pt)
+  Release > 100pt threshold → programmatic swipe
+  Release < threshold → spring back
+
+Programmatic swipe:
+  0.22s easeOut flies card off screen
+  0.22s delay → remove from array + spring reset offset
+
+Swipe directions:
+  Left swipe  → YES (first option / prosLabel side)
+  Right swipe → NO  (second option)
+  YES button  → left swipe
+  NO button   → right swipe
+
+ArticleView integration:
+  .onReceive(.articleDismissedSwipe) → identifies voted option from feedViewModel
+  → triggers programmatic swipe in correct direction
+
+Empty state (all cards swiped):
+  Streak widget: "🔥 3 days in a row" + "×1.5 multiplier active"
+  5 day indicators (Mo–Fr) with checkmark.circle.fill / circle icons
+  Animated transition (.spring)
+
+Card layout (cardHeight = screen height * 0.55):
+  Background: AsyncImage (scaledToFill, clipped) or category gradient fallback
+  Dark vignette: clear→black(0.85) gradient top→bottom
+  Top bar: CategoryBadge (left) + AIInsightButton (right)
+  Bottom: question headline (title2.bold, lineLimit 4)
+  Button row: YES + NO in HStack (success/danger colors, 14pt radius)
+  Ghost row: "Read article" button (white.opacity(0.55), outlined)
+
+Sheet: AnalyticsSheetView with inline voting block
+  On vote in sheet → swipes flash card in corresponding direction
+
+────────────────────────────────────────────────────────────────
+COMPONENT: HeroCardView
+────────────────────────────────────────────────────────────────
+
+Full-width card (not swipeable).
+
+Image area (200pt):
+  AsyncImage, scaledToFill, clipped
+  Black gradient overlay bottom→center
+  Top-left badge: BreakingBadge (if isBreaking) or CategoryBadge
+  Title at bottom, white bold, lineLimit 2
+
+BreakingBadge:
+  "BREAKING" text + pulsing white circle
+  Red AppTheme.danger background
+  Pulse: 0.3↔1.0 opacity, 0.9s easeInOut, repeatForever(autoreverses: true)
+  Starts on .onAppear if item.isBreaking
+
+Content area (below image):
+  Meta: source · time · person.2.fill · N votes (caption, secondary)
+  Question (headline, white)
+  VoteButton × 2 (VStack, showSubtitle: true)
+  "Read more →" NavigationLink (accent, .plain buttonStyle)
+
+Vote triggers: onVote callback → FeedViewModel.castHeroVote
+  After 0.6s ShareSheetView is presented (via feedViewModel.showShareSheet)
+
+────────────────────────────────────────────────────────────────
+COMPONENT: FeedCardView
+────────────────────────────────────────────────────────────────
+
+Image area (140pt, clipped):
+  AsyncImage + black gradient bottom
+  CategoryBadge top-left
+  AIInsightButton top-right (only if aiShortAnswer and aiAnalysis exist)
+  News title bottom-left (caption.bold, white, lineLimit 2)
+
+Content area (below image, AppTheme.card bg):
+  Question (headline, textPrimary, lineLimit 2)
+  2 VoteButtons in HStack (colors: success for first, danger for second)
+  Vote count: person.2.fill icon + "N votes" (caption, secondary, centered)
+
+Gestures:
+  highPriorityGesture DragGesture (minimumDistance 20)
+  Only activates for |dx| > |dy| (more horizontal than vertical)
+  Left swipe → votes for options.first
+  Right swipe → votes for options.last
+  Threshold: 100pt
+  After swipe: withAnimation(.easeOut 0.2) resets offset
+  Card stays in place after vote — no removal, no collapse
+
+  Wiggle hint (first-time users):
+  On appear: if !hasUserSwiped && !hasWiggledThisSession
+    4 × 10pt wiggle, 0.15s easeInOut, 1.0s delay
+    Sets static FeedCardView.hasWiggledThisSession = true
+
+Rotation: dragOffset / 25 * 8 / swipeThreshold degrees (max ±8°)
+
+Tap (not on vote button, not dragging): onCardTap?(article)
+
+Sheet: AnalyticsSheetView (when AI button tapped, no vote integration)
+
+AppStorage: hasUserSwiped (AppFlags.hasUserSwiped.key, default false)
+  Set to true on first successful swipe
+
+────────────────────────────────────────────────────────────────
+SCREEN: ARTICLE (ArticleView)
+────────────────────────────────────────────────────────────────
+
+Full-screen, custom navigation (navigationBarHidden: true).
+Back button: top-left, circular blur material, chevron.left icon.
+
+Scroll content:
+  Header image (200pt, scaledToFill, clipped)
+  Category badge + title + source/time meta (horizontal padding 16)
+  Body paragraphs:
+    .text → Text with .subheadline, lineSpacing 5
+    .image → AsyncImage (180pt height, 16pt radius, border, caption below)
+  100pt spacer at bottom (clears sticky bar)
+
+Sticky vote bar (safeAreaInset .bottom):
+  Only shown if options.count >= 2
+  0.5pt white separator at top
+  VotingBlockView (question + 2 vote buttons + vote count)
+  Background: ultraThinMaterial
+
+Vote behavior:
+  feedViewModel.castVote(for: newsItem.id, option:)
+  After 1.5s: dismiss()
+  After additional 0.6s: post .articleDismissedSwipe notification
+
+────────────────────────────────────────────────────────────────
+SCREEN: LEADERBOARD (LeaderboardView)
+────────────────────────────────────────────────────────────────
+
+Full-screen ScrollView, AppTheme.bg background.
+
+Section 1 — Title: "Leagues" (28pt bold)
+
+Section 2 — Bronze progress card (white.opacity(0.04) bg, 16pt radius):
+  Icon row: star.fill (bronze color) + "To Bronze league"
+  Subtitle: "Make 3 more correct predictions in Daily Flash"
+  ProgressBarView: progress 0.4, fill LeagueTheme.bronze
+  Label: "2 / 5" right-aligned
+  CTA button: "Go to predictions" → selectedTab = 0
+  Button bg: LeagueTheme.bronze, 12pt radius, full-width
+
+Section 3 — League track (vertical timeline, 5 tiers + calibration):
+  Each tier row: track line (gray) + dot + icon + name
+  Bronze row: highlighted (bronze color, full opacity)
+  Other tiers: 0.3 opacity, lock icon on right
+  Calibration row: pulsing dot (bronzeColor, 0.5↔1.0, 1.5s repeatForever)
+    Current position indicator, no lock icon
+
+Section 4 — Feature preview ("What awaits in leagues"):
+  3 feature cards: chart.bar.fill, arrow.up.circle.fill, flame.fill
+  Each: icon (accent) + description text
+
+League data (hardcoded):
+  Diamond (crown.fill), Platinum (trophy.fill), Gold (medal.fill),
+  Silver (shield.fill), Bronze (star.fill)
+
+────────────────────────────────────────────────────────────────
+SCREEN: PROFILE (ProfileView)
+────────────────────────────────────────────────────────────────
+
+Full-screen ScrollView, AppTheme.bg background. All mock data.
+
+Section 1 — Header:
+  person.circle.fill icon (80pt, textSecondary)
+  Name: "Alex Morgan"
+  "#47 in ranking" (if isTopLeague = true)
+
+Section 2 — Metrics row (3-column KPI card):
+  League: trophy.fill (LeagueTheme.gold) + "Gold" text
+  Winrate: "61%"
+  Predictions: "342"
+  Columns separated by 0.5pt vertical dividers
+
+Section 3 — League progress card:
+  "Gold → Platinum" transition label (gold/platinum colors)
+  ProgressBarView: progress 0.78, fill LinearGradient(gold → platinum)
+  "780 / 1000 XP" right-aligned
+
+Section 4 — Strengths:
+  Title "Strengths"
+  3 rows: Finance (74%, green), Tech (68%, green), Politics (52%, yellow)
+  Color thresholds: ≥65% green, ≥45% yellow, <45% red
+
+Section 5 — Recent predictions:
+  "Recent predictions" header + "All →" button
+  Horizontal carousel of prediction cards (200pt width each):
+    Category icon + name
+    Question (lineLimit 2)
+    Answer text + status icon (checkmark.circle.fill / xmark.circle.fill / clock)
+  Statuses: correct (success), wrong (danger), pending (textSecondary)
+
+────────────────────────────────────────────────────────────────
+SHARED COMPONENTS
+────────────────────────────────────────────────────────────────
+
+VoteButton
+  Props: option, isSelected, isVoted, showSubtitle, tintColor?, onTap
+  Default unvoted: icon + text (+ subtitle if showSubtitle)
+  After vote: percent bar animates from leading (width = percent * full, 0.6s easeOut)
+  After vote: percent text replaces icon; text stays
+  Selected: accent/tint border 1.5pt; unselected: fade to 0.55 opacity
+  tintColor overrides accent (used for success/danger in FeedCardView)
+
+CategoryBadge
+  Initialisers: (symbol:, name:) or (category: Category)
+  Capsule, SF Symbol + text, white on black.opacity(0.4)
+  font: caption2.bold icon, caption.bold text
+
+AIInsightButton
+  "AI: [shortAnswer]" in capsule (sparkles icon + text + chevron.right)
+  Dark pill (white 0.15), inner shadow depth effect, drop shadow
+  font: caption.bold, white text
+
+ProgressBarView
+  progress: CGFloat (0.0 – 1.0), fill: some ShapeStyle (AnyShapeStyle)
+  Background: white.opacity(0.10), 8pt height, cornerRadius 4
+  Fill bar: GeometryReader width × progress
+  Accepts Color or LinearGradient as fill
+
+VotingBlockView
+  Props: question, options[], votesCount, votedOptionId, onVote
+  Question (subheadline.bold, lineLimit 2)
+  2 VoteButtons in HStack (success/danger tints)
+  "N votes" centered below (caption, secondary)
+  Used in: ArticleView sticky bar, AnalyticsSheetView
+
+AnalyticsSheetView
+  Props: analysis, optional voteQuestion/options/votesCount/votedOptionId/onVote
+  Header: sparkles icon + "AI Analytics" + "AI confidence N%: summary"
+  Pros block: prosLabel title + bullet points (success color, checkmark icon)
+  Cons block: consLabel title + bullet points (danger color, xmark icon)
+  Optional vote block: divider + VotingBlockView
+  On vote: dismiss after 1.5s
+  Presentation: .fraction(0.65) or .large detent, hidden drag indicator
+
+ShareSheetView
+  Props: chosenOption, topicTitle, @Binding isPresented
+  comment: String (max 280 chars, counter displayed)
+  Preview widget: app icon placeholder + chosen option + topic title
+  4 share circles: X, Telegram, WhatsApp, Copy
+  "Skip" button (any tap dismisses)
+  Presentation: .medium detent, hidden drag indicator
+
+────────────────────────────────────────────────────────────────
+VOTE FLOW SUMMARY
+────────────────────────────────────────────────────────────────
+
+Hero card vote:
+  VoteButton tap → FeedViewModel.castHeroVote(option)
+  → heroVotedOptionId set, animation shows percent bars
+  → 0.6s later: showShareSheet = true → ShareSheetView
+
+Feed card vote:
+  VoteButton tap OR horizontal swipe (100pt threshold)
+  → FeedViewModel.castVote(for: id, option:) with animation
+  → Card stays in place, percent bars animate in
+  → Tap on voted card → NavigationLink to ArticleView
+
+Flash card vote (FlashHeroView path A — buttons):
+  YES button → programmatic left swipe → card animates off → removed
+  NO button  → programmatic right swipe → card animates off → removed
+
+Flash card vote (FlashHeroView path B — drag):
+  Drag > 100pt → swipe(to:) → card flies off → removed
+  Direction: left = YES (prosLabel side), right = NO
+
+Flash card vote (FlashHeroView path C — via article):
+  "Read article" → ArticleView pushes on NavigationStack
+  User votes in sticky bar → castVote → 1.5s delay → dismiss()
+  → 0.6s later: .articleDismissedSwipe notification
+  → FlashHeroView.onReceive: looks up votedOptionId, determines direction, swipes
+
+Flash card vote (FlashHeroView path D — AnalyticsSheetView):
+  AI button → AnalyticsSheetView with VotingBlockView
+  On vote: castVote → 1.5s delay → dismiss sheet → swipe in direction
+
+────────────────────────────────────────────────────────────────
+ANIMATION CONVENTIONS
+────────────────────────────────────────────────────────────────
+
+All state changes: withAnimation (no direct mutations that affect layout)
+Card swipe out:     .easeOut(duration: 0.22)
+Card spring back:   .spring(response: 0.4, dampingFraction: 0.7)
+Card removal reset: .spring(response: 0.35, dampingFraction: 0.8)
+Empty/full toggle:  .spring(response: 0.45, dampingFraction: 0.78)
+Vote bar fill:      .easeOut(duration: 0.6) — VoteButton internal
+Onboarding lines:   .easeOut(duration: 0.4) — staggered 0.5s apart
+Onboarding grid:    .spring(response: 0.5, dampingFraction: 0.8) at t=1.5s
+Breaking pulse:     .easeInOut(duration: 0.9).repeatForever(autoreverses: true)
+League dot pulse:   .easeInOut(duration: 1.5).repeatForever(autoreverses: true)
+Wiggle hint:        .easeInOut(0.15) × 4 repeats, 1.0s delay
+
+────────────────────────────────────────────────────────────────
+KEY RULES & INVARIANTS
+────────────────────────────────────────────────────────────────
+
+1. ShareSheet triggers ONLY on hero card vote (HeroCardView), never on feed or flash cards
 2. Feed cards stay in place after vote — no collapse, no scroll change
-3. Category tabs: min 3 news each
-4. All animations use withAnimation
-5. Dark theme everywhere, no light mode
-6. Russian UI text for labels where user-facing (кнопки, заголовки секций), English for mock news content
+3. FlashCard.id must equal its source NewsItem.id — required for vote state sharing
+4. Flash card swipe direction: left = YES (prosLabel) side, right = NO
+5. "YES"/"NO" prosLabel check in flashVoteOptions must match flash NewsItem option texts
+6. All UI language: English
+7. Dark theme enforced everywhere (.preferredColorScheme(.dark))
+8. SF Symbols only for icons (no emoji glyphs in UI elements)
+9. All category filtering uses .forYou to mean "show all"
+10. ArticleView fires .articleDismissedSwipe 0.6s AFTER dismiss() — not before
+11. hasWiggledThisSession is a static var on FeedCardView (resets on app restart, once per session)
+
+────────────────────────────────────────────────────────────────
+KNOWN DEBUG SETTINGS
+────────────────────────────────────────────────────────────────
+
+ContentView.init() resets hasSeenOnboarding on every launch for onboarding testing.
+Remove before production: AppFlags.reset(AppFlags.hasSeenOnboarding)

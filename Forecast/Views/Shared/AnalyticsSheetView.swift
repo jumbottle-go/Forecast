@@ -33,10 +33,10 @@ struct AnalyticsSheetView: View {
                                     .font(.title2)
                                     .foregroundStyle(AppTheme.accent)
                                 VStack(alignment: .leading, spacing: 3) {
-                                    Text("ИИ-Аналитика")
+                                    Text("AI Analytics")
                                         .font(.headline)
                                         .foregroundStyle(AppTheme.textPrimary)
-                                    Text("AI уверен на \(analysis.confidencePercent)%: \(analysis.summary)")
+                                    Text("AI confidence \(analysis.confidencePercent)%: \(analysis.summary)")
                                         .font(.subheadline)
                                         .foregroundStyle(AppTheme.accent)
                                 }

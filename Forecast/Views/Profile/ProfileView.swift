@@ -59,16 +59,16 @@ struct ProfileView: View {
     private let predictions: [ProfilePrediction] = [
         ProfilePrediction(categoryIcon: "chart.line.uptrend.xyaxis", category: "Finance",
                           question: "Will Fed cut rates?",
-                          answer: "Заморозит", status: .correct),
+                          answer: "Hold", status: .correct),
         ProfilePrediction(categoryIcon: "desktopcomputer", category: "Tech",
                           question: "Apple Vision Pro 2 sales?",
-                          answer: "< 1 млн", status: .pending),
+                          answer: "< 1M", status: .pending),
         ProfilePrediction(categoryIcon: "building.columns.fill", category: "Politics",
                           question: "EU reaction to GPT-5?",
-                          answer: "Запрет", status: .wrong),
+                          answer: "Ban", status: .wrong),
         ProfilePrediction(categoryIcon: "chart.line.uptrend.xyaxis", category: "Finance",
                           question: "Bitcoin hits $100K?",
-                          answer: "ДА", status: .correct)
+                          answer: "YES", status: .correct)
     ]
 
     // ── Body ───────────────────────────────────────────────────────────────
@@ -104,7 +104,7 @@ struct ProfileView: View {
                 .foregroundStyle(AppTheme.textPrimary)
 
             if isTopLeague {
-                Text("#47 в рейтинге")
+                Text("#47 in ranking")
                     .font(.system(size: 14))
                     .foregroundStyle(AppTheme.textSecondary)
             }
@@ -119,10 +119,10 @@ struct ProfileView: View {
     private var metricsBlock: some View {
         HStack(spacing: 0) {
             // League
-            metricView(label: "Лига") {
+            metricView(label: "League") {
                 HStack(spacing: 5) {
                     Image(systemName: "trophy.fill")
-                        .foregroundStyle(Color(hex: "FFD700"))
+                        .foregroundStyle(LeagueTheme.gold)
                     Text("Gold")
                         .foregroundStyle(AppTheme.textPrimary)
                 }
@@ -141,7 +141,7 @@ struct ProfileView: View {
             divider
 
             // Predictions count
-            metricView(label: "Прогнозов") {
+            metricView(label: "Predictions") {
                 Text("342")
                     .font(.system(size: 24, weight: .bold))
                     .foregroundStyle(AppTheme.textPrimary)
@@ -178,31 +178,23 @@ struct ProfileView: View {
             // League transition label
             HStack(spacing: 6) {
                 Text("Gold")
-                    .foregroundStyle(Color(hex: "FFD700"))
+                    .foregroundStyle(LeagueTheme.gold)
                 Text("→")
                     .foregroundStyle(AppTheme.textSecondary)
                 Text("Platinum")
-                    .foregroundStyle(Color(hex: "E5E4E2"))
+                    .foregroundStyle(LeagueTheme.platinum)
             }
             .font(.system(size: 16, weight: .semibold))
 
             // Progress bar
-            GeometryReader { geo in
-                ZStack(alignment: .leading) {
-                    RoundedRectangle(cornerRadius: 4)
-                        .fill(Color.white.opacity(0.10))
-                        .frame(height: 8)
-
-                    RoundedRectangle(cornerRadius: 4)
-                        .fill(LinearGradient(
-                            colors: [Color(hex: "FFD700"), Color(hex: "E5E4E2")],
-                            startPoint: .leading,
-                            endPoint: .trailing
-                        ))
-                        .frame(width: geo.size.width * leagueProgress, height: 8)
-                }
-            }
-            .frame(height: 8)
+            ProgressBarView(
+                progress: leagueProgress,
+                fill: LinearGradient(
+                    colors: [LeagueTheme.gold, LeagueTheme.platinum],
+                    startPoint: .leading,
+                    endPoint: .trailing
+                )
+            )
 
             Text("780 / 1000 XP")
                 .font(.system(size: 13))
@@ -219,7 +211,7 @@ struct ProfileView: View {
 
     private var strengthsBlock: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Сильные стороны")
+            Text("Strengths")
                 .font(.system(size: 18, weight: .bold))
                 .foregroundStyle(AppTheme.textPrimary)
 
@@ -254,11 +246,11 @@ struct ProfileView: View {
 
             // Section header
             HStack {
-                Text("Последние прогнозы")
+                Text("Recent predictions")
                     .font(.system(size: 18, weight: .bold))
                     .foregroundStyle(AppTheme.textPrimary)
                 Spacer()
-                Button("Все →") { }
+                Button("All →") { }
                     .font(.system(size: 14))
                     .foregroundStyle(AppTheme.accent)
             }

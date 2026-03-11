@@ -36,7 +36,7 @@ struct VotingBlockView: View {
 
             HStack(spacing: 4) {
                 Image(systemName: "person.2.fill")
-                Text("\(votesCount.formatted()) голосов")
+                Text("\(votesCount.formatted()) votes")
             }
             .font(.caption)
             .foregroundStyle(.secondary)

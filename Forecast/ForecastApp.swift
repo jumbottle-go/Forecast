@@ -23,15 +23,15 @@ struct ContentView: View {
         TabView(selection: $selectedTab) {
             FeedView()
                 .environmentObject(feedViewModel)
-                .tabItem { Label("Лента", systemImage: "doc.text.image") }
+                .tabItem { Label("Feed", systemImage: "doc.text.image") }
                 .tag(0)
 
             LeaderboardView(selectedTab: $selectedTab)
-                .tabItem { Label("Лидерборд", systemImage: "trophy.fill") }
+                .tabItem { Label("Leaderboard", systemImage: "trophy.fill") }
                 .tag(1)
 
             ProfileView()
-                .tabItem { Label("Профиль", systemImage: "person.fill") }
+                .tabItem { Label("Profile", systemImage: "person.fill") }
                 .tag(2)
         }
         .tint(AppTheme.accent)

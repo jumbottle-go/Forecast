@@ -7,7 +7,7 @@ struct FeedCardView: View {
     let onVote: (VoteOption) -> Void
     var onCardTap: ((Article) -> Void)? = nil
 
-    @AppStorage("hasUserSwiped") private var hasUserSwiped = false
+    @AppStorage(AppFlags.hasUserSwiped.key) private var hasUserSwiped = AppFlags.hasUserSwiped.defaultValue
     static var hasWiggledThisSession = false
 
     @State private var dragOffset: CGFloat = 0
@@ -104,47 +104,13 @@ struct FeedCardView: View {
                 VStack {
                     HStack {
                         // Category pill
-                        HStack(spacing: 4) {
-                            Image(systemName: item.category.symbol)
-                                .font(.caption2.bold())
-                            Text(item.category.rawValue)
-                                .font(.caption.bold())
-                        }
-                        .foregroundStyle(.white)
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 4)
-                        .background(.black.opacity(0.4))
-                        .clipShape(Capsule())
+                        CategoryBadge(category: item.category)
 
                         Spacer()
 
                         // AI interactive pill
                         if let shortAnswer = item.aiShortAnswer, item.aiAnalysis != nil {
-                            Button { showAnalytics = true } label: {
-                                HStack(spacing: 4) {
-                                    Image(systemName: "sparkles")
-                                    Text("AI: \(shortAnswer)")
-                                        .lineLimit(1)
-                                        .minimumScaleFactor(0.8)
-                                    Image(systemName: "chevron.right")
-                                        .font(.caption2.bold())
-                                        .opacity(0.8)
-                                }
-                                .font(.caption.bold())
-                                .foregroundStyle(.white)
-                                .padding(.horizontal, 12)
-                                .padding(.vertical, 6)
-                                .background(
-                                    Capsule()
-                                        .fill(
-                                            Color(white: 0.15)
-                                                .shadow(.inner(color: .black.opacity(0.9), radius: 3, x: 0, y: 3))
-                                                .shadow(.inner(color: .white.opacity(0.2), radius: 2, x: 0, y: -1))
-                                        )
-                                )
-                                .shadow(color: .black.opacity(0.5), radius: 4, x: 0, y: 2)
-                            }
-                            .buttonStyle(.plain)
+                            AIInsightButton(shortAnswer: shortAnswer) { showAnalytics = true }
                         }
                     }
                     .padding(12)
@@ -196,7 +162,7 @@ struct FeedCardView: View {
                     // Vote count
                     HStack(spacing: 4) {
                         Image(systemName: "person.2.fill")
-                        Text("\(item.votesCount.formatted()) голосов")
+                        Text("\(item.votesCount.formatted()) votes")
                     }
                     .font(.caption)
                     .foregroundStyle(.secondary)

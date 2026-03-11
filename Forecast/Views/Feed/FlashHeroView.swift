@@ -6,12 +6,11 @@ struct FlashHeroView: View {
     @Binding var cardsRemaining: Int
     @EnvironmentObject private var feedViewModel: FeedViewModel
 
-    @State private var cards: [FlashCard] = MockData.flashCards
+    @State private var cards: [FlashCard] = []
     @State private var dragOffset: CGSize = .zero
     @State private var isSwiping = false
     @State private var activeCard: FlashCard? = nil
-
-    private let totalCount = MockData.flashCards.count
+    @State private var totalCount: Int = 0
     private let swipeThreshold: CGFloat = 100
     private var cardHeight: CGFloat {
         UIScreen.main.bounds.height * 0.55
@@ -19,7 +18,7 @@ struct FlashHeroView: View {
 
     // Streak widget data (hardcoded for MVP)
     private let weekDays: [(String, Bool)] = [
-        ("Пн", true), ("Вт", true), ("Ср", true), ("Чт", false), ("Пт", false)
+        ("Mo", true), ("Tu", true), ("We", true), ("Th", false), ("Fr", false)
     ]
 
     var body: some View {
@@ -37,7 +36,7 @@ struct FlashHeroView: View {
         }
         .animation(.spring(response: 0.45, dampingFraction: 0.78), value: cards.isEmpty)
         .padding(.horizontal, 16)
-        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("ArticleDismissedSwipe"))) { _ in
+        .onReceive(NotificationCenter.default.publisher(for: .articleDismissedSwipe)) { _ in
             if let topCard = cards.last,
                let votedOptionId = feedViewModel.votedOptionId(for: topCard.id),
                let newsItem = feedViewModel.allNews.first(where: { $0.id == topCard.id }),
@@ -47,6 +46,19 @@ struct FlashHeroView: View {
                 let options = newsItem.options
                 let isLeftOption = options.first?.text == option.text
                 swipe(to: isLeftOption ? .left : .right)
+            }
+        }
+        .task {
+            if cards.isEmpty && !feedViewModel.flashCards.isEmpty {
+                cards = feedViewModel.flashCards
+                totalCount = feedViewModel.flashCards.count
+            }
+        }
+        .onChange(of: feedViewModel.flashCards.count) { _, _ in
+            let newCards = feedViewModel.flashCards
+            if cards.isEmpty && !newCards.isEmpty {
+                cards = newCards
+                totalCount = newCards.count
             }
         }
         .onChange(of: cards.count) { _, _ in cardsRemaining = cards.count }
@@ -125,13 +137,13 @@ struct FlashHeroView: View {
     // Percentages are derived from AI confidence so the bar fills correctly after voting.
     private func flashVoteOptions(for card: FlashCard) -> [VoteOption] {
         let ai = card.aiAnalysis
-        let daPercent = ai.prosLabel == "ДА"
+        let daPercent = ai.prosLabel == "YES"
             ? Double(ai.confidencePercent)
             : Double(100 - ai.confidencePercent)
         let netPercent = 100.0 - daPercent
         return [
-            VoteOption(iconName: "checkmark.circle.fill", text: "ДА",  subtitle: "", percent: daPercent),
-            VoteOption(iconName: "xmark.circle.fill",    text: "НЕТ", subtitle: "", percent: netPercent)
+            VoteOption(iconName: "checkmark.circle.fill", text: "YES", subtitle: "", percent: daPercent),
+            VoteOption(iconName: "xmark.circle.fill",    text: "NO",  subtitle: "", percent: netPercent)
         ]
     }
 
@@ -197,48 +209,12 @@ struct FlashHeroView: View {
                 HStack(alignment: .top) {
 
                     // Category badge (top-left) — identical style to feed cards
-                    HStack(spacing: 4) {
-                        Image(systemName: card.symbol)
-                            .font(.caption2.bold())
-                        Text(card.category)
-                            .font(.caption.bold())
-                    }
-                    .foregroundStyle(.white)
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 4)
-                    .background(.black.opacity(0.4))
-                    .clipShape(Capsule())
+                    CategoryBadge(symbol: card.symbol, name: card.category)
 
                     Spacer()
 
                     // AI analytics button (top-right)
-                    Button {
-                        activeCard = card
-                    } label: {
-                        HStack(spacing: 4) {
-                            Image(systemName: "sparkles")
-                            Text("AI: \(card.aiShortAnswer)")
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.8)
-                            Image(systemName: "chevron.right")
-                                .font(.caption2.bold())
-                                .opacity(0.8)
-                        }
-                        .font(.caption.bold())
-                        .foregroundStyle(.white)
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 6)
-                        .background(
-                            Capsule()
-                                .fill(
-                                    Color(white: 0.15)
-                                        .shadow(.inner(color: .black.opacity(0.9), radius: 3, x: 0, y: 3))
-                                        .shadow(.inner(color: .white.opacity(0.2), radius: 2, x: 0, y: -1))
-                                )
-                        )
-                        .shadow(color: .black.opacity(0.5), radius: 4, x: 0, y: 2)
-                    }
-                    .buttonStyle(.plain)
+                    AIInsightButton(shortAnswer: card.aiShortAnswer) { activeCard = card }
                 }
                 .padding(.horizontal, 20)
                 .padding(.top, 20)
@@ -260,11 +236,14 @@ struct FlashHeroView: View {
                 // ── Swipe buttons ────────────────────────────────────
                 HStack(spacing: 12) {
 
-                    // ДА (успех)
-                    Button { swipe(to: .left) } label: {
+                    // YES (success)
+                    Button {
+                        feedViewModel.castVote(for: card.id, option: flashVoteOptions(for: card)[0])
+                        swipe(to: .left)
+                    } label: {
                         HStack(spacing: 6) {
                             Image(systemName: "checkmark")
-                            Text("ДА")
+                            Text("YES")
                         }
                         .font(.subheadline.bold())
                         .foregroundStyle(AppTheme.success)
@@ -279,11 +258,14 @@ struct FlashHeroView: View {
                     }
                     .buttonStyle(.plain)
 
-                    // НЕТ (отказ)
-                    Button { swipe(to: .right) } label: {
+                    // NO (reject)
+                    Button {
+                        feedViewModel.castVote(for: card.id, option: flashVoteOptions(for: card)[1])
+                        swipe(to: .right)
+                    } label: {
                         HStack(spacing: 6) {
                             Image(systemName: "xmark")
-                            Text("НЕТ")
+                            Text("NO")
                         }
                         .font(.subheadline.bold())
                         .foregroundStyle(AppTheme.danger)
@@ -305,7 +287,7 @@ struct FlashHeroView: View {
                 Button { onReadArticle?(card) } label: {
                     HStack(spacing: 8) {
                         Image(systemName: "doc.text")
-                        Text("Читать новость")
+                        Text("Read article")
                     }
                     .font(.subheadline)
                     .foregroundStyle(.white.opacity(0.55))
@@ -334,7 +316,7 @@ struct FlashHeroView: View {
             // 5. Tinder stamp labels (НЕТ / ДА)
             if isTop {
                 if dragOffset.width < -20 {
-                    Text("НЕТ")
+                    Text("NO")
                         .font(.title.bold())
                         .foregroundStyle(AppTheme.danger)
                         .padding(.horizontal, 14)
@@ -347,7 +329,7 @@ struct FlashHeroView: View {
                         .allowsHitTesting(false)
                 }
                 if dragOffset.width > 20 {
-                    Text("ДА")
+                    Text("YES")
                         .font(.title.bold())
                         .foregroundStyle(AppTheme.success)
                         .padding(.horizontal, 14)
@@ -406,7 +388,12 @@ struct FlashHeroView: View {
                 guard !isSwiping else { return }
                 let dx = value.translation.width
                 if abs(dx) > swipeThreshold {
-                    swipe(to: dx > 0 ? .right : .left)
+                    let direction: SwipeDirection = dx > 0 ? .right : .left
+                    if let topCard = cards.last {
+                        let options = flashVoteOptions(for: topCard)
+                        feedViewModel.castVote(for: topCard.id, option: direction == .left ? options[0] : options[1])
+                    }
+                    swipe(to: direction)
                 } else {
                     withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
                         dragOffset = .zero
@@ -434,10 +421,10 @@ struct FlashHeroView: View {
     private var streakWidget: some View {
         HStack(spacing: 16) {
             VStack(alignment: .leading, spacing: 4) {
-                Text("🔥 3 дня подряд")
+                Text("🔥 3 days in a row")
                     .font(.subheadline.bold())
                     .foregroundStyle(AppTheme.textPrimary)
-                Text("×1.5 множитель активен")
+                Text("×1.5 multiplier active")
                     .font(.caption)
                     .foregroundStyle(AppTheme.accent)
             }

@@ -141,7 +141,7 @@ struct ArticleView: View {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                         dismiss()
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                            NotificationCenter.default.post(name: NSNotification.Name("ArticleDismissedSwipe"), object: nil)
+                            NotificationCenter.default.post(name: .articleDismissedSwipe, object: nil)
                         }
                     }
                 }

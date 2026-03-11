@@ -29,6 +29,13 @@
 		EE0000000000000000000020 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000000020 /* Assets.xcassets */; };
 		EE0000000000000000001F /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0000000000000000001F /* OnboardingView.swift */; };
 		EE000000000000000000021 /* AppFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000000000000000000021 /* AppFlags.swift */; };
+		EE000000000000000000022 /* LeagueTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000000000000000000022 /* LeagueTheme.swift */; };
+		EE000000000000000000023 /* CategoryBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000000000000000000023 /* CategoryBadge.swift */; };
+		EE000000000000000000024 /* AIInsightButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000000000000000000024 /* AIInsightButton.swift */; };
+		EE000000000000000000025 /* ProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000000000000000000025 /* ProgressBarView.swift */; };
+		EE000000000000000000026 /* SupabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000000000000000000026 /* SupabaseService.swift */; };
+		EE000000000000000000027 /* Vote.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000000000000000000027 /* Vote.swift */; };
+		FF000000000000000000003 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = FF000000000000000000002 /* Supabase */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +62,12 @@
 		DD0000000000000000000021 /* Forecast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Forecast.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD0000000000000000001F /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		DD000000000000000000021 /* AppFlags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlags.swift; sourceTree = "<group>"; };
+		DD000000000000000000022 /* LeagueTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueTheme.swift; sourceTree = "<group>"; };
+		DD000000000000000000023 /* CategoryBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBadge.swift; sourceTree = "<group>"; };
+		DD000000000000000000024 /* AIInsightButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIInsightButton.swift; sourceTree = "<group>"; };
+		DD000000000000000000025 /* ProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarView.swift; sourceTree = "<group>"; };
+		DD000000000000000000026 /* SupabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseService.swift; sourceTree = "<group>"; };
+		DD000000000000000000027 /* Vote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vote.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF000000000000000000003 /* Supabase in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,6 +109,7 @@
 				CC0000000000000000000005 /* ViewModels */,
 				CC0000000000000000000006 /* Views */,
 				CC000000000000000000014 /* Storage */,
+				CC000000000000000000015 /* Services */,
 			);
 			path = Forecast;
 			sourceTree = "<group>";
@@ -103,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				DD0000000000000000000002 /* AppTheme.swift */,
+				DD000000000000000000022 /* LeagueTheme.swift */,
 			);
 			path = Theme;
 			sourceTree = "<group>";
@@ -112,6 +128,7 @@
 			children = (
 				DD0000000000000000000003 /* NewsItem.swift */,
 				DD0000000000000000000005 /* Article.swift */,
+				DD000000000000000000027 /* Vote.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -181,6 +198,9 @@
 				DD0000000000000000000018 /* VoteButton.swift */,
 				DD000000000000000000001C /* VotingBlockView.swift */,
 				DD000000000000000000001A /* AnalyticsSheetView.swift */,
+				DD000000000000000000023 /* CategoryBadge.swift */,
+				DD000000000000000000024 /* AIInsightButton.swift */,
+				DD000000000000000000025 /* ProgressBarView.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -217,6 +237,14 @@
 			path = Storage;
 			sourceTree = "<group>";
 		};
+		CC000000000000000000015 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				DD000000000000000000026 /* SupabaseService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -233,6 +261,9 @@
 			dependencies = (
 			);
 			name = Forecast;
+			packageDependencies = (
+				FF000000000000000000002 /* XCSwiftPackageProductDependency */,
+			);
 			productName = Forecast;
 			productReference = DD0000000000000000000021 /* Forecast.app */;
 			productType = "com.apple.product-type.application";
@@ -262,6 +293,9 @@
 			);
 			mainGroup = AA0000000000000000000002 /* Main */;
 			productRefGroup = AA0000000000000000000003 /* Products */;
+			packageReferences = (
+				FF000000000000000000001 /* XCRemoteSwiftPackageReference "supabase-swift" */,
+			);
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -307,10 +341,35 @@
 				EE000000000000000000001E /* LeaderboardView.swift in Sources */,
 				EE0000000000000000001F /* OnboardingView.swift in Sources */,
 				EE000000000000000000021 /* AppFlags.swift in Sources */,
+				EE000000000000000000022 /* LeagueTheme.swift in Sources */,
+				EE000000000000000000023 /* CategoryBadge.swift in Sources */,
+				EE000000000000000000024 /* AIInsightButton.swift in Sources */,
+				EE000000000000000000025 /* ProgressBarView.swift in Sources */,
+				EE000000000000000000026 /* SupabaseService.swift in Sources */,
+				EE000000000000000000027 /* Vote.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		FF000000000000000000001 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase/supabase-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FF000000000000000000002 /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FF000000000000000000001 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCBuildConfiguration section */
 		AA0000000000000000000005 /* Debug */ = {

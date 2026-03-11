@@ -14,14 +14,14 @@ struct LeaderboardView: View {
     }
 
     private let leagues: [League] = [
-        League(iconName: "crown.fill",  name: "Diamond",  color: Color(hex: "B9F2FF")),
-        League(iconName: "trophy.fill", name: "Platinum", color: Color(hex: "E5E4E2")),
-        League(iconName: "medal.fill",  name: "Gold",     color: Color(hex: "FFD700")),
-        League(iconName: "shield.fill", name: "Silver",   color: Color(hex: "C0C0C0")),
-        League(iconName: "star.fill",   name: "Bronze",   color: Color(hex: "CD7F32"))
+        League(iconName: "crown.fill",  name: "Diamond",  color: LeagueTheme.diamond),
+        League(iconName: "trophy.fill", name: "Platinum", color: LeagueTheme.platinum),
+        League(iconName: "medal.fill",  name: "Gold",     color: LeagueTheme.gold),
+        League(iconName: "shield.fill", name: "Silver",   color: LeagueTheme.silver),
+        League(iconName: "star.fill",   name: "Bronze",   color: LeagueTheme.bronze)
     ]
 
-    private let bronzeColor = Color(hex: "CD7F32")
+    private let bronzeColor = LeagueTheme.bronze
     private let grayLine    = Color.white.opacity(0.15)
     private let rowHeight: CGFloat = 48
 
@@ -31,9 +31,9 @@ struct LeaderboardView: View {
     }
 
     private let features: [FeatureCard] = [
-        FeatureCard(icon: "chart.bar.fill",      text: "Соревнуйся с игроками твоего уровня"),
-        FeatureCard(icon: "arrow.up.circle.fill", text: "Повышайся в лигах каждый месяц"),
-        FeatureCard(icon: "flame.fill",           text: "Множители очков в высших лигах")
+        FeatureCard(icon: "chart.bar.fill",      text: "Compete with players at your level"),
+        FeatureCard(icon: "arrow.up.circle.fill", text: "Advance through leagues every month"),
+        FeatureCard(icon: "flame.fill",           text: "Score multipliers in higher leagues")
     ]
 
     // MARK: - Body
@@ -46,7 +46,7 @@ struct LeaderboardView: View {
                 VStack(alignment: .leading, spacing: 0) {
 
                     // Block 1 — Title
-                    Text("Лиги")
+                    Text("Leagues")
                         .font(.system(size: 28, weight: .bold))
                         .foregroundStyle(AppTheme.textPrimary)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -83,30 +83,20 @@ struct LeaderboardView: View {
                 Image(systemName: "star.fill")
                     .font(.system(size: 28))
                     .foregroundStyle(bronzeColor)
-                Text("До Bronze лиги")
+                Text("To Bronze league")
                     .font(.system(size: 18, weight: .bold))
                     .foregroundStyle(AppTheme.textPrimary)
             }
 
             // Subtitle
-            Text("Сделай ещё 3 верных прогноза в Daily Flash")
+            Text("Make 3 more correct predictions in Daily Flash")
                 .font(.system(size: 14))
                 .foregroundStyle(AppTheme.textSecondary)
                 .padding(.top, 8)
 
             // Progress bar
-            GeometryReader { geo in
-                ZStack(alignment: .leading) {
-                    RoundedRectangle(cornerRadius: 4)
-                        .fill(Color.white.opacity(0.10))
-                        .frame(height: 8)
-                    RoundedRectangle(cornerRadius: 4)
-                        .fill(bronzeColor)
-                        .frame(width: geo.size.width * 0.4, height: 8)
-                }
-            }
-            .frame(height: 8)
-            .padding(.top, 14)
+            ProgressBarView(progress: 0.4, fill: bronzeColor)
+                .padding(.top, 14)
 
             Text("2 / 5")
                 .font(.system(size: 12))
@@ -119,7 +109,7 @@ struct LeaderboardView: View {
                 selectedTab = 0
             } label: {
                 HStack(spacing: 8) {
-                    Text("Перейти к прогнозам")
+                    Text("Go to predictions")
                         .font(.system(size: 16, weight: .semibold))
                     Image(systemName: "arrow.right")
                         .font(.system(size: 16, weight: .semibold))
@@ -218,7 +208,7 @@ struct LeaderboardView: View {
             }
             .frame(width: 20, height: rowHeight)
 
-            Text("Калибровка")
+            Text("Calibration")
                 .font(.system(size: 16, weight: .semibold))
                 .foregroundStyle(AppTheme.textPrimary)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -235,7 +225,7 @@ struct LeaderboardView: View {
 
     private var featuresBlock: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Что ждёт в лигах")
+            Text("What awaits in leagues")
                 .font(.system(size: 18, weight: .bold))
                 .foregroundStyle(AppTheme.textPrimary)
                 .padding(.bottom, 2)
