@@ -11,6 +11,8 @@ struct ForecastApp: App {
 
 struct ContentView: View {
     @AppStorage(AppFlags.hasSeenOnboarding.key) private var hasSeenOnboarding = AppFlags.hasSeenOnboarding.defaultValue
+    // DEBUG: reset onboarding on every launch
+    init() { AppFlags.reset(AppFlags.hasSeenOnboarding) }
     @StateObject private var feedViewModel = FeedViewModel()
     @State private var selectedTab = 0
 
