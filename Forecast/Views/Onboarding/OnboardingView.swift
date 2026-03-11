@@ -56,9 +56,9 @@ struct OnboardingView: View {
                             .font(.title3.bold())
                             .foregroundStyle(AppTheme.textSecondary)
 
-                        VStack(alignment: .leading, spacing: 10) {
+                        VStack(alignment: .leading, spacing: 16) {
                             ForEach(topicRows.indices, id: \.self) { rowIdx in
-                                HStack(spacing: 10) {
+                                HStack(spacing: 16) {
                                     ForEach(topicRows[rowIdx], id: \.name) { topic in
                                         topicPill(topic)
                                     }
@@ -120,16 +120,17 @@ struct OnboardingView: View {
                 }
             }
         } label: {
-            HStack(spacing: 6) {
+            HStack(spacing: 12) {
                 Image(systemName: topic.icon)
-                    .font(.subheadline)
+                    .imageScale(.large)
+                    .font(.system(size: 20, weight: .bold))
                     .foregroundStyle(selected ? AppTheme.accent : .white)
                 Text(topic.name)
-                    .font(.subheadline.bold())
+                    .font(.system(size: 20, weight: .bold))
                     .foregroundStyle(selected ? AppTheme.accent : .white)
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 10)
+            .padding(.horizontal, 28)
+            .padding(.vertical, 18)
             .background(selected ? AppTheme.accent.opacity(0.2) : Color.white.opacity(0.05))
             .clipShape(Capsule())
             .overlay(
